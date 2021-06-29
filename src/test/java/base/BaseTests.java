@@ -42,7 +42,7 @@ public class BaseTests {
 
     @AfterSuite
     public void stopSuite () {
-        System.out.println("All done!!!");
+        System.out.println("\n*** All done!!!" );
     }
 
     @BeforeClass
