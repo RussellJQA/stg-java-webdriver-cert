@@ -1,6 +1,9 @@
 package pages;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -9,10 +12,9 @@ import java.util.List;
 
 public class CopartHomePage {
 
+    private final static String url = "https://www.copart.com";
     private final WebDriver driver;
     private final WebDriverWait wait;
-
-    private final static String url = "https://www.copart.com";
 
     public CopartHomePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
@@ -20,9 +22,13 @@ public class CopartHomePage {
         driver.get(url);
     }
 
-    private void clickLink(String linkText) { driver.findElement(By.linkText(linkText)).click(); }
+    private void clickLink(String linkText) {
+        driver.findElement(By.linkText(linkText)).click();
+    }
 
-    public void enterSearchKey(String searchKey) { driver.findElement(By.id("input-search")).sendKeys(searchKey, Keys.ENTER); }
+    public void enterSearchKey(String searchKey) {
+        driver.findElement(By.id("input-search")).sendKeys(searchKey, Keys.ENTER);
+    }
 
     public void setEntriesPerPageTo(int desiredEntriesPerPage) {
         WebElement entriesPerPageElement =
@@ -31,7 +37,9 @@ public class CopartHomePage {
         entriesPerPage.selectByValue(String.valueOf(desiredEntriesPerPage));
     }
 
-    public String getTableText() { return driver.findElement(By.xpath("*//table[@id='serverSideDataTable']")).getText(); }
+    public String getTableText() {
+        return driver.findElement(By.xpath("*//table[@id='serverSideDataTable']")).getText();
+    }
 
     // No longer needed (at least for now).
     // public List<WebElement> getMakes() {return driver.findElements(By.xpath("//span[@class='make-items']//a")); }
@@ -46,10 +54,17 @@ public class CopartHomePage {
         return driver.findElements(spanDamageLocator);
     }
 
+    public void searchAndSetEntriesPerPage(String searchKey, int entriesPerPage) {
+        enterSearchKey(searchKey);
+
+        setEntriesPerPageTo(entriesPerPage);
+        waitForSpinnerToComeAndGo();  // Sometimes this fails. Look at alternatives discussed in "class" and afterwards
+    }
+
     // TODO: Ask - Which of the following getMostPopularItemsX() versions is preferred?
 
     // This 1st version include2 the links underneath the "Categories" <h3>
-   public List<WebElement> getMostPopularItems1() {
+    public List<WebElement> getMostPopularItems1() {
         clickLink("Trending"); // Clicking on this tab brings up a list of "Most Popular Items" (Makes/Models)
         return driver.findElements(
                 By.xpath("//h3[text()='Most Popular Items']//parent::div//a[not(text()='VIEW MORE')]"));

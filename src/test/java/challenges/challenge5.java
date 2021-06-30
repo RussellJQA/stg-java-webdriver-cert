@@ -1,74 +1,69 @@
 package challenges;
 
 import base.BaseTests;
+import com.google.common.collect.Sets;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import java.util.*;
 
-import static org.testng.Assert.assertTrue;
-
 public class challenge5 extends BaseTests {
 
     private final static String searchKey = "porsche";
 
-    // TODO: Create some common code which both tests call
-
-    @Test
-    public void testPorscheMakesAndModels() {
-        goToCopart();
-        copartHomePage.enterSearchKey(searchKey);
-
-        copartHomePage.setEntriesPerPageTo(100);
-        copartHomePage.waitForSpinnerToComeAndGo();
-
-        List<WebElement> models = copartHomePage.getModels();
-
-        // Use TreeMap, rather than HashMap, since TreeMap is automatically sorted by the map's keys
-        //      TreeMap is an implementation of the SortedMap interface
-        Map<String, Integer> modelCounts = new TreeMap<>();
-        for (WebElement model : models) {
+    private Map<String, Integer> getColumnValueCounts(List<WebElement> elements) {
+        // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
+        //      (TreeMap is automatically sorted in ascending order of the map's keys.)
+        Map<String, Integer> ColumnValueCounts = new TreeMap<>();
+        for (WebElement model : elements) {
             String modelKey = model.getText();
-            Integer count = modelCounts.get(modelKey);
-            modelCounts.put(modelKey, (count == null) ? 1 : count + 1);
+            Integer count = ColumnValueCounts.get(modelKey);
+            ColumnValueCounts.put(modelKey, (count == null) ? 1 : count + 1);
         }
+        return ColumnValueCounts;
+    }
 
-        String partTitle = String.format("\nPART 1: %d distinct %s MODELS (with the counts of their occurrences)",
-                modelCounts.size(), searchKey.toUpperCase());
-        System.out.println(partTitle);
-        for (Map.Entry<String, Integer> entry : modelCounts.entrySet()) {
+    private void printColumnValueCounts(Map<String, Integer> Counts, String testTitle) {
+        System.out.println(testTitle);
+        for (Map.Entry<String, Integer> entry : Counts.entrySet()) {
             System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
         }
     }
 
     @Test
-    public void testPorscheMakesAndDamage() {
+    public void printPorscheModels() {
         goToCopart();
-        copartHomePage.enterSearchKey(searchKey);
+        copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
 
-        copartHomePage.setEntriesPerPageTo(100);
-        copartHomePage.waitForSpinnerToComeAndGo();
+        Map<String, Integer> modelCounts = getColumnValueCounts(copartHomePage.getModels());
 
-        List<WebElement> damages = copartHomePage.getDamages();
+        String testTitle = String.format("\nPART 1: %d distinct %s MODELS (with the counts of their occurrences)",
+                modelCounts.size(), searchKey.toUpperCase());
+        printColumnValueCounts(modelCounts, testTitle);
+    }
 
-        Map<String, Integer> damageCounts = new TreeMap<>();
+    @Test
+    public void printPorscheDamageCategories() {
+        goToCopart();
+        copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
+        Map<String, Integer> damageCounts = getColumnValueCounts(copartHomePage.getDamages());
 
-        for (WebElement damage : damages) {
-            String damageKey = damage.getText();
+        int miscCount = 0;
 
-            // If damageKey is not in the set of categories to keep, then count it in a "MISC" category
-            Set<String> damageCategoriesToKeep = Set.of("REAR END", "FRONT END", "MINOR DENT/SCRATCHES", "UNDERCARRIAGE");
-            damageKey = damageCategoriesToKeep.contains(damageKey) ? damageKey : "MISC";
+        // Create a set of all categories which will be merged into the "MISC" category
+        Set<String> miscDamageCategories = new HashSet<>(Sets.difference(damageCounts.keySet(),
+                Set.of("REAR END", "FRONT END", "MINOR DENT/SCRATCHES", "UNDERCARRIAGE")));
 
-            Integer count = damageCounts.get(damageKey);
-            damageCounts.put(damageKey, (count == null) ? 1 : count + 1);
+        // Iterate over all the miscellaneous categories
+        for (String category : miscDamageCategories) {
+            miscCount += damageCounts.get(category); // Merge category count into count for "MISC" category
+            damageCounts.remove(category); // Remove category
         }
 
-        String partTitle = String.format("\nPART 2: %s DAMAGE categories (with the counts of their occurrences)",
+        damageCounts.put("MISC", miscCount);
+
+        String testTitle = String.format("\nPART 2: %s DAMAGE categories (with the counts of their occurrences)",
                 searchKey.toUpperCase());
-        System.out.println(partTitle);
-        for (Map.Entry<String, Integer> entry : damageCounts.entrySet()) {
-            System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
-        }
+        printColumnValueCounts(damageCounts, testTitle);
     }
 }
