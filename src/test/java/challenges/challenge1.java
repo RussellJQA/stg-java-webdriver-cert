@@ -9,7 +9,7 @@ public class challenge1 extends BaseTests {
 
     @Test
     public void testGoogleTitle() {
-        goToGoogle();
+        initGoogleHomePage();
         assertTitleAsExpected("Google");
 
         // The Python WebDriver certification also includes 2 additional requirements:

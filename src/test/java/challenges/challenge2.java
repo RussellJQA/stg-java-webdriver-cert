@@ -12,7 +12,7 @@ public class challenge2 extends BaseTests {
 
     @Test
     public void textSearchForExotics() {
-        goToCopart();
+        initCopartHomePage();
         copartHomePage.enterSearchKey(searchKey);
         copartHomePage.waitForSpinnerToComeAndGo();
         assertTrue(copartHomePage.getTableText().contains(expectedSearchResult));

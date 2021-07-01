@@ -32,7 +32,7 @@ public class challenge5 extends BaseTests {
 
     @Test
     public void printPorscheModels() {
-        goToCopart();
+        initCopartHomePage();
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
 
         Map<String, Integer> modelCounts = getColumnValueCounts(copartHomePage.getModels());
@@ -44,7 +44,7 @@ public class challenge5 extends BaseTests {
 
     @Test
     public void printPorscheDamageCategories() {
-        goToCopart();
+        initCopartHomePage();
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
         Map<String, Integer> damageCounts = getColumnValueCounts(copartHomePage.getDamages());
 

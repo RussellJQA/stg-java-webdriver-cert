@@ -15,12 +15,10 @@ import pages.GoogleHomePage;
 
 public class BaseTests {
 
-    private WebDriver driver;
-
+    public WebDriverWait wait;
     protected GoogleHomePage googleHomePage;
     protected CopartHomePage copartHomePage;
-
-    public WebDriverWait wait;
+    private WebDriver driver;
 
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
@@ -41,8 +39,8 @@ public class BaseTests {
     }
 
     @AfterSuite
-    public void stopSuite () {
-        System.out.println("\n*** All done!!!" );
+    public void stopSuite() {
+        System.out.println("\n*** All done!!!");
     }
 
     @BeforeClass
@@ -56,22 +54,22 @@ public class BaseTests {
     }
 
     public void assertTitleAsExpected(String expectedTitle) {
-        Assert.assertEquals(driver.getTitle(), expectedTitle,"Incorrect page title");
+        Assert.assertEquals(driver.getTitle(), expectedTitle, "Incorrect page title");
     }
 
     public void assertTitleContains(String expectedTitleSubstring) {
-        Assert.assertTrue(driver.getTitle().contains(expectedTitleSubstring),"Incorrect page title");
+        Assert.assertTrue(driver.getTitle().contains(expectedTitleSubstring), "Incorrect page title");
     }
 
     public void assertUrlContains(String expectedTitleSubstring) {
-        Assert.assertTrue(driver.getCurrentUrl().contains(expectedTitleSubstring),"Incorrect URL");
+        Assert.assertTrue(driver.getCurrentUrl().contains(expectedTitleSubstring), "Incorrect URL");
     }
 
-    public void goToGoogle() {
-        googleHomePage =  new GoogleHomePage(driver);
+    public void initGoogleHomePage() {
+        googleHomePage = new GoogleHomePage(driver);
     }
 
-    public void goToCopart() {
+    public void initCopartHomePage() {
         copartHomePage = new CopartHomePage(driver, wait);
     }
 }
