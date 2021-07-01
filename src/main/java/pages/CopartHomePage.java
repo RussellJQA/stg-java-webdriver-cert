@@ -9,21 +9,37 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Map;
 
 public class CopartHomePage {
+
+    // PRIVATE VARIABLES AND METHODS
 
     private final static String url = "https://www.copart.com";
     private final WebDriver driver;
     private final WebDriverWait wait;
 
+    // Java 9's Map.of() is an immutable map with at most 10 key/value pairs
+    private final static Map<String, String> columnXpathLocators = Map.of(
+            "make", "//span[@class='make-items']//a",
+            "model", "//span[@data-uname='lotsearchLotmodel' and not(text()='[[ lm ]]')]",
+            "damage", "//span[@data-uname='lotsearchLotdamagedescription' and not(text()='[[ dd ]]')]"
+    );
+
+    private void clickLink(String linkText) {
+        driver.findElement(By.linkText(linkText)).click();
+    }
+
+    // PUBLIC METHODS
+
+    public List<WebElement> getElementsFromColumn(String columnName) {
+        return driver.findElements(By.xpath(columnXpathLocators.get(columnName)));
+    }
+
     public CopartHomePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
         driver.get(url);
-    }
-
-    private void clickLink(String linkText) {
-        driver.findElement(By.linkText(linkText)).click();
     }
 
     public void enterSearchKey(String searchKey) {
@@ -39,19 +55,6 @@ public class CopartHomePage {
 
     public String getTableText() {
         return driver.findElement(By.xpath("*//table[@id='serverSideDataTable']")).getText();
-    }
-
-    // No longer needed (at least for now).
-    // public List<WebElement> getMakes() {return driver.findElements(By.xpath("//span[@class='make-items']//a")); }
-
-    public List<WebElement> getModels() {
-        By spanModelLocator = By.xpath("//span[@data-uname='lotsearchLotmodel' and not(text()='[[ lm ]]')]");
-        return driver.findElements(spanModelLocator);
-    }
-
-    public List<WebElement> getDamages() {
-        By spanDamageLocator = By.xpath("//span[@data-uname='lotsearchLotdamagedescription' and not(text()='[[ dd ]]')]");
-        return driver.findElements(spanDamageLocator);
     }
 
     public void searchAndSetEntriesPerPage(String searchKey, int entriesPerPage) {

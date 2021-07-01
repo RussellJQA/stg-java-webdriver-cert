@@ -34,8 +34,7 @@ public class challenge5 extends BaseTests {
     public void printPorscheModels() {
         initCopartHomePage();
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
-
-        Map<String, Integer> modelCounts = getColumnValueCounts(copartHomePage.getModels());
+        Map<String, Integer> modelCounts = getColumnValueCounts(copartHomePage.getElementsFromColumn("model"));
 
         String testTitle = String.format("\nPART 1: %d distinct %s MODELS (with the counts of their occurrences)",
                 modelCounts.size(), searchKey.toUpperCase());
@@ -46,11 +45,12 @@ public class challenge5 extends BaseTests {
     public void printPorscheDamageCategories() {
         initCopartHomePage();
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
-        Map<String, Integer> damageCounts = getColumnValueCounts(copartHomePage.getDamages());
+        Map<String, Integer> damageCounts = getColumnValueCounts(copartHomePage.getElementsFromColumn("damage"));
 
         int miscCount = 0;
 
         // Create a set of all categories which will be merged into the "MISC" category
+        // NOTE: Set.of() creates an immutable set
         Set<String> miscDamageCategories = new HashSet<>(Sets.difference(damageCounts.keySet(),
                 Set.of("REAR END", "FRONT END", "MINOR DENT/SCRATCHES", "UNDERCARRIAGE")));
 
