@@ -60,8 +60,15 @@ public class CopartHomePage {
     public void searchAndSetEntriesPerPage(String searchKey, int entriesPerPage) {
         enterSearchKey(searchKey);
 
-        setEntriesPerPageTo(entriesPerPage);
+        if (entriesPerPage > 0) {
+            setEntriesPerPageTo(entriesPerPage);
+        };
+
         waitForSpinnerToComeAndGo();  // Sometimes this fails. Look at alternatives discussed in "class" and afterwards
+    }
+
+    public void search (String searchKey) {
+        searchAndSetEntriesPerPage(searchKey, -1);  // Leave entriesPerPage unchanged
     }
 
     // TODO: Ask - Which of the following getMostPopularItemsX() versions is preferred?
@@ -91,4 +98,21 @@ public class CopartHomePage {
         WebElement spinner = wait.until(ExpectedConditions.presenceOfElementLocated(spinnerLoc));
         wait.until(ExpectedConditions.invisibilityOf(spinner));
     }
+
+    public void clickFilterBtn(String filterButtonXPath) {
+        WebElement filterButton = driver.findElement(By.xpath(filterButtonXPath));
+        filterButton.click();
+    }
+
+    public void setFilterTextBox(String filterTextBoxXPath, String filterText) {
+        WebElement filterTextBox = driver.findElement(By.xpath(filterTextBoxXPath));
+        filterTextBox.sendKeys(filterText);
+    }
+
+    public void checkFilterCheckBox(String filterCheckBoxXPath, String successMessage) {
+        WebElement filterCheckBox = driver.findElement(By.xpath(filterCheckBoxXPath));
+        filterCheckBox.click();
+        System.out.println(successMessage);
+    }
+
 }
