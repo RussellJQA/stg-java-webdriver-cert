@@ -1,17 +1,22 @@
 package base;
 
+import com.google.common.io.Files;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 import pages.CopartHomePage;
 import pages.GoogleHomePage;
+import utils.Screenshots;
+
+import java.io.File;
+import java.io.IOException;
 
 public class BaseTests {
 
@@ -51,6 +56,15 @@ public class BaseTests {
     public void stopClass() throws InterruptedException {
         Thread.sleep(5000); // Wait long enough for the state of the browser to be seen before closing the browser.
         driver.quit();  // Close the browser and [unlike driver.close()] end the session
+    }
+
+    @AfterMethod
+    public void recordFailure(ITestResult result) {
+        if (ITestResult.FAILURE == result.getStatus()) {
+            Screenshots screenshots = new Screenshots(driver);
+            String filepath = String.format("screenshots/%s.png", result.getName());
+            screenshots.takeScreenshot(filepath);
+        }
     }
 
     public void assertTitleAsExpected(String expectedTitle) {

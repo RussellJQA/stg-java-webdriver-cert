@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Screenshots;
 
 import java.util.List;
 import java.util.Map;
@@ -16,30 +17,29 @@ public class CopartHomePage {
     // PRIVATE VARIABLES AND METHODS
 
     private final static String url = "https://www.copart.com";
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
     // Java 9's Map.of() is an immutable map with at most 10 key/value pairs
     private final static Map<String, String> columnXpathLocators = Map.of(
             "make", "//span[@class='make-items']//a",
             "model", "//span[@data-uname='lotsearchLotmodel' and not(text()='[[ lm ]]')]",
             "damage", "//span[@data-uname='lotsearchLotdamagedescription' and not(text()='[[ dd ]]')]"
     );
-
-    private void clickLink(String linkText) {
-        driver.findElement(By.linkText(linkText)).click();
-    }
-
-    // PUBLIC METHODS
-
-    public List<WebElement> getElementsFromColumn(String columnName) {
-        return driver.findElements(By.xpath(columnXpathLocators.get(columnName)));
-    }
+    private final WebDriver driver;
+    private final WebDriverWait wait;
 
     public CopartHomePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
         driver.get(url);
+    }
+
+    // PUBLIC METHODS
+
+    private void clickLink(String linkText) {
+        driver.findElement(By.linkText(linkText)).click();
+    }
+
+    public List<WebElement> getElementsFromColumn(String columnName) {
+        return driver.findElements(By.xpath(columnXpathLocators.get(columnName)));
     }
 
     public void enterSearchKey(String searchKey) {
@@ -62,12 +62,12 @@ public class CopartHomePage {
 
         if (entriesPerPage > 0) {
             setEntriesPerPageTo(entriesPerPage);
-        };
+        }
 
         waitForSpinnerToComeAndGo();  // Sometimes this fails. Look at alternatives discussed in "class" and afterwards
     }
 
-    public void search (String searchKey) {
+    public void search(String searchKey) {
         searchAndSetEntriesPerPage(searchKey, -1);  // Leave entriesPerPage unchanged
     }
 
@@ -109,10 +109,37 @@ public class CopartHomePage {
         filterTextBox.sendKeys(filterText);
     }
 
-    public void checkFilterCheckBox(String filterCheckBoxXPath, String successMessage) {
+    public void checkFilterCheckBox(String filterCheckBoxXPath) {
         WebElement filterCheckBox = driver.findElement(By.xpath(filterCheckBoxXPath));
         filterCheckBox.click();
-        System.out.println(successMessage);
     }
 
+    public boolean setFilterTextAndCheckBox(String filterPanelLinkText, String filterText, String filterCheckBox) {
+        boolean success = true;
+
+        try {
+            String filterButtonXPath = String.format("//h4[@class='panel-title']/a[text()='%s']", filterPanelLinkText);
+            clickFilterBtn(filterButtonXPath);
+            setFilterTextBox(String.format("%s/ancestor::li//form//input", filterButtonXPath), filterText);
+            checkFilterCheckBox(String.format("%s/ancestor::li//ul//input[@value='%s']", filterButtonXPath,
+                    filterCheckBox));
+        } catch (Exception e) {
+
+            // In order to more generally handle test failures,
+            // I've added a call to takeScreenshot() as an @AfterMethod in BaseTest.
+            // As a result, the following is now redundant, in that a failure here will actually take 2 screenshots.
+            // But it was left here in order to show the specified behavior for this challenge.
+
+            Screenshots screenshots = new Screenshots(driver);
+            String fileBase = String.format("filtering_for_%s_%s_%s", filterPanelLinkText, filterText, filterCheckBox);
+            screenshots.takeScreenshot(String.format("screenshots/%s.png", fileBase));
+            String errorMessage = String.format("Filter checkbox for panel: %s, text: %s, checkbox: %s not found.",
+                    filterPanelLinkText, filterText, filterCheckBox);
+            System.out.println(errorMessage);
+            System.out.println(e.getMessage());
+            success = false;
+        }
+
+        return success;
+    }
 }
