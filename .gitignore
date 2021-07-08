@@ -27,3 +27,4 @@ hs_err_pid*
 /target/
 
 # Custom files to exclude
+/src/main/java/fieldstones/

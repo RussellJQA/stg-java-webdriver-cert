@@ -1,22 +1,19 @@
 package base;
 
-import com.google.common.io.Files;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.CopartHomePage;
 import pages.GoogleHomePage;
 import utils.Screenshots;
+import utils.SeleniumUtils;
 
-import java.io.File;
-import java.io.IOException;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class BaseTests {
 
@@ -68,15 +65,11 @@ public class BaseTests {
     }
 
     public void assertTitleAsExpected(String expectedTitle) {
-        Assert.assertEquals(driver.getTitle(), expectedTitle, "Incorrect page title");
+        assertEquals(driver.getTitle(), expectedTitle, "Incorrect page title");
     }
 
     public void assertTitleContains(String expectedTitleSubstring) {
-        Assert.assertTrue(driver.getTitle().contains(expectedTitleSubstring), "Incorrect page title");
-    }
-
-    public void assertUrlContains(String expectedTitleSubstring) {
-        Assert.assertTrue(driver.getCurrentUrl().contains(expectedTitleSubstring), "Incorrect URL");
+        assertTrue(driver.getTitle().contains(expectedTitleSubstring), "Incorrect page title");
     }
 
     public void initGoogleHomePage() {
@@ -85,5 +78,10 @@ public class BaseTests {
 
     public void initCopartHomePage() {
         copartHomePage = new CopartHomePage(driver, wait);
+    }
+
+    public void goToPageAndCheckTitle(String url, String linkText) {
+        SeleniumUtils seleniumUtils = new SeleniumUtils(driver, wait);
+        assertTrue(seleniumUtils.goToPageAndCheckTitle(url, linkText));
     }
 }
