@@ -118,19 +118,6 @@ public class NumbersToWords {
                 }
             } else {
                 ones_digit = (tens_and_ones - 10 * tens_digit);
-
-//                // Linter says (tens_digit == 0) is always 'false'. I think it is, so eliminate this check.
-//                if (tens_digit == 0) {
-//                    if (ones_digit != 0) {
-//                        result += String.format("%s", numLtTwenty.get(ones_digit));
-//                    }
-//                } else {
-//                    String result1 = (hundreds_digit > 0) ? " " : "";
-//                    String result2 = String.format("%s", tensPlace.get(10 * tens_digit));
-//                    String result3 = (ones_digit > 0) ? String.format(" %s", numLtTwenty.get(ones_digit)) : "";
-//                    result += result1 + result2 + result3;
-//                }
-
                 String result1 = (hundreds_digit > 0) ? " " : "";
                 String result2 = String.format("%s", tensPlace.get(10 * tens_digit));
                 String result3 = (ones_digit > 0) ? String.format(" %s", numLtTwenty.get(ones_digit)) : "";
@@ -143,33 +130,24 @@ public class NumbersToWords {
 
     public static String numberToWords(int number) {
         StringBuilder numberAsWords;
-        int stringLength;
-        int paddedLength;
-        int triadCount;
-        String numberAsStringPadded;
-        String groupingSeparator;
-        String formatSpecifier;
-        String triad;
-        String triadAsString;
-        String triadGrouping;
-
         if (number == 0) {
             numberAsWords = new StringBuilder("zero");
         } else {
-            stringLength = String.valueOf(number).length();
-            paddedLength = stringLength + ((3 - (stringLength % 3)) % 3);
-            triadCount = paddedLength / 3;
-            formatSpecifier = "%" + paddedLength + "d";
-            numberAsStringPadded = String.format(formatSpecifier, number);
+            int stringLength = String.valueOf(number).length();
+            int paddedLength = stringLength + ((3 - (stringLength % 3)) % 3);
+            int triadCount = paddedLength / 3;
+            String formatSpecifier = "%" + paddedLength + "d";
+            String numberAsStringPadded = String.format(formatSpecifier, number);
 
             numberAsWords = new StringBuilder();
             for (int triadGroupNumber = 0; triadGroupNumber < triadCount; triadGroupNumber++) {
 
-                triad = numberAsStringPadded.substring(3 * triadGroupNumber, 3 * triadGroupNumber + 3);
+                String triad = numberAsStringPadded.substring(3 * triadGroupNumber, 3 * triadGroupNumber + 3);
 
                 if (!triad.equals("000")) {
-                    triadAsString = triadToString(Integer.valueOf(triad.trim()));
-                    triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
+                    String triadAsString = triadToString(Integer.valueOf(triad.trim()));
+                    String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
+                    String groupingSeparator;
 
                     if (triadGroupNumber > 0) {
                         if ((Integer.valueOf(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
