@@ -131,17 +131,17 @@ public class NumbersToWords {
 
                     // TODO: To reduce cyclomatic complexity, move much of what follows into a separate function
 
-                    String triadAsString = triadToString(Integer.valueOf(triad.trim()));
-                    String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
                     String groupingSeparator;
                     if (triadGroupNumber > 0) {
                         if ((Integer.valueOf(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
                             groupingSeparator = ", ";
                         } else { groupingSeparator = " "; }
                     } else { groupingSeparator = ""; }
-                    String numberAsWords1 = String.format("%s%s", groupingSeparator, triadAsString);
-                    String numberAsWords2 = String.format("%s", (triadGrouping.isEmpty() ? "" : triadGrouping));
-                    numberAsWords.append(numberAsWords1).append(numberAsWords2);
+                    String triadAsString = triadToString(Integer.valueOf(triad.trim()));
+                    String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
+                    String addend = String.format("%s%s", groupingSeparator, triadAsString) + String.format("%s", (triadGrouping.isEmpty() ? "" : triadGrouping));
+
+                    numberAsWords.append(addend);
                 }
             }
         }
