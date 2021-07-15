@@ -1,9 +1,13 @@
 package challenges;
 
 import base.BaseTests;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertTrue;
+
+// TODO: SonarLint recommends renaming "challenge7" to match the regular expression:
+//       ^((Test|IT)[a-zA-Z0-9_]+|[A-Z][a-zA-Z0-9_]*(Test|Tests|TestCase|IT|ITCase))$
+// as in: "TestChallenge06"
 public class challenge6 extends BaseTests {
 
     private final static String searchKey = "nissan";
@@ -15,6 +19,6 @@ public class challenge6 extends BaseTests {
     public void testChallenge6() {
         initCopartHomePage();
         copartHomePage.search(searchKey);
-        Assert.assertTrue(copartHomePage.setFilterTextAndCheckBox(filterPanelLinkText, filterText, filterCheckBox));
+        assertTrue(copartHomePage.setFilterTextAndCheckBox(filterPanelLinkText, filterText, filterCheckBox));
     }
 }

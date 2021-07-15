@@ -6,8 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+This class has functions for dealing with Fibonacci numbers, and Fibonacci
+sequences. For an explanation of Fibonacci numbers and Fibonacci sequences,
+see https://en.wikipedia.org/wiki/Fibonacci_number
+*/
+
 public class Fibonacci {
 
+    /*
+    This is a list of the first 301 Fibonacci numbers from
+    "The first 300 Fibonacci numbers, completely factorised"
+            at http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html
+            [The referenced Web page lists 301 Fibonacci numbers, those for n=0 through n=300.]
+    */
     private static final List<BigInteger> expectedFibonaccis = Arrays.asList(
 
             // ints
