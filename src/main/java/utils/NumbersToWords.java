@@ -76,7 +76,6 @@ public class NumbersToWords {
     );
 
     public static void main(String[] args) {
-        // System.out.println(triadToString(123));
         System.out.println(numberToWords(999));
         System.out.println(numberToWords(1000));
         System.out.println(numberToWords(1999));
@@ -84,40 +83,27 @@ public class NumbersToWords {
         System.out.println(numberToWords(1000000));
     }
 
-    public static String triadToString(int one_to_three_digit_int) {
+    public static String triadToString(int oneToThreeDigitInt) {
         String result = "";
-        if (one_to_three_digit_int <= 19) {
-            if (one_to_three_digit_int == 0) {
+        if (oneToThreeDigitInt <= 19) {
+            if (oneToThreeDigitInt == 0) {
                 result = "";
-            } else {
-                result = numLtTwenty.get(one_to_three_digit_int);
-            }
+            } else { result = numLtTwenty.get(oneToThreeDigitInt); }
         } else {
-            int hundreds_digit;
-            if (one_to_three_digit_int >= 100) {
-                hundreds_digit = (one_to_three_digit_int / 100);
-                result = hundredsPlace.get(100 * hundreds_digit);
+            int hundredsDigit;
+            if (oneToThreeDigitInt >= 100) {
+                hundredsDigit = (oneToThreeDigitInt / 100);
+                result = hundredsPlace.get(100 * hundredsDigit);
+            } else { hundredsDigit = 0; }
+            int tensAndOnes = (oneToThreeDigitInt - (100 * hundredsDigit));
+            int tensDigit = (tensAndOnes >= 10) ? (tensAndOnes / 10) :  0;
+            if (tensAndOnes <= 19) {
+                if (tensAndOnes > 0) { result += String.format("%s", numLtTwenty.get(tensAndOnes)); }
             } else {
-                hundreds_digit = 0;
-            }
-            int tens_and_ones = (one_to_three_digit_int - (100 * hundreds_digit));
-
-            int tens_digit;
-            if (tens_and_ones >= 10) {
-                tens_digit = (tens_and_ones / 10);
-            } else {
-                tens_digit = 0;
-            }
-
-            if (tens_and_ones <= 19) {
-                if (tens_and_ones > 0) {
-                    result += String.format("%s", numLtTwenty.get(tens_and_ones));
-                }
-            } else {
-                int ones_digit = (tens_and_ones - 10 * tens_digit);
-                String result1 = (hundreds_digit > 0) ? " " : "";
-                String result2 = String.format("%s", tensPlace.get(10 * tens_digit));
-                String result3 = (ones_digit > 0) ? String.format(" %s", numLtTwenty.get(ones_digit)) : "";
+                int onesDigit = (tensAndOnes - 10 * tensDigit);
+                String result1 = (hundredsDigit > 0) ? " " : "";
+                String result2 = String.format("%s", tensPlace.get(10 * tensDigit));
+                String result3 = (onesDigit > 0) ? String.format(" %s", numLtTwenty.get(onesDigit)) : "";
                 result += result1 + result2 + result3;
             }
         }
@@ -142,20 +128,17 @@ public class NumbersToWords {
                 String triad = numberAsStringPadded.substring(3 * triadGroupNumber, 3 * triadGroupNumber + 3);
 
                 if (!triad.equals("000")) {
+
+                    // TODO: To reduce cyclomatic complexity, move much of what follows into a separate function
+
                     String triadAsString = triadToString(Integer.valueOf(triad.trim()));
                     String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
                     String groupingSeparator;
-
                     if (triadGroupNumber > 0) {
                         if ((Integer.valueOf(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
                             groupingSeparator = ", ";
-                        } else {
-                            groupingSeparator = " ";
-                        }
-                    } else {
-                        groupingSeparator = "";
-                    }
-
+                        } else { groupingSeparator = " "; }
+                    } else { groupingSeparator = ""; }
                     String numberAsWords1 = String.format("%s%s", groupingSeparator, triadAsString);
                     String numberAsWords2 = String.format("%s", (triadGrouping.isEmpty() ? "" : triadGrouping));
                     numberAsWords.append(numberAsWords1).append(numberAsWords2);
