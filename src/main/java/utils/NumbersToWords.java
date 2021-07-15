@@ -77,7 +77,11 @@ public class NumbersToWords {
 
     public static void main(String[] args) {
         // System.out.println(triadToString(123));
-        System.out.println(numberToWords(1234));
+        System.out.println(numberToWords(999));
+        System.out.println(numberToWords(1000));
+        System.out.println(numberToWords(1999));
+        System.out.println(numberToWords(999999));
+        System.out.println(numberToWords(1000000));
     }
 
     public static String triadToString(int one_to_three_digit_int) {
@@ -114,15 +118,17 @@ public class NumbersToWords {
                 }
             } else {
                 ones_digit = (tens_and_ones - 10 * tens_digit);
+
+//                // Linter says (tens_digit == 0) is always 'false'. I think it is, so eliminate this check.
 //                if (tens_digit == 0) {
 //                    if (ones_digit != 0) {
 //                        result += String.format("%s", numLtTwenty.get(ones_digit));
 //                    }
 //                } else {
-//                    String addend1 = (hundreds_digit > 0) ? " " : "";
-//                    String addend2 = String.format("%s", tensPlace.get(10 * tens_digit));
-//                    String addend3 = (ones_digit > 0) ? String.format(" %s", numLtTwenty.get(ones_digit)) : "";
-//                    result += addend1 + addend2 + addend3;
+//                    String result1 = (hundreds_digit > 0) ? " " : "";
+//                    String result2 = String.format("%s", tensPlace.get(10 * tens_digit));
+//                    String result3 = (ones_digit > 0) ? String.format(" %s", numLtTwenty.get(ones_digit)) : "";
+//                    result += result1 + result2 + result3;
 //                }
 
                 String result1 = (hundreds_digit > 0) ? " " : "";
@@ -137,7 +143,6 @@ public class NumbersToWords {
 
     public static String numberToWords(int number) {
         StringBuilder numberAsWords;
-        String numberAsString;
         int stringLength;
         int paddedLength;
         int triadCount;
@@ -151,9 +156,7 @@ public class NumbersToWords {
         if (number == 0) {
             numberAsWords = new StringBuilder("zero");
         } else {
-            numberAsString = String.valueOf(number);
-            stringLength = numberAsString.length();
-
+            stringLength = String.valueOf(number).length();
             paddedLength = stringLength + ((3 - (stringLength % 3)) % 3);
             triadCount = paddedLength / 3;
             formatSpecifier = "%" + paddedLength + "d";
@@ -169,7 +172,7 @@ public class NumbersToWords {
                     triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
 
                     if (triadGroupNumber > 0) {
-                        if ((Integer.valueOf(triad) >= 100) || (triadGroupNumber < triadCount - 1)) {
+                        if ((Integer.valueOf(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
                             groupingSeparator = ", ";
                         } else {
                             groupingSeparator = " ";
