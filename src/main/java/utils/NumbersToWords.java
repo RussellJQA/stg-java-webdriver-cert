@@ -83,38 +83,32 @@ public class NumbersToWords {
         System.out.println(numberToWords(1000000));
     }
 
-    // TODO: Reduced cyclomatic complexity from 22 to 15, to satisfy linter.
     public static String triadToString(int oneToThreeDigitInt) {
-        String result = "";
         if (oneToThreeDigitInt <= 19) {
-            if (oneToThreeDigitInt == 0) {
-                result = "";
-            } else {
-                result = numLtTwenty.get(oneToThreeDigitInt);
-            }
-        } else {
-            int hundredsDigit;
-            if (oneToThreeDigitInt >= 100) {
-                hundredsDigit = (oneToThreeDigitInt / 100);
-                result = hundredsPlace.get(100 * hundredsDigit);
-            } else {
-                hundredsDigit = 0;
-            }
-            int tensAndOnes = (oneToThreeDigitInt - (100 * hundredsDigit));
-            int tensDigit = (tensAndOnes >= 10) ? (tensAndOnes / 10) : 0;
-            if (tensAndOnes <= 19) {
-                if (tensAndOnes > 0) {
-                    result += String.format("%s", numLtTwenty.get(tensAndOnes));
-                }
-            } else {
-                int onesDigit = (tensAndOnes - 10 * tensDigit);
-                String result1 = (hundredsDigit > 0) ? " " : "";
-                String result2 = String.format("%s", tensPlace.get(10 * tensDigit));
-                String result3 = (onesDigit > 0) ? String.format(" %s", numLtTwenty.get(onesDigit)) : "";
-                result += result1 + result2 + result3;
-            }
+            return (oneToThreeDigitInt == 0) ? "" : numLtTwenty.get(oneToThreeDigitInt);
         }
 
+        String result = "";
+        int hundredsDigit;
+        if (oneToThreeDigitInt >= 100) {
+            hundredsDigit = (oneToThreeDigitInt / 100);
+            result = hundredsPlace.get(100 * hundredsDigit);
+        } else {
+            hundredsDigit = 0;
+        }
+        int tensAndOnes = (oneToThreeDigitInt - (100 * hundredsDigit));
+        int tensDigit = (tensAndOnes >= 10) ? (tensAndOnes / 10) : 0;
+        if (tensAndOnes <= 19) {
+            if (tensAndOnes > 0) {
+                result += String.format("%s", numLtTwenty.get(tensAndOnes));
+            }
+        } else {
+            int onesDigit = (tensAndOnes - 10 * tensDigit);
+            String result1 = (hundredsDigit > 0) ? " " : "";
+            String result2 = String.format("%s", tensPlace.get(10 * tensDigit));
+            String result3 = (onesDigit > 0) ? String.format(" %s", numLtTwenty.get(onesDigit)) : "";
+            result += result1 + result2 + result3;
+        }
         return result;
     }
 
