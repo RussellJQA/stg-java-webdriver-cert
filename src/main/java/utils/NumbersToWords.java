@@ -83,22 +83,29 @@ public class NumbersToWords {
         System.out.println(numberToWords(1000000));
     }
 
+    // TODO: Reduced cyclomatic complexity from 22 to 15, to satisfy linter.
     public static String triadToString(int oneToThreeDigitInt) {
         String result = "";
         if (oneToThreeDigitInt <= 19) {
             if (oneToThreeDigitInt == 0) {
                 result = "";
-            } else { result = numLtTwenty.get(oneToThreeDigitInt); }
+            } else {
+                result = numLtTwenty.get(oneToThreeDigitInt);
+            }
         } else {
             int hundredsDigit;
             if (oneToThreeDigitInt >= 100) {
                 hundredsDigit = (oneToThreeDigitInt / 100);
                 result = hundredsPlace.get(100 * hundredsDigit);
-            } else { hundredsDigit = 0; }
+            } else {
+                hundredsDigit = 0;
+            }
             int tensAndOnes = (oneToThreeDigitInt - (100 * hundredsDigit));
-            int tensDigit = (tensAndOnes >= 10) ? (tensAndOnes / 10) :  0;
+            int tensDigit = (tensAndOnes >= 10) ? (tensAndOnes / 10) : 0;
             if (tensAndOnes <= 19) {
-                if (tensAndOnes > 0) { result += String.format("%s", numLtTwenty.get(tensAndOnes)); }
+                if (tensAndOnes > 0) {
+                    result += String.format("%s", numLtTwenty.get(tensAndOnes));
+                }
             } else {
                 int onesDigit = (tensAndOnes - 10 * tensDigit);
                 String result1 = (hundredsDigit > 0) ? " " : "";
@@ -109,6 +116,23 @@ public class NumbersToWords {
         }
 
         return result;
+    }
+
+    private static String getConvertedTriad(int triadCount, String triad, int triadGroupNumber) {
+        String groupingSeparator;
+        if (triadGroupNumber > 0) {
+            if ((Integer.valueOf(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
+                groupingSeparator = ", ";
+            } else {
+                groupingSeparator = " ";
+            }
+        } else {
+            groupingSeparator = "";
+        }
+        String triadAsString = triadToString(Integer.valueOf(triad.trim()));
+        String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
+        return String.format("%s%s", groupingSeparator, triadAsString) +
+               String.format("%s", (triadGrouping.isEmpty() ? "" : triadGrouping));
     }
 
     public static String numberToWords(int number) {
@@ -128,20 +152,7 @@ public class NumbersToWords {
                 String triad = numberAsStringPadded.substring(3 * triadGroupNumber, 3 * triadGroupNumber + 3);
 
                 if (!triad.equals("000")) {
-
-                    // TODO: To reduce cyclomatic complexity, move much of what follows into a separate function
-
-                    String groupingSeparator;
-                    if (triadGroupNumber > 0) {
-                        if ((Integer.valueOf(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
-                            groupingSeparator = ", ";
-                        } else { groupingSeparator = " "; }
-                    } else { groupingSeparator = ""; }
-                    String triadAsString = triadToString(Integer.valueOf(triad.trim()));
-                    String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
-                    String addend = String.format("%s%s", groupingSeparator, triadAsString) + String.format("%s", (triadGrouping.isEmpty() ? "" : triadGrouping));
-
-                    numberAsWords.append(addend);
+                    numberAsWords.append(getConvertedTriad(triadCount, triad, triadGroupNumber));
                 }
             }
         }
