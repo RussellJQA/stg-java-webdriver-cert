@@ -86,11 +86,6 @@ public class NumbersToWords {
 
     public static String triadToString(int one_to_three_digit_int) {
         String result = "";
-        int hundreds_digit;
-        int tens_and_ones;
-        int tens_digit;
-        int ones_digit;
-
         if (one_to_three_digit_int <= 19) {
             if (one_to_three_digit_int == 0) {
                 result = "";
@@ -98,14 +93,16 @@ public class NumbersToWords {
                 result = numLtTwenty.get(one_to_three_digit_int);
             }
         } else {
+            int hundreds_digit;
             if (one_to_three_digit_int >= 100) {
                 hundreds_digit = (one_to_three_digit_int / 100);
                 result = hundredsPlace.get(100 * hundreds_digit);
             } else {
                 hundreds_digit = 0;
             }
-            tens_and_ones = (one_to_three_digit_int - (100 * hundreds_digit));
+            int tens_and_ones = (one_to_three_digit_int - (100 * hundreds_digit));
 
+            int tens_digit;
             if (tens_and_ones >= 10) {
                 tens_digit = (tens_and_ones / 10);
             } else {
@@ -117,7 +114,7 @@ public class NumbersToWords {
                     result += String.format("%s", numLtTwenty.get(tens_and_ones));
                 }
             } else {
-                ones_digit = (tens_and_ones - 10 * tens_digit);
+                int ones_digit = (tens_and_ones - 10 * tens_digit);
                 String result1 = (hundreds_digit > 0) ? " " : "";
                 String result2 = String.format("%s", tensPlace.get(10 * tens_digit));
                 String result3 = (ones_digit > 0) ? String.format(" %s", numLtTwenty.get(ones_digit)) : "";
