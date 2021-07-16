@@ -76,13 +76,6 @@ public class NumbersToWords {
             entry(21, "vigintillion")
     );
 
-    public static void main(String[] args) {
-        String expectedWords = "two hundred twenty two novemdecillion, two hundred thirty two octodecillion, two hundred forty four septdecillion, six hundred twenty nine sexdecillion, four hundred twenty quindecillion, four hundred forty five quattuordecillion, five hundred twenty nine tredecillion, seven hundred thirty nine duodecillion, eight hundred ninety three undecillion, four hundred sixty one decillion, nine hundred nine nonillion, nine hundred sixty seven octillion, two hundred six septillion, six hundred sixty six sextillion, nine hundred thirty nine quintillion, ninety six quadrillion, four hundred ninety nine trillion, seven hundred sixty four billion, nine hundred ninety million, nine hundred seventy nine thousand, six hundred";
-        System.out.println(expectedWords);
-        BigInteger num = new BigInteger("222232244629420445529739893461909967206666939096499764990979600"); // This is the Fibonacci number for n=300
-        System.out.println(numberToWords(num));
-    }
-
     public static String triadToString(int oneToThreeDigitInt) {
         if (oneToThreeDigitInt <= 19) {
             return (oneToThreeDigitInt == 0) ? "" : numLtTwenty.get(oneToThreeDigitInt);
@@ -126,13 +119,17 @@ public class NumbersToWords {
         String triadAsString = triadToString(Integer.valueOf(triad.trim()));
         String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
         return String.format("%s%s", groupingSeparator, triadAsString) +
-               String.format("%s", (triadGrouping.isEmpty() ? "" : (" " + triadGrouping)));
+                String.format("%s", (triadGrouping.isEmpty() ? "" : (" " + triadGrouping)));
     }
 
-    public static String numberToWords(BigInteger number) {
+/*
+    Converts the specified BigInteger to words, as in converting 12,586,269,025 (the Fibonacci number for n=50) to:
+        "twelve billion, five hundred eighty six million, two hundred sixty nine thousand twenty five"
+*/
+    public String numberToWords(BigInteger number) {
         StringBuilder numberAsWords;
 
-        if (number.equals(BigInteger.ZERO))   {
+        if (number.equals(BigInteger.ZERO)) {
             numberAsWords = new StringBuilder("zero");
         } else {
             int stringLength = String.valueOf(number).length();

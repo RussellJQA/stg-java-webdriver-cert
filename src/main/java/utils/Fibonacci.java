@@ -361,12 +361,4 @@ public class Fibonacci {
         }
         return generatedFibonacciSequence;
     }
-
-    public static void main(String[] args) {
-        Fibonacci f = new Fibonacci();
-        List<BigInteger> generatedFibonacciSequence = f.getGeneratedFibonacciSequence((300));
-        for (BigInteger fibonacciNumber : generatedFibonacciSequence) {
-            System.out.println(fibonacciNumber.toString());
-        }
-    }
 }
