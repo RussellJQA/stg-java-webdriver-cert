@@ -1,10 +1,7 @@
 package utils;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /*
 This class has functions for dealing with Fibonacci numbers, and Fibonacci
@@ -353,6 +350,23 @@ public class Fibonacci {
             BigInteger fibonacciNumber = getFibonacciNumber(n - 1).add(getFibonacciNumber(n - 2));
             cache.put(n, fibonacciNumber);
             return fibonacciNumber;
+        }
+    }
+
+    public List<BigInteger> getGeneratedFibonacciSequence(int max) {
+        List<BigInteger> generatedFibonacciSequence = new ArrayList<>();
+        for (int n = 0; n <= max; n++) {
+            BigInteger fibonacciNumber = getFibonacciNumber(n);
+            generatedFibonacciSequence.add(fibonacciNumber);
+        }
+        return generatedFibonacciSequence;
+    }
+
+    public static void main(String[] args) {
+        Fibonacci f = new Fibonacci();
+        List<BigInteger> generatedFibonacciSequence = f.getGeneratedFibonacciSequence((300));
+        for (BigInteger fibonacciNumber : generatedFibonacciSequence) {
+            System.out.println(fibonacciNumber.toString());
         }
     }
 }
