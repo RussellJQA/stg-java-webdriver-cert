@@ -11,6 +11,8 @@ public class challenge5 extends BaseTests {
 
     private final static String searchKey = "porsche";
 
+    // TODO: Move the next 2 functions into a page or utility class.
+
     private Map<String, Integer> getColumnValueCounts(List<WebElement> elements) {
         // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
         //      (TreeMap is automatically sorted in ascending order of the map's keys.)
