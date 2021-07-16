@@ -1,5 +1,6 @@
 package utils;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -56,7 +57,7 @@ public class NumbersToWords {
             entry(2, "million"),
             entry(3, "billion"),
             entry(4, "trillion"),
-            entry(5, "quadrillion)"),
+            entry(5, "quadrillion"),
             entry(6, "quintillion"),
             entry(7, "sextillion"),
             entry(8, "septillion"),
@@ -76,11 +77,10 @@ public class NumbersToWords {
     );
 
     public static void main(String[] args) {
-        System.out.println(numberToWords(999));
-        System.out.println(numberToWords(1000));
-        System.out.println(numberToWords(1999));
-        System.out.println(numberToWords(999999));
-        System.out.println(numberToWords(1000000));
+        String expectedWords = "two hundred twenty two novemdecillion, two hundred thirty two octodecillion, two hundred forty four septdecillion, six hundred twenty nine sexdecillion, four hundred twenty quindecillion, four hundred forty five quattuordecillion, five hundred twenty nine tredecillion, seven hundred thirty nine duodecillion, eight hundred ninety three undecillion, four hundred sixty one decillion, nine hundred nine nonillion, nine hundred sixty seven octillion, two hundred six septillion, six hundred sixty six sextillion, nine hundred thirty nine quintillion, ninety six quadrillion, four hundred ninety nine trillion, seven hundred sixty four billion, nine hundred ninety million, nine hundred seventy nine thousand, six hundred";
+        System.out.println(expectedWords);
+        BigInteger num = new BigInteger("222232244629420445529739893461909967206666939096499764990979600"); // This is the Fibonacci number for n=300
+        System.out.println(numberToWords(num));
     }
 
     public static String triadToString(int oneToThreeDigitInt) {
@@ -100,7 +100,7 @@ public class NumbersToWords {
         int tensDigit = (tensAndOnes >= 10) ? (tensAndOnes / 10) : 0;
         if (tensAndOnes <= 19) {
             if (tensAndOnes > 0) {
-                result += String.format("%s", numLtTwenty.get(tensAndOnes));
+                result += String.format(" %s", numLtTwenty.get(tensAndOnes));
             }
         } else {
             int onesDigit = (tensAndOnes - 10 * tensDigit);
@@ -126,12 +126,13 @@ public class NumbersToWords {
         String triadAsString = triadToString(Integer.valueOf(triad.trim()));
         String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
         return String.format("%s%s", groupingSeparator, triadAsString) +
-               String.format("%s", (triadGrouping.isEmpty() ? "" : triadGrouping));
+               String.format("%s", (triadGrouping.isEmpty() ? "" : (" " + triadGrouping)));
     }
 
-    public static String numberToWords(int number) {
+    public static String numberToWords(BigInteger number) {
         StringBuilder numberAsWords;
-        if (number == 0) {
+
+        if (number.equals(BigInteger.ZERO))   {
             numberAsWords = new StringBuilder("zero");
         } else {
             int stringLength = String.valueOf(number).length();
