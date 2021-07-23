@@ -11,6 +11,7 @@ import utils.Screenshots;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class CopartHomePage {
 
@@ -80,6 +81,25 @@ public class CopartHomePage {
         By spinnerLoc = By.xpath("//div[@id='serverSideDataTable_processing']");
         WebElement spinner = wait.until(ExpectedConditions.presenceOfElementLocated(spinnerLoc));
         wait.until(ExpectedConditions.invisibilityOf(spinner));
+    }
+
+    public Map<String, Integer> getColumnValueCounts(List<WebElement> elements) {
+        // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
+        //      (TreeMap is automatically sorted in ascending order of the map's keys.)
+        Map<String, Integer> columnValueCounts = new TreeMap<>();
+        for (WebElement element : elements) {
+            String elementKey = element.getText();
+            Integer count = columnValueCounts.get(elementKey);
+            columnValueCounts.put(elementKey, (count == null) ? 1 : count + 1);
+        }
+        return columnValueCounts;
+    }
+
+    public void printColumnValueCounts(Map<String, Integer> counts, String testTitle) {
+        System.out.println(testTitle);
+        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+            System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
+        }
     }
 
     public void clickFilterBtn(String filterButtonXPath) {

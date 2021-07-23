@@ -2,52 +2,34 @@ package challenges;
 
 import base.BaseTests;
 import com.google.common.collect.Sets;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class challenge5 extends BaseTests {
 
     private final static String searchKey = "porsche";
 
-    // TODO: Move the next 2 functions into a page or utility class.
-
-    private Map<String, Integer> getColumnValueCounts(List<WebElement> elements) {
-        // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
-        //      (TreeMap is automatically sorted in ascending order of the map's keys.)
-        Map<String, Integer> ColumnValueCounts = new TreeMap<>();
-        for (WebElement model : elements) {
-            String modelKey = model.getText();
-            Integer count = ColumnValueCounts.get(modelKey);
-            ColumnValueCounts.put(modelKey, (count == null) ? 1 : count + 1);
-        }
-        return ColumnValueCounts;
-    }
-
-    private void printColumnValueCounts(Map<String, Integer> Counts, String testTitle) {
-        System.out.println(testTitle);
-        for (Map.Entry<String, Integer> entry : Counts.entrySet()) {
-            System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
-        }
-    }
-
     @Test
     public void printPorscheModels() {
         initCopartHomePage();
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
-        Map<String, Integer> modelCounts = getColumnValueCounts(copartHomePage.getElementsFromColumn("model"));
+        Map<String, Integer> modelCounts = copartHomePage.getColumnValueCounts(
+                copartHomePage.getElementsFromColumn("model"));
 
         String testTitle = String.format("\nPART 1: %d distinct %s MODELS (with the counts of their occurrences)",
                 modelCounts.size(), searchKey.toUpperCase());
-        printColumnValueCounts(modelCounts, testTitle);
+        copartHomePage.printColumnValueCounts(modelCounts, testTitle);
     }
 
     @Test
     public void printPorscheDamageCategories() {
         initCopartHomePage();
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
-        Map<String, Integer> damageCounts = getColumnValueCounts(copartHomePage.getElementsFromColumn("damage"));
+        Map<String, Integer> damageCounts = copartHomePage.getColumnValueCounts(
+                copartHomePage.getElementsFromColumn("damage"));
 
         int miscCount = 0;
 
@@ -66,6 +48,6 @@ public class challenge5 extends BaseTests {
 
         String testTitle = String.format("\nPART 2: %s DAMAGE categories (with the counts of their occurrences)",
                 searchKey.toUpperCase());
-        printColumnValueCounts(damageCounts, testTitle);
+        copartHomePage.printColumnValueCounts(damageCounts, testTitle);
     }
 }
