@@ -10,7 +10,6 @@ import org.testng.annotations.*;
 import pages.CopartHomePage;
 import pages.GoogleHomePage;
 import utils.Screenshots;
-import utils.SeleniumUtils;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -80,8 +79,8 @@ public class BaseTests {
         copartHomePage = new CopartHomePage(driver, wait);
     }
 
-    public void goToPageAndCheckTitle(String url, String linkText) {
-        SeleniumUtils seleniumUtils = new SeleniumUtils(driver, wait);
-        assertTrue(seleniumUtils.goToPageAndCheckTitle(url, linkText));
+    public String getActualUrl(String href) {
+        driver.get(href);
+        return driver.getCurrentUrl();
     }
 }

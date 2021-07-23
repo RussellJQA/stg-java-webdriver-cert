@@ -16,9 +16,9 @@ public class CopartHomePage {
 
     // PRIVATE VARIABLES AND METHODS
 
-    private final static String url = "https://www.copart.com";
+    private static final String URL = "https://www.copart.com";
     // Java 9's Map.of() is an immutable map with at most 10 key/value pairs
-    private final static Map<String, String> columnXpathLocators = Map.of(
+    private static final Map<String, String> columnXpathLocators = Map.of(
             "make", "//span[@class='make-items']//a",
             "model", "//span[@data-uname='lotsearchLotmodel' and not(text()='[[ lm ]]')]",
             "damage", "//span[@data-uname='lotsearchLotdamagedescription' and not(text()='[[ dd ]]')]"
@@ -29,7 +29,7 @@ public class CopartHomePage {
     public CopartHomePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
-        driver.get(url);
+        driver.get(URL);
     }
 
     // PUBLIC METHODS
@@ -71,24 +71,7 @@ public class CopartHomePage {
         searchAndSetEntriesPerPage(searchKey, -1);  // Leave entriesPerPage unchanged
     }
 
-    // TODO: Ask - Which of the following getMostPopularItemsX() versions is preferred?
-
-    // This 1st version include2 the links underneath the "Categories" <h3>
-    public List<WebElement> getMostPopularItems1() {
-        clickLink("Trending"); // Clicking on this tab brings up a list of "Most Popular Items" (Makes/Models)
-        return driver.findElements(
-                By.xpath("//h3[text()='Most Popular Items']//parent::div//a[not(text()='VIEW MORE')]"));
-    }
-
-    // The next 2 versions don't include the links underneath the "Categories" <h3>
-    // Neither requires specifically filtering out any "VIEW MORE" links. Even without filtering, neither includes them.
-
-    public List<WebElement> getMostPopularItems2() {
-        clickLink("Trending");
-        return driver.findElements(By.xpath("//span[@ng-repeat='popularSearch in popularSearches']//a"));
-    }
-
-    public List<WebElement> getMostPopularItems3() {
+    public List<WebElement> getMostPopularItems() {
         clickLink("Trending");
         return driver.findElements(By.xpath("//h3[text()='Most Popular Items']//parent::div/div/span/a"));
     }

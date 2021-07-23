@@ -13,7 +13,7 @@ public class challenge3 extends BaseTests {
     public void getListOfMostPopularItems() {
         initCopartHomePage();
 
-        List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems3();
+        List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems();
         mostPopularItems.sort(Comparator.comparing(WebElement::getText));
 
         for (WebElement element : mostPopularItems) {

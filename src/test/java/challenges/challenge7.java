@@ -17,13 +17,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.testng.Assert.assertTrue;
+
 public class challenge7 extends BaseTests {
 
     @Test
     public void checkUrlsOfMostPopularItems() {
         initCopartHomePage();
 
-        List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems3();
+        List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems();
         mostPopularItems.sort(Comparator.comparing(WebElement::getText));
 
         // Create a 2 dimensional array or arraylist that stores all the values displayed on the page along w/ the URL for that link
@@ -36,10 +38,12 @@ public class challenge7 extends BaseTests {
         // Once you have this array, you can then verify that all the elements in the array navigate to the correct page
         System.out.println("\n**********");
         for (ArrayList<String> popularItem : popularItemList) {
-            String linkText = popularItem.get(0);
-            String url = popularItem.get(1);
-            System.out.printf("Make or model: %s, url: %s%n", linkText, url);
-            goToPageAndCheckTitle(url, linkText);
+            String make = popularItem.get(0);
+            String href = popularItem.get(1);
+            System.out.printf("Make or model: %s, href: %s%n", make, href);
+            String actualUrl = getActualUrl(href);
+            assertTrue(actualUrl.contains(make.toLowerCase()),
+                    String.format("Actual URL (%s) doesn't contain Make '{%s}'", actualUrl, make));
         }
     }
 }
