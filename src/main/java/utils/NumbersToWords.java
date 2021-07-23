@@ -108,7 +108,7 @@ public class NumbersToWords {
     private static String getConvertedTriad(int triadCount, String triad, int triadGroupNumber) {
         String groupingSeparator;
         if (triadGroupNumber > 0) {
-            if ((Integer.valueOf(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
+            if ((Integer.parseInt(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
                 groupingSeparator = ", ";
             } else {
                 groupingSeparator = " ";
@@ -116,16 +116,16 @@ public class NumbersToWords {
         } else {
             groupingSeparator = "";
         }
-        String triadAsString = triadToString(Integer.valueOf(triad.trim()));
+        String triadAsString = triadToString(Integer.parseInt(triad.trim()));
         String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
         return String.format("%s%s", groupingSeparator, triadAsString) +
                 String.format("%s", (triadGrouping.isEmpty() ? "" : (" " + triadGrouping)));
     }
 
-/*
-    Converts the specified BigInteger to words, as in converting 12,586,269,025 (the Fibonacci number for n=50) to:
-        "twelve billion, five hundred eighty six million, two hundred sixty nine thousand twenty five"
-*/
+    /*
+        Converts the specified BigInteger to words, as in converting 12,586,269,025 (the Fibonacci number for n=50) to:
+            "twelve billion, five hundred eighty six million, two hundred sixty nine thousand twenty five"
+    */
     public String numberToWords(BigInteger number) {
         StringBuilder numberAsWords;
 

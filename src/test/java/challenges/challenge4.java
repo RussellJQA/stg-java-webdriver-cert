@@ -15,9 +15,6 @@ public class challenge4 extends BaseTests {
 
     private final static int maxFibonacciSeed = 300;
 
-    // TODO: When just this class, or its test, is run in isolation, prevent Selenium from bringing up the browser.
-    //      [from BaseTests:startSuite()]
-
     @Test
     public void testFibonacci() {
         Fibonacci f = new Fibonacci();

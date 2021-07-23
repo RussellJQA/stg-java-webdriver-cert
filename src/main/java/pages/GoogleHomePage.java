@@ -6,12 +6,12 @@ import org.openqa.selenium.WebDriver;
 
 public class GoogleHomePage {
 
-    private final static String url = "https://www.google.com/";
+    private static final String URL = "https://www.google.com/";
     private final WebDriver driver;
 
     public GoogleHomePage(WebDriver driver) {
         this.driver = driver;
-        driver.get(url);
+        driver.get(URL);
     }
 
     public void enterSearchKey(String searchKey) {
