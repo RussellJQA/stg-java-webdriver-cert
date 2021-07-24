@@ -2,10 +2,12 @@ package challenges;
 
 /*
 Challenge 7:
-Take a look at https://www.copart.com main page.
+Go to the https://www.copart.com main page.
 Go to the the Makes/Models section of the page.
-Create a 2 dimensional array or arraylist that stores all the values displayed on the page along w/ the URL for that link.
-Once you have this array, you can verify that all the elements in the array navigate to the correct page.
+    This used to be displayed on initial page load.
+    But now, you first need to click the "Trending" tab. There, you'll find it under the "Most Popular Items" heading.
+Create a 2 dimensional Array or ArrayList that stores all the values displayed on the page along with the URL for that link.
+Once you have this array, verify that all the elements in the Array navigate to the correct page.
 */
 
 import base.BaseTests;
@@ -21,7 +23,7 @@ import static org.testng.Assert.assertTrue;
 
 public class challenge7 extends BaseTests {
 
-    @Test
+    @Test(priority = 10)
     public void checkUrlsOfMostPopularItems() {
         initCopartHomePage();
 
@@ -43,7 +45,7 @@ public class challenge7 extends BaseTests {
             System.out.printf("Make or model: %s, href: %s%n", make, href);
             String actualUrl = getActualUrl(href);
             assertTrue(actualUrl.contains(make.toLowerCase()),
-                    String.format("Actual URL (%s) doesn't contain Make '{%s}'", actualUrl, make));
+                    String.format("Actual URL (%s) doesn't contain Make '%s'", actualUrl, make));
         }
     }
 }

@@ -93,14 +93,14 @@ public class NumbersToWords {
         int tensDigit = (tensAndOnes >= 10) ? (tensAndOnes / 10) : 0;
         if (tensAndOnes <= 19) {
             if (tensAndOnes > 0) {
-                result += String.format(" %s", numLtTwenty.get(tensAndOnes));
+                result += String.format(" %s", numLtTwenty.get(tensAndOnes));  // Use string concatenation
             }
         } else {
             int onesDigit = (tensAndOnes - 10 * tensDigit);
             String result1 = (hundredsDigit > 0) ? " " : "";
             String result2 = String.format("%s", tensPlace.get(10 * tensDigit));
             String result3 = (onesDigit > 0) ? String.format(" %s", numLtTwenty.get(onesDigit)) : "";
-            result += result1 + result2 + result3;
+            result += result1 + result2 + result3;  // Use string concatenation
         }
         return result;
     }
@@ -118,6 +118,8 @@ public class NumbersToWords {
         }
         String triadAsString = triadToString(Integer.parseInt(triad.trim()));
         String triadGrouping = triadGroupings.get(triadCount - triadGroupNumber - 1);
+
+        // Use string concatenation
         return String.format("%s%s", groupingSeparator, triadAsString) +
                 String.format("%s", (triadGrouping.isEmpty() ? "" : (" " + triadGrouping)));
     }
@@ -135,7 +137,7 @@ public class NumbersToWords {
             int stringLength = String.valueOf(number).length();
             int paddedLength = stringLength + ((3 - (stringLength % 3)) % 3);
             int triadCount = paddedLength / 3;
-            String formatSpecifier = "%" + paddedLength + "d";
+            String formatSpecifier = "%" + paddedLength + "d";  // Use string concatenation
             String numberAsStringPadded = String.format(formatSpecifier, number);
 
             numberAsWords = new StringBuilder();

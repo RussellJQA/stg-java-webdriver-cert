@@ -1,18 +1,36 @@
 package challenges;
 
+/*
+Challenge 5 (If/Else/Switch):
+
+- Part 1:
+Go to the https://www.copart.com main page.
+Do a search for “porsche” and change the  drop down for “Show Entries” from 20 to 100.
+Count how many different models of Porsche are in the results on the first page, and return in the terminal how many of each type exists.
+    Possible values can be “CAYENNE S”, “BOXSTER S”, etc.
+
+- Part 2:
+Create a switch statement to count the types of damages.
+Here’s the types:
+    REAR END
+    FRONT END
+    MINOR DENT/SCRATCHES
+    UNDERCARRIAGE
+And any other types can be grouped into one of MISC.
+Make sure you make your code is reusable.  Use a class and methods.
+*/
+
 import base.BaseTests;
-import com.google.common.collect.Sets;
 import org.testng.annotations.Test;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.TreeMap;
 
 public class challenge5 extends BaseTests {
 
     private final static String searchKey = "porsche";
 
-    @Test
+    @Test(priority = 7)
     public void printPorscheModels() {
         initCopartHomePage();
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
@@ -24,30 +42,33 @@ public class challenge5 extends BaseTests {
         copartHomePage.printColumnValueCounts(modelCounts, testTitle);
     }
 
-    @Test
+    @Test(priority = 8)
     public void printPorscheDamageCategories() {
         initCopartHomePage();
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
         Map<String, Integer> damageCounts = copartHomePage.getColumnValueCounts(
                 copartHomePage.getElementsFromColumn("damage"));
 
+        // Create an adjusted map, with all unspecified categories grouped together under the "MISC" category.
+        Map<String, Integer> adjustedDamageCounts = new TreeMap<>();
         int miscCount = 0;
-
-        // Create a set of all categories which will be merged into the "MISC" category
-        // NOTE: Set.of() creates an immutable set
-        Set<String> miscDamageCategories = new HashSet<>(Sets.difference(damageCounts.keySet(),
-                Set.of("REAR END", "FRONT END", "MINOR DENT/SCRATCHES", "UNDERCARRIAGE")));
-
-        // Iterate over all the miscellaneous categories
-        for (String category : miscDamageCategories) {
-            miscCount += damageCounts.get(category); // Merge category count into count for "MISC" category
-            damageCounts.remove(category); // Remove category
+        for (Map.Entry<String, Integer> damageCount : damageCounts.entrySet()) {
+            String key = damageCount.getKey();
+            switch (key) {
+                case "REAR END":
+                case "FRONT END":
+                case "MINOR DENT/SCRATCHES":
+                case "UNDERCARRIAGE":
+                    adjustedDamageCounts.put(key, damageCount.getValue());
+                    break;
+                default:
+                    miscCount += damageCounts.get(key); // Merge category count into count for "MISC" category
+            }
         }
-
-        damageCounts.put("MISC", miscCount);
+        adjustedDamageCounts.put("MISC", miscCount);
 
         String testTitle = String.format("\nPART 2: %s DAMAGE categories (with the counts of their occurrences)",
                 searchKey.toUpperCase());
-        copartHomePage.printColumnValueCounts(damageCounts, testTitle);
+        copartHomePage.printColumnValueCounts(adjustedDamageCounts, testTitle);
     }
 }

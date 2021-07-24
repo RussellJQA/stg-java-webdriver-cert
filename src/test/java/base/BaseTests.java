@@ -33,10 +33,6 @@ public class BaseTests {
 
     @BeforeSuite
     public void startSuite() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver(getChromeOptions());
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, 10);
     }
 
     @AfterSuite
@@ -46,16 +42,20 @@ public class BaseTests {
 
     @BeforeClass
     public void startClass() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver(getChromeOptions());
+        driver.manage().window().maximize();
+        wait = new WebDriverWait(driver, 10);
     }
 
     @AfterClass
-    public void stopClass() throws InterruptedException {
-        Thread.sleep(5000); // Wait long enough for the state of the browser to be seen before closing the browser.
+    public void stopClass() {
         driver.quit();  // Close the browser and [unlike driver.close()] end the session
     }
 
     @AfterMethod
-    public void recordFailure(ITestResult result) {
+    public void stopMethod(ITestResult result) throws InterruptedException {
+        Thread.sleep(5000); // Wait long enough for the state of the browser to be seen before closing the browser.
         if (ITestResult.FAILURE == result.getStatus()) {
             Screenshots screenshots = new Screenshots(driver);
             String filepath = String.format("screenshots/%s.png", result.getName());
