@@ -2,11 +2,11 @@ package challenges;
 
 /*
 Challenge 3 (Loops):
-Go to the https://www.copart.com main page.
-Go to the the Makes/Models section of the page.
+1. Go to the https://www.copart.com main page.
+2. Go to the the Makes/Models section of the page.
     This used to be displayed on initial page load.
     But now, you first need to click the "Trending" tab. There, you'll find it under the "Most Popular Items" heading.
-Print a list of the vehicle Make/Models, and the URL/href for each type.
+3. Print a list of the vehicle Make/Models, and the URL/href for each type.
     This list can dynamically change depending on what is authored by the content creator,
     but using a loop will make sure that everything will be displayed regardless of the list size.
 */

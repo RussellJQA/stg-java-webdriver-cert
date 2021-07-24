@@ -2,10 +2,10 @@ package challenges;
 
 /*
 Challenge 4 (Operators and Functions):
-Write a class that displays the Fibonacci sequence up to a certain number.
-    If I want the Fibonacci number for the 9 order of the sequence, I should see 21.
+1. Write a class that displays the Fibonacci sequence up to a certain number.
+    If I want the Fibonacci number for the 9th order of the sequence, I should see 21.
     Keep your function to calculate the Fibonacci sequence separate from the test file.
-To add additional challenge to this challenge, instead of displaying the number 21, display the string representation of "twenty one".
+2. To add additional challenge to this challenge, instead of displaying the number 21, display the string representation of "twenty one".
     This will require you to use string concatenation to print out the string.
     [String concatenation is used -- along with String format() -- in class NumbersToWords.]
 */

@@ -1,13 +1,13 @@
 package challenges;
 
 /*
-Challenge 7:
-Go to the https://www.copart.com main page.
-Go to the the Makes/Models section of the page.
+Challenge 7 (Array or ArrayList):
+1. Go to the https://www.copart.com main page.
+2. Go to the the Makes/Models section of the page.
     This used to be displayed on initial page load.
     But now, you first need to click the "Trending" tab. There, you'll find it under the "Most Popular Items" heading.
-Create a 2 dimensional Array or ArrayList that stores all the values displayed on the page along with the URL for that link.
-Once you have this array, verify that all the elements in the Array navigate to the correct page.
+3. Create a 2-dimensional Array or ArrayList that stores all the values displayed on the page along with the URL for that link.
+4. Verify that all the elements in the Array or ArrayList navigate to the correct page.
 */
 
 import base.BaseTests;

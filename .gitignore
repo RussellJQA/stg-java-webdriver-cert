@@ -29,4 +29,3 @@ hs_err_pid*
 
 # Custom files to exclude
 /notes/
-/src/main/java/fieldstones/

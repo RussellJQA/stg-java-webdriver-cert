@@ -2,10 +2,10 @@ package challenges;
 
 /*
 Challenge 2 (Asserts):
-Go to the https://www.copart.com main page.
-Search for "exotics".
-Verify "PORSCHE" is in the list of cars.
-Use the hard assertion for this challenge.
+1. Go to the https://www.copart.com main page.
+2. Search for "exotics".
+3. Verify "PORSCHE" is in the list of cars.
+4. Use the hard assertion for this challenge.
 */
 
 import base.BaseTests;
