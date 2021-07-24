@@ -74,7 +74,7 @@ public class CopartHomePage {
 
     public List<WebElement> getMostPopularItems() {
         clickLink("Trending");
-        return driver.findElements(By.xpath("//h3[text()='Most Popular Items']//parent::div/div/span/a"));
+        return driver.findElements(By.xpath("//span[@ng-repeat='popularSearch in popularSearches']/a"));
     }
 
     public void waitForSpinnerToComeAndGo() {

@@ -25,8 +25,8 @@ There are 2 parts to this challenge. They are completely independent of each oth
 import base.BaseTests;
 import org.testng.annotations.Test;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class challenge5 extends BaseTests {
 
@@ -52,7 +52,8 @@ public class challenge5 extends BaseTests {
                 copartHomePage.getElementsFromColumn("damage"));
 
         // Create an adjusted map, with all unspecified categories grouped together under the "MISC" category.
-        Map<String, Integer> adjustedDamageCounts = new TreeMap<>();
+        // A LinkedHashMap maintains insertion order, so that "MISC" appears last, preceded by the others in alphabetical order
+        Map<String, Integer> adjustedDamageCounts = new LinkedHashMap<>();
         int miscCount = 0;
         for (Map.Entry<String, Integer> damageCount : damageCounts.entrySet()) {
             String key = damageCount.getKey();
