@@ -1,3 +1,5 @@
+// This class interfaces with Selenium's TakesScreenshot class, and that class's getScreenshotAs function
+
 package utils;
 
 import org.apache.commons.io.FileUtils;

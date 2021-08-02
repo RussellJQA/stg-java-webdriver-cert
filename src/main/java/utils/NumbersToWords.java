@@ -1,3 +1,5 @@
+// This class is used to convert numbers (e.g., 21) to their corresponding strings (e.g., "twenty one")
+
 package utils;
 
 import java.math.BigInteger;

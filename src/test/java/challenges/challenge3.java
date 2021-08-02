@@ -22,11 +22,16 @@ public class challenge3 extends BaseTests {
 
     @Test(priority = 5)
     public void getListOfMostPopularItems() {
+
+        // GIVEN the Copart homepage is displayed
         initCopartHomePage();
 
+        // WHEN you get a list of the Web elements for the page's Most Popular Items"
         List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems();
         mostPopularItems.sort(Comparator.comparing(WebElement::getText));
 
+        // THEN you can print the link text and href for each of the WebElements
+        System.out.println();
         for (WebElement element : mostPopularItems) {
             System.out.println(element.getText() + " - " + element.getAttribute("href"));
         }

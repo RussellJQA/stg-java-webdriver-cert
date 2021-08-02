@@ -1,3 +1,5 @@
+// This class provides a function which returns a list of the first 301 Fibonacci numbers (as words).
+
 package utils;
 
 import java.util.Arrays;

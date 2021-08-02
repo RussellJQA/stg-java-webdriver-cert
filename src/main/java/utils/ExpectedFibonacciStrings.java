@@ -1,3 +1,10 @@
+/*
+This class provides a function which returns a list of the first 301 Fibonacci numbers (as strings).
+The numbers were taken from "The first 300 Fibonacci numbers, completely factorised"
+at http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html
+[The referenced Web page lists 301 Fibonacci numbers, those for n=0 through n=300.]
+*/
+
 package utils;
 
 import java.util.Arrays;

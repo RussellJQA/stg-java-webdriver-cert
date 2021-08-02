@@ -48,6 +48,8 @@ public class challenge5 extends BaseTests {
         Map<String, Integer> modelCounts = copartHomePage.getWebElementValueCounts(
                 copartHomePage.getElementsFromColumn("model"));
 
+        // THEN Print a sorted list of those values, with their corresponding counts
+
         String testTitle = String.format("\nPART 1: %d distinct %s MODELS (with the counts of their occurrences)",
                 modelCounts.size(), searchKey.toUpperCase());
         copartHomePage.printWebElementValueCounts(modelCounts, testTitle);

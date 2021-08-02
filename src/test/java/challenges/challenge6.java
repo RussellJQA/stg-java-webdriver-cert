@@ -24,8 +24,19 @@ public class challenge6 extends BaseTests {
 
     @Test(priority = 9)
     public void testChallenge6() {
+
+        // GIVEN the Copart homepage is displayed
         initCopartHomePage();
+
+        // WHEN the user searches for the specified search phrase
         copartHomePage.search(searchKey);
+
+        /*
+         * THEN the user is able to successfully do the following in the page's page's left-hand 'Filter Options' sidebar:
+         *  - Click the panel with the specified link text (e.g., 'Model')
+         *  - Enter the specified text (e.g. 'skyline') in the 'Model' filter panel's text box
+         *  - Check the specified checkbox (e.g. 'Skyline') in the 'Model' filter panel's list of checkboxes
+         */
         assertTrue(copartHomePage.setFilterTextAndCheckBox(filterPanelLinkText, filterText, filterCheckBox));
     }
 }

@@ -20,11 +20,13 @@ public class challenge1 extends BaseTests {
 
     private final static String searchKey = "puppies";
 
+    // GIVEN/WHEN the Google search page is displayed
     @Test(priority = 1)
     public void testGotoGoogle() {
         initGoogleHomePage();
     }
 
+    // THEN the page title is "Google"
     @Test(priority = 2)
     public void testGoogleTitle() {
         assertTitleAsExpected("Google");
@@ -36,7 +38,11 @@ public class challenge1 extends BaseTests {
         // • Search for “puppies”
         // • Assert that the results page that loads has “puppies” in its title
         // So, for comparison between Java and Python, that has been implemented below.
+
+        // WHEN the user searches for the specified search phrase
         googleHomePage.enterSearchKey(searchKey);
+
+        // THEN the page title of the search results contains the specified search phrase
         assertTitleContains(searchKey);
     }
 }

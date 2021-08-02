@@ -1,3 +1,5 @@
+// This class is a base class for other tests
+
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;

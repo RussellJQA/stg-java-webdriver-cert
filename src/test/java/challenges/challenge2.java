@@ -19,10 +19,16 @@ public class challenge2 extends BaseTests {
     private final static String expectedSearchResult = "PORSCHE";
 
     @Test(priority = 4)
-    public void textSearchForExotics() {
+    public void testSearchForExotics() {
+
+        //  GIVEN the Copart homepage is displayed
         initCopartHomePage();
+
+        // WHEN the user searches for the specified search phrase
         copartHomePage.enterSearchKey(searchKey);
         copartHomePage.waitForSpinnerToComeAndGo();
+
+        // THEN the text of the resulting table (of search results) contains the specified search result
         assertTrue(copartHomePage.getTableText().contains(expectedSearchResult));
     }
 }

@@ -13,7 +13,6 @@ Challenge 7 (Array or ArrayList):
 import base.BaseTests;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.testng.Assert.assertTrue;
