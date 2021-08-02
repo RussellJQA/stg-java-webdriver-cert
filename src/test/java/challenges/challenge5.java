@@ -34,26 +34,49 @@ public class challenge5 extends BaseTests {
 
     @Test(priority = 7)
     public void printPorscheModels() {
+
+        // GIVEN the Copart homepage is displayed
         initCopartHomePage();
+
+        /*
+         * WHEN the user searches for the specified search phrase (e.g., "porsche"),
+         * sets the entries per page (e.g., to 100), and get counts for each of the
+         * distinct values for a specified column (e.g., "model")
+         */
+
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
-        Map<String, Integer> modelCounts = copartHomePage.getColumnValueCounts(
+        Map<String, Integer> modelCounts = copartHomePage.getWebElementValueCounts(
                 copartHomePage.getElementsFromColumn("model"));
 
         String testTitle = String.format("\nPART 1: %d distinct %s MODELS (with the counts of their occurrences)",
                 modelCounts.size(), searchKey.toUpperCase());
-        copartHomePage.printColumnValueCounts(modelCounts, testTitle);
+        copartHomePage.printWebElementValueCounts(modelCounts, testTitle);
     }
 
     @Test(priority = 8)
     public void printPorscheDamageCategories() {
+
+        // GIVEN the Copart homepage is displayed
         initCopartHomePage();
+
+        /*
+         * WHEN the user searches for the specified search phrase (e.g., "porsche"),
+         * sets the entries per page (e.g., to 100), and get counts for each of the
+         * distinct values for a specified column (e.g., "damage")
+         */
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
-        Map<String, Integer> damageCounts = copartHomePage.getColumnValueCounts(
+        Map<String, Integer> damageCounts = copartHomePage.getWebElementValueCounts(
                 copartHomePage.getElementsFromColumn("damage"));
 
-        // Create an adjusted map, with all unspecified categories grouped together under the "MISC" category.
-        // A LinkedHashMap maintains insertion order, so that "MISC" appears last, preceded by the others in alphabetical order
-        Map<String, Integer> adjustedDamageCounts = new LinkedHashMap<>();
+        /*
+         * THEN Print a sorted list of those values, with their corresponding counts
+         * (lumping some miscellanous values together as "MISC")
+         *
+         */
+
+        // Lump all unspecified damage categories together under the "MISC" category.
+        //      A LinkedHashMap maintains insertion order, so that "MISC" appears last, preceded by the others in alphabetical order
+        Map<String, Integer> lumpedDamageCounts = new LinkedHashMap<>();
         int miscCount = 0;
         for (Map.Entry<String, Integer> damageCount : damageCounts.entrySet()) {
             String key = damageCount.getKey();
@@ -62,16 +85,16 @@ public class challenge5 extends BaseTests {
                 case "FRONT END":
                 case "MINOR DENT/SCRATCHES":
                 case "UNDERCARRIAGE":
-                    adjustedDamageCounts.put(key, damageCount.getValue());
+                    lumpedDamageCounts.put(key, damageCount.getValue());
                     break;
                 default:
                     miscCount += damageCounts.get(key); // Merge category count into count for "MISC" category
             }
         }
-        adjustedDamageCounts.put("MISC", miscCount);
+        lumpedDamageCounts.put("MISC", miscCount);
 
         String testTitle = String.format("\nPART 2: %s DAMAGE categories (with the counts of their occurrences)",
                 searchKey.toUpperCase());
-        copartHomePage.printColumnValueCounts(adjustedDamageCounts, testTitle);
+        copartHomePage.printWebElementValueCounts(lumpedDamageCounts, testTitle);
     }
 }

@@ -1,3 +1,5 @@
+// This class contains GoogleSearchPage, the page object for Google's search page
+
 package pages;
 
 import org.openqa.selenium.By;
@@ -6,12 +8,13 @@ import org.openqa.selenium.WebDriver;
 
 public class GoogleHomePage {
 
-    private static final String URL = "https://www.google.com/";
     private final WebDriver driver;
 
     public GoogleHomePage(WebDriver driver) {
+        String url = "https://www.google.com/";
+
         this.driver = driver;
-        driver.get(URL);
+        driver.get(url);
     }
 
     public void enterSearchKey(String searchKey) {
