@@ -3,7 +3,7 @@ package challenges;
 /*
 Challenge 7 (Array or ArrayList):
 1. Go to the https://www.copart.com main page.
-2. Go to the the Makes/Models section of the page.
+2. Go to the Makes/Models section of the page.
     This used to be displayed on initial page load.
     But now, you first need to click the "Trending" tab. There, you'll find it under the "Most Popular Items" heading.
 3. Create a 2-dimensional Array or ArrayList that stores all the values displayed on the page along with the URL for that link.
@@ -11,12 +11,9 @@ Challenge 7 (Array or ArrayList):
 */
 
 import base.BaseTests;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import static org.testng.Assert.assertTrue;
@@ -25,25 +22,21 @@ public class challenge7 extends BaseTests {
 
     @Test(priority = 10)
     public void checkUrlsOfMostPopularItems() {
+
+        // GIVEN the Copart homepage is displayed
         initCopartHomePage();
 
-        List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems();
-        mostPopularItems.sort(Comparator.comparing(WebElement::getText));
+        // WHEN you get a list of the link text and the hrefs for the page's "Most Popular Items", and navigate to each href in the list
+        List<List<String>> mostPopularItemsLinkTextAndHref = copartHomePage.getMostPopularItemsLinkTextAndHref();
 
-        // Create a 2 dimensional array or arraylist that stores all the values displayed on the page along w/ the URL for that link
-        //      [A map might be preferable.]
-        ArrayList<ArrayList<String>> popularItemList = new ArrayList<>();
-        for (WebElement element : mostPopularItems) {
-            popularItemList.add(new ArrayList<>(Arrays.asList(element.getText(), element.getAttribute("href"))));
-        }
-
-        // Once you have this array, you can then verify that all the elements in the array navigate to the correct page
         System.out.println("\n**********");
-        for (ArrayList<String> popularItem : popularItemList) {
+        for (List<String> popularItem : mostPopularItemsLinkTextAndHref) {
             String make = popularItem.get(0);
             String href = popularItem.get(1);
             System.out.printf("Make or model: %s, href: %s%n", make, href);
             String actualUrl = getActualUrl(href);
+
+            // THEN for each element in the list, the current URL of the navigated-to page contains the element's link text (lower-cased)
             assertTrue(actualUrl.contains(make.toLowerCase()),
                     String.format("Actual URL (%s) doesn't contain Make '%s'", actualUrl, make));
         }

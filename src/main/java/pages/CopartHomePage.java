@@ -1,4 +1,4 @@
-// This module contains CopartHomePage, page object for Copart.com's home page
+// This class contains CopartHomePage, page object for Copart.com's home page
 
 package pages;
 
@@ -11,9 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Screenshots;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class CopartHomePage {
 
@@ -63,9 +61,28 @@ public class CopartHomePage {
     public List<WebElement> getMostPopularItems() {
         // Return a sorted list of the links (WebElements) from the 'Most Popular Items' section of the page's 'Trending' tab
 
+        By mostPopularItemLinks = By.xpath("//span[@ng-repeat='popularSearch in popularSearches']/a");
+
         clickLink("Trending");
 
-        return driver.findElements(By.xpath("//span[@ng-repeat='popularSearch in popularSearches']/a"));
+        List<WebElement> mostPopularItems = driver.findElements(mostPopularItemLinks);
+        mostPopularItems.sort(Comparator.comparing(WebElement::getText));
+
+        return mostPopularItems;
+    }
+
+    public List<List<String>> getMostPopularItemsLinkTextAndHref() {
+
+        List<WebElement> mostPopularItems = getMostPopularItems();
+
+        // Create a 2 dimensional array or arraylist that stores all the values displayed on the page along w/ the URL for that link
+        //      [A map might be preferable.]
+        List<List<String>> mostPopularItemsLinkTextAndHref = new ArrayList<>();
+        for (WebElement element : mostPopularItems) {
+            mostPopularItemsLinkTextAndHref.add(new ArrayList<>(Arrays.asList(element.getText(), element.getAttribute("href"))));
+        }
+
+        return mostPopularItemsLinkTextAndHref;
     }
 
     public void setEntriesPerPageTo(int desiredEntriesPerPage) {
