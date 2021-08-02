@@ -20,6 +20,13 @@ public class CopartHomePage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
+    private static String filterButtonXpath(String panelLinkText) {
+        // XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
+        //  and also used indirectly for the corresponding filter text box and filter checkboxes
+
+        return String.format("//h4[@class='panel-title']/a[text()='%s']", panelLinkText);
+    }
+
     // Constructor
 
     public CopartHomePage(WebDriver driver, WebDriverWait wait) {
@@ -153,34 +160,31 @@ public class CopartHomePage {
         }
     }
 
-    public void clickFilterBtn(String filterButtonXPath) {
+    public void clickFilterBtn(String panelLinkText) {
         /*
          * Click the specified filter button in the page's left-hand 'Filter Options' sidebar.
          * For example, click the button which expands the 'Model' filter
          */
 
-        WebElement filterButton = driver.findElement(By.xpath(filterButtonXPath));
-        filterButton.click();
+        String xpath = filterButtonXpath(panelLinkText);
+        driver.findElement(By.xpath(xpath)).click();
     }
 
-    public void setFilterTextBox(String filterTextBoxXPath, String filterText) {
+    public void setFilterTextBox(String panelLinkText, String filterText) {
         /*
-         * Enter specified filter text in the specified filter text box
-         * For example, enter 'skyline' in the 'Model' filter panel's text box
+         * Enter the specified filter text (e.g., 'skyline') in the specified
+         * filter text box (e.g., the filter panel's 'Model' text box)
          */
 
-        WebElement filterTextBox = driver.findElement(By.xpath(filterTextBoxXPath));
-        filterTextBox.sendKeys(filterText);
+        String xpath = String.format("%s/ancestor::li//form//input", filterButtonXpath(panelLinkText));
+        driver.findElement(By.xpath(xpath)).sendKeys(filterText);
     }
 
-    public void checkFilterCheckBox(String filterCheckBoxXPath) {
-        /*
-         * Check the specified checkbox
-         * For example, check the 'Model' filter's 'Skyline' checkbox
-         */
+    public void checkFilterCheckBox(String panelLinkText, String filterCheckBox) {
+        // Check the specified checkbox. For example, check the 'Model' filter's 'Skyline' checkbox
 
-        WebElement filterCheckBox = driver.findElement(By.xpath(filterCheckBoxXPath));
-        filterCheckBox.click();
+        String xpath = String.format("%s/ancestor::li//ul//input[@value='%s']", filterButtonXpath(panelLinkText), filterCheckBox);
+        driver.findElement(By.xpath(xpath)).click();
     }
 
     public boolean setFilterTextAndCheckBox(String filterPanelLinkText, String filterText, String filterCheckBox) {
@@ -194,16 +198,14 @@ public class CopartHomePage {
         boolean success = true;
 
         try {
-            String filterButtonXPath = String.format("//h4[@class='panel-title']/a[text()='%s']", filterPanelLinkText);
-
             // Click the panel with the specified link text (e.g., 'Model')
-            clickFilterBtn(filterButtonXPath);
+            clickFilterBtn(filterPanelLinkText);
 
             // Enter the specified text (e.g. 'Skyline') in the corresponding filter text box
-            setFilterTextBox(String.format("%s/ancestor::li//form//input", filterButtonXPath), filterText);
+            setFilterTextBox(filterPanelLinkText, filterText);
 
-            checkFilterCheckBox(String.format("%s/ancestor::li//ul//input[@value='%s']", filterButtonXPath,
-                    filterCheckBox));
+            // Check the corresponding filter check box
+            checkFilterCheckBox(filterPanelLinkText, filterCheckBox);
         } catch (Exception e) {
 
             // In order to more generally handle test failures,
