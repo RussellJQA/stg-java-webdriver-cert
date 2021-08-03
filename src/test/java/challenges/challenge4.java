@@ -12,6 +12,7 @@ Challenge 4 (Operators and Functions):
 
 import base.BaseTests;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import utils.ExpectedFibonacciWords;
 import utils.Fibonacci;
 import utils.NumbersToWords;
@@ -32,12 +33,14 @@ public class challenge4 extends BaseTests {
         List<String> expectedFibonacciWords = ExpectedFibonacciWords.getExpectedFibonacciWords();
         List<BigInteger> generatedFibonacciSequence = f.getGeneratedFibonacciSequence((maxFibonacciSeed));
         NumbersToWords n = new NumbersToWords();
+        SoftAssert softassert = new SoftAssert();
         for (int num = 0; num <= maxFibonacciSeed; num++) {
             BigInteger fibonacciNumber = generatedFibonacciSequence.get(num);
             String fibonacciNumberAsWords = n.numberToWords(fibonacciNumber);
             System.out.printf("For num=%d, the Fibonacci number is %d - %s%n", num, fibonacciNumber, fibonacciNumberAsWords);
-            assertEquals(expectedFibonaccis.get(num), fibonacciNumber, "Generated Fibonacci number doesn't match its expected value.");
-            assertEquals(expectedFibonacciWords.get(num), fibonacciNumberAsWords, "Generated Fibonacci number as words doesn't match its expected value.");
+            softassert.assertEquals(expectedFibonaccis.get(num), fibonacciNumber, "Generated Fibonacci number doesn't match its expected value.");
+            softassert.assertEquals(expectedFibonacciWords.get(num), fibonacciNumberAsWords, "Generated Fibonacci number as words doesn't match its expected value.");
         }
+        softassert.assertAll();
     }
 }
