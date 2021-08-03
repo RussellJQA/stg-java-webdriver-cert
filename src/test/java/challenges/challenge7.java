@@ -12,10 +12,9 @@ Challenge 7 (Array or ArrayList):
 
 import base.BaseTests;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.util.List;
-
-import static org.testng.Assert.assertTrue;
 
 public class challenge7 extends BaseTests {
 
@@ -29,6 +28,7 @@ public class challenge7 extends BaseTests {
         List<List<String>> mostPopularItemsLinkTextAndHref = copartHomePage.getMostPopularItemsLinkTextAndHref();
 
         System.out.println("\n**********");
+        SoftAssert softassert = new SoftAssert();
         for (List<String> popularItem : mostPopularItemsLinkTextAndHref) {
             String make = popularItem.get(0);
             String href = popularItem.get(1);
@@ -36,8 +36,9 @@ public class challenge7 extends BaseTests {
             String actualUrl = getActualUrl(href);
 
             // THEN for each element in the list, the current URL of the navigated-to page contains the element's link text (lower-cased)
-            assertTrue(actualUrl.contains(make.toLowerCase()),
+            softassert.assertTrue(actualUrl.contains(make.toLowerCase()),
                     String.format("Actual URL (%s) doesn't contain Make '%s'", actualUrl, make));
         }
+        softassert.assertAll();
     }
 }
