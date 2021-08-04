@@ -20,26 +20,33 @@ import utils.NumbersToWords;
 import java.math.BigInteger;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-
 public class challenge4 extends BaseTests {
 
     private final static int maxFibonacciSeed = 300;
 
     @Test(priority = 6)
     public void testFibonacci() {
+
         Fibonacci f = new Fibonacci();
+        List<BigInteger> actualFibonaccis = f.getGeneratedFibonacciSequence((maxFibonacciSeed));
         List<BigInteger> expectedFibonaccis = f.getExpectedFibonaccis();
-        List<String> expectedFibonacciWords = ExpectedFibonacciWords.getExpectedFibonacciWords();
-        List<BigInteger> generatedFibonacciSequence = f.getGeneratedFibonacciSequence((maxFibonacciSeed));
+        List<String> expectedFibonaccisAsWords = ExpectedFibonacciWords.getExpectedFibonacciWords();
+
         NumbersToWords n = new NumbersToWords();
         SoftAssert softassert = new SoftAssert();
         for (int num = 0; num <= maxFibonacciSeed; num++) {
-            BigInteger fibonacciNumber = generatedFibonacciSequence.get(num);
+
+            BigInteger fibonacciNumber = actualFibonaccis.get(num);
             String fibonacciNumberAsWords = n.numberToWords(fibonacciNumber);
             System.out.printf("For num=%d, the Fibonacci number is %d - %s%n", num, fibonacciNumber, fibonacciNumberAsWords);
-            softassert.assertEquals(expectedFibonaccis.get(num), fibonacciNumber, "Generated Fibonacci number doesn't match its expected value.");
-            softassert.assertEquals(expectedFibonacciWords.get(num), fibonacciNumberAsWords, "Generated Fibonacci number as words doesn't match its expected value.");
+
+            BigInteger expectedFibonacci = expectedFibonaccis.get(num);
+            String message1 = String.format("\n\nThe Fibonncaci number for n=%d is:\n\t%d\nrather than:\n\t%d\n", num, fibonacciNumber, expectedFibonacci);
+            softassert.assertEquals(fibonacciNumber, expectedFibonacci, message1);
+
+            String expectedFibonacciWords = expectedFibonaccisAsWords.get(num);
+            String message2 = String.format("\n\nThe Fibonncaci number for n=%d (as words) is:\n\t%s\nrather than:\n\t%s\n", num, fibonacciNumberAsWords, expectedFibonacciWords);
+            softassert.assertEquals(fibonacciNumberAsWords, expectedFibonacciWords, message2);
         }
         softassert.assertAll();
     }
