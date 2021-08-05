@@ -7,10 +7,8 @@ Challenge 1 (Java/WebDriver/textNG):
 
 A 3rd test has been added, to borrow 2 additional challenge requirements from the Python/WebDriver Level 1 certification.
 
-testGotoGoogle() can be run separately.
-But the other 2 tests are designed to be run together as part of class challenge1, as when selecting
-(from the right-click context menu for challenge1, in IntelliJ):
-• Run 'challenge1'
+Although testGotoGoogle() can be run separately, the other 2 tests both "depend" on it being run first.
+Such dependencies are enforced using testNG's "dependsOnMethods" attribute.
 */
 
 import base.BaseTests;
@@ -27,12 +25,12 @@ public class challenge1 extends BaseTests {
     }
 
     // THEN the page title is "Google"
-    @Test(priority = 2)
+    @Test(priority = 1, dependsOnMethods = "testGotoGoogle")
     public void testGoogleTitle() {
         assertTitleAsExpected("Google");
     }
 
-    @Test(priority = 3)
+    @Test(priority = 2, dependsOnMethods = "testGotoGoogle")
     public void testSearchPuppies() {
         // The STG Python/WebDriver Level 1 (Automation Associate) certification includes 2 additional requirements for challenge 1:
         // • Search for “puppies”
