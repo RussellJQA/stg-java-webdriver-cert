@@ -23,6 +23,7 @@ There are 2 parts to this challenge. They are completely independent of each oth
 */
 
 import base.BaseTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.LinkedHashMap;
@@ -30,10 +31,13 @@ import java.util.Map;
 
 public class challenge5 extends BaseTests {
 
-    private final static String searchKey = "porsche";
+    @DataProvider
+    public Object[][] searchData() {
+        return new Object[][]{{"porsche"}};
+    }
 
-    @Test(priority = 7)
-    public void printPorscheModels() {
+    @Test(priority = 7, dataProvider = "searchData")
+    public void printModels(String searchKey) {
 
         // GIVEN the Copart homepage is displayed
         initCopartHomePage();
@@ -55,8 +59,8 @@ public class challenge5 extends BaseTests {
         copartHomePage.printWebElementValueCounts(modelCounts, testTitle);
     }
 
-    @Test(priority = 8)
-    public void printPorscheDamageCategories() {
+    @Test(priority = 8, dataProvider = "searchData")
+    public void printDamageCategories(String searchKey) {
 
         // GIVEN the Copart homepage is displayed
         initCopartHomePage();

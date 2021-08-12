@@ -9,26 +9,29 @@ Challenge 2 (Asserts):
 */
 
 import base.BaseTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class challenge2 extends BaseTests {
 
-    private final static String searchKey = "exotics";
-    private final static String expectedSearchResult = "PORSCHE";
+    @DataProvider
+    public Object[][] searchData() {
+        return new Object[][]{{"exotics", "PORSCHE"}};
+    }
 
-    @Test(priority = 4)
-    public void testSearchForExotics() {
+    @Test(priority = 4, dataProvider = "searchData")
+    public void testSearchForExotics(String searchKey, String expectedSearchResult) {
 
         //  GIVEN the Copart homepage is displayed
         initCopartHomePage();
 
-        // WHEN the user searches for the specified search phrase
+        // WHEN the user searches for the specified search key (e.g., "exotics")
         copartHomePage.enterSearchKey(searchKey);
         copartHomePage.waitForSpinnerToComeAndGo();
 
-        // THEN the text of the resulting table (of search results) contains the specified search result
+        // THEN the text of the resulting search results table contains the expected search result (e.g., "PORSCHE")
         assertTrue(copartHomePage.getTableText().contains(expectedSearchResult));
     }
 }

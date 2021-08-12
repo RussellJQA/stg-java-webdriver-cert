@@ -12,11 +12,15 @@ Such dependencies are enforced using testNG's "dependsOnMethods" attribute.
 */
 
 import base.BaseTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class challenge1 extends BaseTests {
 
-    private final static String searchKey = "puppies";
+    @DataProvider
+    public Object[][] searchData() {
+        return new Object[][]{{"puppies"}};
+    }
 
     // GIVEN/WHEN the Google search page is displayed
     @Test(priority = 1)
@@ -30,11 +34,11 @@ public class challenge1 extends BaseTests {
         assertTitleAsExpected("Google");
     }
 
-    @Test(priority = 2, dependsOnMethods = "testGotoGoogle")
-    public void testSearchPuppies() {
+    @Test(priority = 2, dependsOnMethods = "testGotoGoogle", dataProvider = "searchData")
+    public void testSearchPuppies(String searchKey) {
         // The STG Python/WebDriver Level 1 (Automation Associate) certification includes 2 additional requirements for challenge 1:
-        // • Search for “puppies”
-        // • Assert that the results page that loads has “puppies” in its title
+        // • Search for the specified search key (e.g., "puppies")
+        // • Assert that the results page that loads has the specified search key in its title
         // So, for comparison between Java and Python, that has been implemented below.
 
         // WHEN the user searches for the specified search phrase

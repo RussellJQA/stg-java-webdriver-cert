@@ -20,21 +20,21 @@ public class CopartHomePage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    private static String filterButtonXpath(String panelLinkText) {
-        // XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
-        //  and also used indirectly for the corresponding filter text box and filter checkboxes
-
-        return String.format("//h4[@class='panel-title']/a[text()='%s']", panelLinkText);
-    }
-
-    // Constructor
-
     public CopartHomePage(WebDriver driver, WebDriverWait wait) {
         String url = "https://www.copart.com";
 
         this.driver = driver;
         this.wait = wait;
         driver.get(url);
+    }
+
+    // Constructor
+
+    private static String filterButtonXpath(String panelLinkText) {
+        // XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
+        //  and also used indirectly for the corresponding filter text box and filter checkboxes
+
+        return String.format("//h4[@class='panel-title']/a[text()='%s']", panelLinkText);
     }
 
     // PUBLIC METHODS

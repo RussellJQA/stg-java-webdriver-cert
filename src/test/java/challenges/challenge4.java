@@ -11,6 +11,7 @@ Challenge 4 (Operators and Functions):
 */
 
 import base.BaseTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utils.ExpectedFibonacciWords;
@@ -22,10 +23,13 @@ import java.util.List;
 
 public class challenge4 extends BaseTests {
 
-    private final static int maxFibonacciSeed = 300;
+    @DataProvider
+    public Object[][] fibonacciData() {
+        return new Object[][]{{300}};
+    }
 
-    @Test(priority = 6)
-    public void testFibonacci() {
+    @Test(priority = 6, dataProvider = "fibonacciData")
+    public void testFibonacci(int maxFibonacciSeed) {
 
         Fibonacci f = new Fibonacci();
         List<BigInteger> actualFibonaccis = f.getGeneratedFibonacciSequence((maxFibonacciSeed));

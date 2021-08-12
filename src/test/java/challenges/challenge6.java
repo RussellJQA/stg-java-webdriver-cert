@@ -11,20 +11,20 @@ Challenge 6 (Error Handling):
 */
 
 import base.BaseTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class challenge6 extends BaseTests {
 
-    private final static String searchKey = "nissan";
-    private final static String filterPanelLinkText = "Model";
-    private final static String filterText = "skyline";
-    private final static String filterCheckBox = "Skyline";
+    @DataProvider
+    public Object[][] searchData() {
+        return new Object[][]{{"nissan", "Model", "skyline", "Skyline"}};
+    }
 
-    @Test(priority = 9)
-    public void testChallenge6() {
-
+    @Test(priority = 9, dataProvider = "searchData")
+    public void testChallenge6(String searchKey, String filterPanelLinkText, String filterText, String filterCheckBox) {
         // GIVEN the Copart homepage is displayed
         initCopartHomePage();
 
