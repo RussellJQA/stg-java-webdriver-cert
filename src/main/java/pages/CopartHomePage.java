@@ -15,10 +15,12 @@ import java.util.*;
 
 public class CopartHomePage {
 
-    // PRIVATE VARIABLES AND METHOD
+    // PRIVATE VARIABLES
 
     private final WebDriver driver;
     private final WebDriverWait wait;
+
+    // CONSTRUCTOR
 
     public CopartHomePage(WebDriver driver, WebDriverWait wait) {
         String url = "https://www.copart.com";
@@ -28,7 +30,57 @@ public class CopartHomePage {
         driver.get(url);
     }
 
-    // Constructor
+    // PUBLIC STATIC METHODS
+
+    public static Map<String, Integer> getWebElementValueCounts(List<WebElement> elements) {
+        //  Get counts for each of the distinct text values from the specified WebElements
+
+        // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
+        //      (TreeMap is automatically sorted in ascending order of the map's keys.)
+        Map<String, Integer> columnValueCounts = new TreeMap<>();
+
+        for (WebElement element : elements) {
+            String elementKey = element.getText();
+            Integer count = columnValueCounts.get(elementKey);
+            columnValueCounts.put(elementKey, (count == null) ? 1 : count + 1);
+        }
+
+        return columnValueCounts;
+    }
+
+    public static void printWebElementValueCounts(Map<String, Integer> counts, String testTitle) {
+        // Prints the count for each of the distinct text values from the specified WebElements
+
+        System.out.println(testTitle);
+        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+            System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
+        }
+    }
+
+    public static Map<String, Integer> getLumpedColumnValueCounts(Map<String, Integer> columnValueCounts,
+                                                                  List<String> columnLumping) {
+        if (columnLumping.size() < 2) {
+            throw new IllegalArgumentException("columnLumping must contain at least 2 elements");
+        }
+
+        String lumpMiscAs = columnLumping.get(0); // Lump all unspecified categories together under the lumpMiscAs category
+        List<String> nonLumpedColumnValues = columnLumping.subList(1, columnLumping.size());
+
+        // Lump all unspecified damage categories together under the "MISC" category.
+        //      A LinkedHashMap maintains insertion order, so that "MISC" appears last, preceded by the others in alphabetical order
+        Map<String, Integer> lumpedColumnValueCounts = new LinkedHashMap<>();
+        int miscCount = 0;
+        for (Map.Entry<String, Integer> valueCount : columnValueCounts.entrySet()) {
+            String key = valueCount.getKey();
+            if (nonLumpedColumnValues.contains(key)) {
+                lumpedColumnValueCounts.put(key, valueCount.getValue());
+            } else {
+                miscCount += columnValueCounts.get(key); // Merge category count into count for "MISC" category
+            }
+        }
+        lumpedColumnValueCounts.put(lumpMiscAs, miscCount);
+        return lumpedColumnValueCounts;
+    }
 
     private static String filterButtonXpath(String panelLinkText) {
         // XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
@@ -37,7 +89,7 @@ public class CopartHomePage {
         return String.format("//h4[@class='panel-title']/a[text()='%s']", panelLinkText);
     }
 
-    // PUBLIC METHODS
+    // PUBLIC CLASS METHODS
 
     public void enterSearchKey(String searchKey) {
         // Enter the specified search key into main search input and press RETURN
@@ -133,31 +185,6 @@ public class CopartHomePage {
 
     public void search(String searchKey) {
         searchAndSetEntriesPerPage(searchKey, -1);  // Leave entriesPerPage unchanged
-    }
-
-    public Map<String, Integer> getWebElementValueCounts(List<WebElement> elements) {
-        //  Get counts for each of the distinct text values from the specified WebElements
-
-        // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
-        //      (TreeMap is automatically sorted in ascending order of the map's keys.)
-        Map<String, Integer> columnValueCounts = new TreeMap<>();
-
-        for (WebElement element : elements) {
-            String elementKey = element.getText();
-            Integer count = columnValueCounts.get(elementKey);
-            columnValueCounts.put(elementKey, (count == null) ? 1 : count + 1);
-        }
-
-        return columnValueCounts;
-    }
-
-    public void printWebElementValueCounts(Map<String, Integer> counts, String testTitle) {
-        // Prints the count for each of the distinct text values from the specified WebElements
-
-        System.out.println(testTitle);
-        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
-            System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
-        }
     }
 
     public void clickFilterBtn(String panelLinkText) {
