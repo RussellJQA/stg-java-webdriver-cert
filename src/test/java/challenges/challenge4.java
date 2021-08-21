@@ -36,12 +36,11 @@ public class challenge4 extends BaseTests {
         List<BigInteger> expectedFibonaccis = f.getExpectedFibonaccis();
         List<String> expectedFibonaccisAsWords = ExpectedFibonacciWords.getExpectedFibonacciWords();
 
-        NumbersToWords n = new NumbersToWords();
         SoftAssert softassert = new SoftAssert();
         for (int num = 0; num <= maxFibonacciSeed; num++) {
 
             BigInteger fibonacciNumber = actualFibonaccis.get(num);
-            String fibonacciNumberAsWords = n.numberToWords(fibonacciNumber);
+            String fibonacciNumberAsWords = NumbersToWords.numberToWords(fibonacciNumber);
             System.out.printf("For num=%d, the Fibonacci number is %d - %s%n", num, fibonacciNumber, fibonacciNumberAsWords);
 
             BigInteger expectedFibonacci = expectedFibonaccis.get(num);
