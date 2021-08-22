@@ -1,4 +1,9 @@
-// This utility class is used to convert triads [1-to-3 digit integers] (e.g., 21) to their corresponding strings (e.g., "twenty one")
+/*
+This TriadToWords utility class is used to convert an integer triad
+[1-to-3-digit integer,
+ or 1-to-3-digit portion of a larger integer (representing either the thousands, millions, billions, or ... place)]
+(e.g., 629) to its corresponding strings of words (e.g., "six hundred twenty nine").
+*/
 
 package utils;
 
@@ -54,7 +59,8 @@ public class TriadToWords {
     );
 
     private TriadToWords() {
-        throw new IllegalStateException("Utility class");
+        // See "Utility classes should not have public constructors" at https://rules.sonarsource.com/java/tag/design/RSPEC-1118
+        throw new IllegalStateException("This is a utility class, and so should not be instantiated.");
     }
 
     public static String triadToString(int oneToThreeDigitInt) {

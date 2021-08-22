@@ -1,4 +1,4 @@
-// This utility class is used to convert numbers (e.g., 269,025) to their corresponding strings (e.g., "two hundred sixty nine thousand twenty five")
+// This NumbersToWords utility class is used to convert numbers (e.g., 269,025) to their corresponding strings of words (e.g., "two hundred sixty nine thousand twenty five")
 
 package utils;
 
@@ -35,20 +35,19 @@ public class NumbersToWords {
     );
 
     private NumbersToWords() {
-        throw new IllegalStateException("Utility class");
+        // See "Utility classes should not have public constructors" at https://rules.sonarsource.com/java/tag/design/RSPEC-1118
+        throw new IllegalStateException("This is a utility class, and so should not be instantiated.");
     }
 
     private static String getConvertedTriadAndGrouping(int triadCount, String triad, int triadGroupNumber) {
 
         String groupingSeparator;
-        if (triadGroupNumber > 0) {
-            if ((Integer.parseInt(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
-                groupingSeparator = ", ";
-            } else {
-                groupingSeparator = " ";
-            }
-        } else {
+        if (triadGroupNumber == 0) {
             groupingSeparator = "";
+        } else if ((Integer.parseInt(triad.trim()) >= 100) || (triadGroupNumber < triadCount - 1)) {
+            groupingSeparator = ", ";
+        } else {
+            groupingSeparator = " ";
         }
 
         String triadAsString = String.format("%s%s", groupingSeparator, TriadToWords.triadToString(Integer.parseInt(triad.trim())));
@@ -57,35 +56,40 @@ public class NumbersToWords {
         return triadAsString + String.format("%s", (triadGrouping.isEmpty() ? "" : (" " + triadGrouping)));
     }
 
-    // TODO Also, implement a version of numberToWords() whose argument is just a plain integer (of type int)
+    private static String stringNumberToWordsString(String numberAsStringPadded, int triadCount) {
+        StringBuilder numberAsWords = new StringBuilder();
+        for (int triadGroupNumber = 0; triadGroupNumber < triadCount; triadGroupNumber++) {
+
+            String triad = numberAsStringPadded.substring(3 * triadGroupNumber, 3 * triadGroupNumber + 3);
+            if (!triad.equals("000")) {
+                numberAsWords.append(getConvertedTriadAndGrouping(triadCount, triad, triadGroupNumber));
+            }
+        }
+        return numberAsWords.toString();
+    }
+
     /*
         Converts the specified BigInteger to words, as in converting 12,586,269,025 (the Fibonacci number for n=50) to:
             "twelve billion, five hundred eighty six million, two hundred sixty nine thousand twenty five"
     */
     public static String numberToWords(BigInteger number) {
-
-        StringBuilder numberAsWords;
-
         if (number.equals(BigInteger.ZERO)) {
-            numberAsWords = new StringBuilder("zero");
+            return "zero";
         } else {
-
             int stringLength = String.valueOf(number).length();
+
             int paddedLength = stringLength + ((3 - (stringLength % 3)) % 3);
             int triadCount = paddedLength / 3;
-            String formatSpecifier = "%" + paddedLength + "d";  // Use string concatenation
+            String formatSpecifier = "%" + paddedLength + "d";
+
             String numberAsStringPadded = String.format(formatSpecifier, number);
 
-            numberAsWords = new StringBuilder();
-            for (int triadGroupNumber = 0; triadGroupNumber < triadCount; triadGroupNumber++) {
-
-                String triad = numberAsStringPadded.substring(3 * triadGroupNumber, 3 * triadGroupNumber + 3);
-                if (!triad.equals("000")) {
-                    numberAsWords.append(getConvertedTriadAndGrouping(triadCount, triad, triadGroupNumber));
-                }
-            }
+            return stringNumberToWordsString(numberAsStringPadded, triadCount);
         }
+    }
 
-        return numberAsWords.toString();
+    // Not currently used
+    public static String numberToWords(int number) {
+        return numberToWords(BigInteger.valueOf(number));
     }
 }

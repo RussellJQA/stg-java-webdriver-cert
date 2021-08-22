@@ -1,4 +1,4 @@
-// This class provides a function which returns a list of the first 301 Fibonacci numbers (as words).
+// This ExpectedFibonacciWords utility class provides a function which returns a list of the first 301 Fibonacci numbers (as words).
 
 package utils;
 
@@ -312,7 +312,8 @@ public class ExpectedFibonacciWords {
     );
 
     private ExpectedFibonacciWords() {
-        throw new IllegalStateException("Utility class");
+        // See "Utility classes should not have public constructors" at https://rules.sonarsource.com/java/tag/design/RSPEC-1118
+        throw new IllegalStateException("This is a utility class, and so should not be instantiated.");
     }
 
     public static List<String> getExpectedFibonacciWords() {
