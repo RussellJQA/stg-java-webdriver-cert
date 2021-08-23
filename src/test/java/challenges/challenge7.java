@@ -36,10 +36,12 @@ public class challenge7 extends BaseWebDriverTests {
             String actualUrl = getActualUrl(href);
 
             // THEN for each element in the list, the current URL of the navigated-to page contains the element's link text
-            // Also, convert the make to lowercase in order to match URL
-            softassert.assertTrue(actualUrl.contains(make.toLowerCase()),
+            // Also, convert the make to lowercase, and replace any blank characters in it with "-", in order to match URL
+            //     Replacing blanks is needed because there's now a "3 SERIES" make which takes you to
+            //          https://www.copart.com/popular/model/3-series?query=3-series&free
+            softassert.assertTrue(actualUrl.contains(make.toLowerCase().replace(" ", "-")),
                     String.format("Actual URL (%s) doesn't contain Make '%s'", actualUrl, make));
-        }
+       }
         softassert.assertAll();
     }
 }
