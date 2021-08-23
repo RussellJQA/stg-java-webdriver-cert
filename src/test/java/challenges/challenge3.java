@@ -3,7 +3,7 @@ package challenges;
 /*
 Challenge 3 (Loops):
 1. Go to the https://www.copart.com main page.
-2. Go to the the Makes/Models section of the page.
+2. Go to the Makes/Models section of the page.
     This used to be displayed on initial page load.
     But now, you first need to click the "Trending" tab. There, you'll find it under the "Most Popular Items" heading.
 3. Print a list of the vehicle Make/Models, and the URL/href for each type.
@@ -26,7 +26,7 @@ public class challenge3 extends BaseTests {
         // GIVEN the Copart homepage is displayed
         initCopartHomePage();
 
-        // WHEN you get a list of the Web elements for the page's Most Popular Items"
+        // WHEN you get a list of the Web elements for the page's Most Popular Items
         List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems();
         mostPopularItems.sort(Comparator.comparing(WebElement::getText));
 

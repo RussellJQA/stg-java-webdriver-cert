@@ -57,7 +57,10 @@ public class BaseTests {
 
     @AfterMethod
     public void stopMethod(ITestResult result) throws InterruptedException {
-        Thread.sleep(5000); // Wait long enough for the state of the browser to be seen before closing the browser.
+
+        // Wait long enough for the state of the browser to be seen before closing the browser. {REMOVE FOR PRODUCTION TEST CODE.}
+        Thread.sleep(5000);
+
         if (ITestResult.FAILURE == result.getStatus()) {
             Screenshots screenshots = new Screenshots(driver);
             String filepath = String.format("screenshots/%s.png", result.getName());
