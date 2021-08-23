@@ -8,13 +8,13 @@ Challenge 2 (Asserts):
 4. Use the hard assertion for this challenge.
 */
 
-import base.BaseTests;
+import base.BaseWebDriverTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class challenge2 extends BaseTests {
+public class challenge2 extends BaseWebDriverTests {
 
     @DataProvider
     public Object[][] searchData() {

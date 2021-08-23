@@ -10,13 +10,13 @@ Challenge 7 (Array or ArrayList):
 4. Verify that all the elements in the Array or ArrayList navigate to the correct page.
 */
 
-import base.BaseTests;
+import base.BaseWebDriverTests;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-public class challenge7 extends BaseTests {
+public class challenge7 extends BaseWebDriverTests {
 
     @Test(priority = 10)
     public void checkUrlsOfMostPopularItems() {
@@ -35,7 +35,8 @@ public class challenge7 extends BaseTests {
             System.out.printf("Make or model: %s, href: %s%n", make, href);
             String actualUrl = getActualUrl(href);
 
-            // THEN for each element in the list, the current URL of the navigated-to page contains the element's link text (lower-cased)
+            // THEN for each element in the list, the current URL of the navigated-to page contains the element's link text
+            // Also, convert the make to lowercase in order to match URL
             softassert.assertTrue(actualUrl.contains(make.toLowerCase()),
                     String.format("Actual URL (%s) doesn't contain Make '%s'", actualUrl, make));
         }

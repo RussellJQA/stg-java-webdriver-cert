@@ -11,11 +11,11 @@ Although testGotoGoogle() can be run separately, the other 2 tests both "depend"
 Such dependencies are enforced using testNG's "dependsOnMethods" attribute.
 */
 
-import base.BaseTests;
+import base.BaseWebDriverTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class challenge1 extends BaseTests {
+public class challenge1 extends BaseWebDriverTests {
 
     @DataProvider
     public Object[][] searchData() {

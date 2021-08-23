@@ -22,7 +22,7 @@ There are 2 parts to this challenge. They are completely independent of each oth
 2. Make sure you make your code is reusable. Use a class and methods.
 */
 
-import base.BaseTests;
+import base.BaseWebDriverTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -30,7 +30,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class challenge5 extends BaseTests {
+public class challenge5 extends BaseWebDriverTests {
 
     @DataProvider
     public Object[][] searchData() {

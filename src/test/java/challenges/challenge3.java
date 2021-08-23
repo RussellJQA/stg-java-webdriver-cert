@@ -11,14 +11,14 @@ Challenge 3 (Loops):
     but using a loop will make sure that everything will be displayed regardless of the list size.
 */
 
-import base.BaseTests;
+import base.BaseWebDriverTests;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
 import java.util.List;
 
-public class challenge3 extends BaseTests {
+public class challenge3 extends BaseWebDriverTests {
 
     @Test(priority = 5)
     public void getListOfMostPopularItems() {

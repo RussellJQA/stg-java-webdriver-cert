@@ -10,13 +10,13 @@ Challenge 6 (Error Handling):
     Catch the exception, and take a screenshot of the page, to show what it looks like.
 */
 
-import base.BaseTests;
+import base.BaseWebDriverTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class challenge6 extends BaseTests {
+public class challenge6 extends BaseWebDriverTests {
 
     @DataProvider
     public Object[][] searchData() {
