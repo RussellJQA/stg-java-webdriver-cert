@@ -15,7 +15,7 @@ public class Fibonacci {
 
     private final Map<Integer, BigInteger> cache = new HashMap<>();
 
-    public List<BigInteger> getExpectedFibonaccis() {
+    public static List<BigInteger> getExpectedFibonaccis() {
         List<BigInteger> expectedFibonaccis = new ArrayList<>();
         List<String> expectedFibonacciStrings = ExpectedFibonacciStrings.getExpectedFibonacciStrings();
         for (String expectedFibonacciString : expectedFibonacciStrings) {

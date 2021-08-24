@@ -31,23 +31,25 @@ public class challenge4 extends BaseTests {
     @Test(priority = 6, dataProvider = "fibonacciData")
     public void testFibonacci(int maxFibonacciSeed) {
 
+        List<BigInteger> expectedFibonaccis = Fibonacci.getExpectedFibonaccis();
+        List<String> expectedFibonaccisAsWords = ExpectedFibonacciWords.getExpectedFibonacciWords();
+
         Fibonacci f = new Fibonacci();
         List<BigInteger> actualFibonaccis = f.getGeneratedFibonacciSequence((maxFibonacciSeed));
-        List<BigInteger> expectedFibonaccis = f.getExpectedFibonaccis();
-        List<String> expectedFibonaccisAsWords = ExpectedFibonacciWords.getExpectedFibonacciWords();
 
         SoftAssert softassert = new SoftAssert();
         for (int num = 0; num <= maxFibonacciSeed; num++) {
 
+            BigInteger expectedFibonacci = expectedFibonaccis.get(num);
+            String expectedFibonacciWords = expectedFibonaccisAsWords.get(num);
             BigInteger fibonacciNumber = actualFibonaccis.get(num);
+
             String fibonacciNumberAsWords = NumbersToWords.numberToWords(fibonacciNumber);
             System.out.printf("For num=%d, the Fibonacci number is %d - %s%n", num, fibonacciNumber, fibonacciNumberAsWords);
 
-            BigInteger expectedFibonacci = expectedFibonaccis.get(num);
             String message1 = String.format("\n\nThe Fibonncaci number for n=%d is:\n\t%d\nrather than:\n\t%d\n", num, fibonacciNumber, expectedFibonacci);
             softassert.assertEquals(fibonacciNumber, expectedFibonacci, message1);
 
-            String expectedFibonacciWords = expectedFibonaccisAsWords.get(num);
             String message2 = String.format("\n\nThe Fibonncaci number for n=%d (as words) is:\n\t%s\nrather than:\n\t%s\n", num, fibonacciNumberAsWords, expectedFibonacciWords);
             softassert.assertEquals(fibonacciNumberAsWords, expectedFibonacciWords, message2);
         }
