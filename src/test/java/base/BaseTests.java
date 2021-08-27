@@ -2,11 +2,12 @@
 
 package base;
 
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterSuite;
 
 public class BaseTests {
 
-    @BeforeSuite
-    public void startSuite() {
+    @AfterSuite
+    public void stopSuite() {
+        System.out.println("\n*** All done!!!");
     }
 }

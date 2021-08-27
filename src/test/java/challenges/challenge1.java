@@ -18,14 +18,20 @@ import org.testng.annotations.Test;
 public class challenge1 extends BaseWebDriverTests {
 
     @DataProvider
+    public Object[][] googleUrlData() {
+        // Possible googleUrl values: "https://www.google.com/", "https://www.google.ca/", "https://www.google.co.uk/"
+        return new Object[][]{{"https://www.google.com/"}};
+    }
+
+    @DataProvider
     public Object[][] searchData() {
         return new Object[][]{{"puppies"}};
     }
 
     // GIVEN/WHEN the Google search page is displayed
-    @Test(priority = 1)
-    public void testGotoGoogle() {
-        initGoogleHomePage();
+    @Test(priority = 1, dataProvider = "googleUrlData")
+    public void testGotoGoogle(String googleUrl) {
+        initGoogleHomePage(googleUrl);
     }
 
     // THEN the page title is "Google"

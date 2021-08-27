@@ -35,8 +35,8 @@ public class challenge5 extends BaseWebDriverTests {
     @DataProvider
     public Object[][] searchData() {
         return new Object[][]{
-                {"porsche", "model", List.of()}, // Part 1
-                {"porsche", "damage", List.of("MISC", "REAR END", "FRONT END", "MINOR DENT/SCRATCHES", "UNDERCARRIAGE")} // Part 2
+                {"https://www.copart.com", "porsche", "model", List.of()}, // Part 1
+                {"https://www.copart.com", "porsche", "damage", List.of("MISC", "REAR END", "FRONT END", "MINOR DENT/SCRATCHES", "UNDERCARRIAGE")} // Part 2
         };
     }
 
@@ -60,10 +60,10 @@ public class challenge5 extends BaseWebDriverTests {
      *                      If column_lumping.size() == 0, then no lumping will occur. Instead, all distinct values will be reported.
      */
     @Test(priority = 7, dataProvider = "searchData")
-    public void testSearchThenPrintColumnData(String searchKey, String columnName, List<String> columnLumping) {
+    public void testSearchThenPrintColumnData(String copartUrl, String searchKey, String columnName, List<String> columnLumping) {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage();
+        initCopartHomePage(copartUrl);
 
         /*
          * WHEN the user searches for the specified search phrase (e.g., "porsche"),
@@ -92,16 +92,16 @@ public class challenge5 extends BaseWebDriverTests {
 
     @DataProvider
     public Object[][] searchDataSwitch() {
-        return new Object[][]{{"porsche", "damage"}};
+        return new Object[][]{{"https://www.copart.com", "porsche", "damage"}};
     }
 
     // The following version of Part 2 is deprecated, but has been left here to demonstrate the use of a switch statement.
 
     @Test(priority = 8, dataProvider = "searchDataSwitch")
-    public void testSearchThenPrintColumnDataSwitch(String searchKey, String columnName) {
+    public void testSearchThenPrintColumnDataSwitch(String copartUrl, String searchKey, String columnName) {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage();
+        initCopartHomePage(copartUrl);
 
         /*
          * WHEN the user searches for the specified search phrase (e.g., "porsche"),

@@ -10,11 +10,9 @@ public class GoogleHomePage {
 
     private final WebDriver driver;
 
-    public GoogleHomePage(WebDriver driver) {
-        String url = "https://www.google.com/";
-
+    public GoogleHomePage(WebDriver driver, String googleUrl) {
         this.driver = driver;
-        driver.get(url);
+        driver.get(googleUrl);
     }
 
     public void enterSearchKey(String searchKey) {

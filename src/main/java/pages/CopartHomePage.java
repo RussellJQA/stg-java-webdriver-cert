@@ -22,12 +22,12 @@ public class CopartHomePage {
 
     // CONSTRUCTOR
 
-    public CopartHomePage(WebDriver driver, WebDriverWait wait) {
-        String url = "https://www.copart.com";
+    public CopartHomePage(WebDriver driver, WebDriverWait wait, String copartUrl) {
+        // Possible copartUrl values: https://www.copart.com", https://www.copart.co.uk/, https://www.copart.co.uk/
 
         this.driver = driver;
         this.wait = wait;
-        driver.get(url);
+        driver.get(copartUrl);
     }
 
     // PUBLIC STATIC METHODS

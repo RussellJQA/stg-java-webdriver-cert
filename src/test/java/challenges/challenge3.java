@@ -13,6 +13,7 @@ Challenge 3 (Loops):
 
 import base.BaseWebDriverTests;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
@@ -20,11 +21,17 @@ import java.util.List;
 
 public class challenge3 extends BaseWebDriverTests {
 
-    @Test(priority = 5)
-    public void getListOfMostPopularItems() {
+    @DataProvider
+    public Object[][] copartUrlData() {
+        // Possible copartUrl values: https://www.copart.com", https://www.copart.co.uk/, https://www.copart.co.uk/
+        return new Object[][]{{"https://www.copart.com"}};
+    }
+
+    @Test(priority = 5, dataProvider = "copartUrlData")
+    public void testGetListOfMostPopularItems(String copartUrl) {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage();
+        initCopartHomePage(copartUrl);
 
         // WHEN you get a list of the Web elements for the page's Most Popular Items
         List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems();

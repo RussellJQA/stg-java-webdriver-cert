@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import pages.CopartHomePage;
 import pages.GoogleHomePage;
@@ -34,11 +33,6 @@ public class BaseWebDriverTests extends BaseTests {
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 
         return options;
-    }
-
-    @AfterSuite
-    public void stopSuite() {
-        System.out.println("\n*** All done!!!");
     }
 
     @BeforeClass
@@ -75,12 +69,12 @@ public class BaseWebDriverTests extends BaseTests {
         assertTrue(driver.getTitle().contains(expectedTitleSubstring), "Incorrect page title");
     }
 
-    public void initGoogleHomePage() {
-        googleHomePage = new GoogleHomePage(driver);
+    public void initGoogleHomePage(String googleUrl) {
+        googleHomePage = new GoogleHomePage(driver, googleUrl);
     }
 
-    public void initCopartHomePage() {
-        copartHomePage = new CopartHomePage(driver, wait);
+    public void initCopartHomePage(String copartUrl) {
+        copartHomePage = new CopartHomePage(driver, wait, copartUrl);
     }
 
     public String getActualUrl(String href) {

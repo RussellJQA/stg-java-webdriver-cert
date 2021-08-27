@@ -11,6 +11,7 @@ Challenge 7 (Array or ArrayList):
 */
 
 import base.BaseWebDriverTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -18,11 +19,17 @@ import java.util.List;
 
 public class challenge7 extends BaseWebDriverTests {
 
-    @Test(priority = 10)
-    public void checkUrlsOfMostPopularItems() {
+    @DataProvider
+    public Object[][] copartUrlData() {
+        // Possible copartUrl values: https://www.copart.com", https://www.copart.co.uk/, https://www.copart.co.uk/
+        return new Object[][]{{"https://www.copart.com"}};
+    }
+
+    @Test(priority = 10, dataProvider = "copartUrlData")
+    public void testCheckUrlsOfMostPopularItems(String copartUrl) {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage();
+        initCopartHomePage(copartUrl);
 
         // WHEN you get a list of the link text and the hrefs for the page's "Most Popular Items", and navigate to each href in the list
         List<List<String>> mostPopularItemsLinkTextAndHref = copartHomePage.getMostPopularItemsLinkTextAndHref();
@@ -41,7 +48,7 @@ public class challenge7 extends BaseWebDriverTests {
             //          https://www.copart.com/popular/model/3-series?query=3-series&free
             softassert.assertTrue(actualUrl.contains(make.toLowerCase().replace(" ", "-")),
                     String.format("Actual URL (%s) doesn't contain Make '%s'", actualUrl, make));
-       }
+        }
         softassert.assertAll();
     }
 }
