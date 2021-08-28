@@ -18,15 +18,14 @@ public class challenge2 extends BaseWebDriverTests {
 
     @DataProvider
     public Object[][] searchData() {
-        // Possible copartUrl values: https://www.copart.com", https://www.copart.co.uk/, https://www.copart.co.uk/
-        return new Object[][]{{"https://www.copart.com", "exotics", "PORSCHE"}};
+        return new Object[][]{{"exotics", "PORSCHE"}};
     }
 
     @Test(priority = 4, dataProvider = "searchData")
-    public void testSearchForExotics(String copartUrl, String searchKey, String expectedSearchResult) {
+    public void testSearchForExotics(String searchKey, String expectedSearchResult) {
 
         //  GIVEN the Copart homepage is displayed
-        initCopartHomePage(copartUrl);
+        initCopartHomePage(testUrl);
 
         // WHEN the user searches for the specified search key (e.g., "exotics")
         copartHomePage.enterSearchKey(searchKey);

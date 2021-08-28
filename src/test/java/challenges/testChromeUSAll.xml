@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="ChromeUSAllTestSuite" parallel="none">
+    <test name="ChromeUSGoogleTest">
+        <parameter name="browserType" value="chrome"/>
+        <parameter name="url" value="https://www.google.com/"/>
+        <classes>
+            <class name="challenges.challenge1"/>
+        </classes>
+    </test>
+    <test name="ChromeUSCopartTest1">
+        <parameter name="browserType" value="chrome"/>
+        <parameter name="url" value="https://www.copart.com/"/>
+        <classes>
+            <class name="challenges.challenge2"/>
+            <class name="challenges.challenge3"/>
+        </classes>
+    </test>
+    <test name="FibonacciTest">
+        <classes>
+            <class name="challenges.challenge4"/>
+        </classes>
+    </test>
+    <test name="ChromeUSCopartTest2">
+        <parameter name="browserType" value="chrome"/>
+        <parameter name="url" value="https://www.copart.com/"/>
+        <classes>
+            <class name="challenges.challenge5"/>
+            <class name="challenges.challenge6"/>
+            <class name="challenges.challenge7"/>
+        </classes>
+    </test>
+</suite>

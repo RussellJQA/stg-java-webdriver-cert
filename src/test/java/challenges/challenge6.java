@@ -20,13 +20,24 @@ public class challenge6 extends BaseWebDriverTests {
 
     @DataProvider
     public Object[][] searchData() {
-        return new Object[][]{{"https://www.copart.com", "nissan", "Model", "skyline", "Skyline"}};
+        // Run this twice: once with "Skyline" and once with "Skyline Gt".
+        // The reason:
+        //      Although the challenge only calls for "Skyline", that often fails (as the challenge said it might).
+        //      So I'm re-running with a value which for the U.S. usually passes,
+        //      to demonstrate that it can pass (when it should). [Both values usually fail in Canada and the U.K.]
+        return new Object[][]{
+                {"nissan", "Model", "skyline", "Skyline"},
+                {"nissan", "Model", "skyline", "Skyline Gt"}
+        };
     }
 
     @Test(priority = 9, dataProvider = "searchData")
-    public void testChallenge6(String copartUrl, String searchKey, String filterPanelLinkText, String filterText, String filterCheckBox) {
+    public void testChallenge6(String searchKey, String filterPanelLinkText, String filterText, String filterCheckbox) {
+
+        System.out.println("Filter checkbox: " + filterCheckbox);
+
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage(copartUrl);
+        initCopartHomePage(testUrl);
 
         // WHEN the user searches for the specified search phrase
         copartHomePage.search(searchKey);
@@ -37,6 +48,6 @@ public class challenge6 extends BaseWebDriverTests {
          *  - Enter the specified text (e.g. 'skyline') in the 'Model' filter panel's text box
          *  - Check the specified checkbox (e.g. 'Skyline') in the 'Model' filter panel's list of checkboxes
          */
-        assertTrue(copartHomePage.setFilterTextAndCheckBox(filterPanelLinkText, filterText, filterCheckBox));
+        assertTrue(copartHomePage.setFilterTextAndCheckBox(filterPanelLinkText, filterText, filterCheckbox));
     }
 }

@@ -28,4 +28,6 @@ hs_err_pid*
 *.iml
 
 # Custom files to exclude
-/notes/
+/.my_notes/
+/src/test/java/playground/
+/screenshots/

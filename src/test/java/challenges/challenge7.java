@@ -11,7 +11,6 @@ Challenge 7 (Array or ArrayList):
 */
 
 import base.BaseWebDriverTests;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -19,17 +18,11 @@ import java.util.List;
 
 public class challenge7 extends BaseWebDriverTests {
 
-    @DataProvider
-    public Object[][] copartUrlData() {
-        // Possible copartUrl values: https://www.copart.com", https://www.copart.co.uk/, https://www.copart.co.uk/
-        return new Object[][]{{"https://www.copart.com"}};
-    }
-
-    @Test(priority = 10, dataProvider = "copartUrlData")
-    public void testCheckUrlsOfMostPopularItems(String copartUrl) {
+    @Test(priority = 10)
+    public void testCheckUrlsOfMostPopularItems() {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage(copartUrl);
+        initCopartHomePage(testUrl);
 
         // WHEN you get a list of the link text and the hrefs for the page's "Most Popular Items", and navigate to each href in the list
         List<List<String>> mostPopularItemsLinkTextAndHref = copartHomePage.getMostPopularItemsLinkTextAndHref();
@@ -37,16 +30,26 @@ public class challenge7 extends BaseWebDriverTests {
         System.out.println("\n**********");
         SoftAssert softassert = new SoftAssert();
         for (List<String> popularItem : mostPopularItemsLinkTextAndHref) {
+
             String make = popularItem.get(0);
             String href = popularItem.get(1);
             System.out.printf("Make or model: %s, href: %s%n", make, href);
             String actualUrl = getActualUrl(href);
 
+            String make1 = make.toLowerCase(); // Convert to lowercase to match URL
+
+            // In the US, "3 SERIES" takes you to https://www.copart.com/popular/model/3-series?query=3-series&free
+            String make2 = make1.replace(" ", "-");
+
+            // In the UK, "LAND ROVER" takes you to "...landrover..." and 'MERCEDES BENZ' to "...mercedesbenz..."
+            String make3 = make1.replace(" ", "");
+
+            // In Canada, 'MERCEDES-BENZ' to "...mercedesbenz..."
+            String make4 = make1.replace("-", "");
+
             // THEN for each element in the list, the current URL of the navigated-to page contains the element's link text
-            // Also, convert the make to lowercase, and replace any blank characters in it with "-", in order to match URL
-            //     Replacing blanks is needed because there's now a "3 SERIES" make which takes you to
-            //          https://www.copart.com/popular/model/3-series?query=3-series&free
-            softassert.assertTrue(actualUrl.contains(make.toLowerCase().replace(" ", "-")),
+            softassert.assertTrue((actualUrl.contains(make1) || actualUrl.contains(make2) ||
+                            actualUrl.contains(make3) || actualUrl.contains(make4)),
                     String.format("Actual URL (%s) doesn't contain Make '%s'", actualUrl, make));
         }
         softassert.assertAll();

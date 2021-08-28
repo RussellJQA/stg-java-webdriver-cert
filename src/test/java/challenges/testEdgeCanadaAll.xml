@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="EdgeCanadaAllTestSuite" parallel="none">
+    <test name="EdgeCanadaGoogleTest">
+        <parameter name="browserType" value="edge"/>
+        <parameter name="url" value="https://www.google.ca/"/>
+        <classes>
+            <class name="challenges.challenge1"/>
+        </classes>
+    </test>
+    <test name="EdgeCanadaCopartTest1">
+        <parameter name="browserType" value="edge"/>
+        <parameter name="url" value="https://www.copart.ca/"/>
+        <classes>
+            <class name="challenges.challenge2"/>
+            <class name="challenges.challenge3"/>
+        </classes>
+    </test>
+    <test name="FibonacciTest">
+        <classes>
+            <class name="challenges.challenge4"/>
+        </classes>
+    </test>
+    <test name="EdgeCanadaCopartTest2">
+        <parameter name="browserType" value="edge"/>
+        <parameter name="url" value="https://www.copart.ca/"/>
+        <classes>
+            <class name="challenges.challenge5"/>
+            <class name="challenges.challenge6"/>
+            <class name="challenges.challenge7"/>
+        </classes>
+    </test>
+</suite>

@@ -18,20 +18,14 @@ import org.testng.annotations.Test;
 public class challenge1 extends BaseWebDriverTests {
 
     @DataProvider
-    public Object[][] googleUrlData() {
-        // Possible googleUrl values: "https://www.google.com/", "https://www.google.ca/", "https://www.google.co.uk/"
-        return new Object[][]{{"https://www.google.com/"}};
-    }
-
-    @DataProvider
     public Object[][] searchData() {
         return new Object[][]{{"puppies"}};
     }
 
     // GIVEN/WHEN the Google search page is displayed
-    @Test(priority = 1, dataProvider = "googleUrlData")
-    public void testGotoGoogle(String googleUrl) {
-        initGoogleHomePage(googleUrl);
+    @Test(priority = 1)
+    public void testGotoGoogle() {
+        initGoogleHomePage(testUrl);
     }
 
     // THEN the page title is "Google"
@@ -49,6 +43,9 @@ public class challenge1 extends BaseWebDriverTests {
 
         // WHEN the user searches for the specified search phrase
         googleHomePage.enterSearchKey(searchKey);
+
+        // This test passed in Chrome without this wait. But it failed in Firefox without it.
+        googleHomePage.waitForTitleToContain(searchKey);
 
         // THEN the page title of the search results contains the specified search phrase
         assertTitleContains(searchKey);
