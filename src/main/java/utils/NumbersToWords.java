@@ -9,6 +9,8 @@ import static java.util.Map.entry;
 
 public class NumbersToWords {
 
+    // PRIVATE CONSTRUCTOR
+
     private static final Map<Integer, String> triadGroupings = Map.ofEntries(
             entry(0, ""),
             entry(1, "thousand"),
@@ -33,6 +35,8 @@ public class NumbersToWords {
             entry(20, "novemdecillion"),
             entry(21, "vigintillion")
     );
+
+    // PRIVATE STATIC METHODS
 
     private NumbersToWords() {
         // See "Utility classes should not have public constructors" at https://rules.sonarsource.com/java/tag/design/RSPEC-1118
@@ -68,6 +72,8 @@ public class NumbersToWords {
         return numberAsWords.toString();
     }
 
+    // PUBLIC STATIC METHODS
+
     /*
         Converts the specified BigInteger to words, as in converting 12,586,269,025 (the Fibonacci number for n=50) to:
             "twelve billion, five hundred eighty six million, two hundred sixty nine thousand twenty five"
@@ -92,4 +98,5 @@ public class NumbersToWords {
     public static String numberToWords(int number) {
         return numberToWords(BigInteger.valueOf(number));
     }
+
 }

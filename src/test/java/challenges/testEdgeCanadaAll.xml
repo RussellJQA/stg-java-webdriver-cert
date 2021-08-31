@@ -5,14 +5,14 @@
 <suite name="EdgeCanadaAllTestSuite" parallel="none">
     <test name="EdgeCanadaGoogleTest">
         <parameter name="browserType" value="edge"/>
-        <parameter name="url" value="https://www.google.ca/"/>
+        <parameter name="testUrl" value="https://www.google.ca/"/>
         <classes>
             <class name="challenges.challenge1"/>
         </classes>
     </test>
     <test name="EdgeCanadaCopartTest1">
         <parameter name="browserType" value="edge"/>
-        <parameter name="url" value="https://www.copart.ca/"/>
+        <parameter name="testUrl" value="https://www.copart.ca/"/>
         <classes>
             <class name="challenges.challenge2"/>
             <class name="challenges.challenge3"/>
@@ -25,7 +25,7 @@
     </test>
     <test name="EdgeCanadaCopartTest2">
         <parameter name="browserType" value="edge"/>
-        <parameter name="url" value="https://www.copart.ca/"/>
+        <parameter name="testUrl" value="https://www.copart.ca/"/>
         <classes>
             <class name="challenges.challenge5"/>
             <class name="challenges.challenge6"/>

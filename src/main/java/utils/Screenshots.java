@@ -14,24 +14,26 @@ public class Screenshots {
 
     private final WebDriver driver;
 
+    // CONSTRUCTOR
+
     public Screenshots(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void takeScreenshot(String filepath) {
-        TakesScreenshot screenshot = ((TakesScreenshot) driver);
-        File image = screenshot.getScreenshotAs(OutputType.FILE);
-        File destination = new File(filepath);
+    // PUBLIC CLASS METHODS
 
-        // The screenshot file will need to be moved, because it's just a temporary file
+    public void takeScreenshot(String filepath) {
+        File imageFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+        // The screenshot file needs to be moved (or copied), because it's just a temporary file
         // (which is deleted when the JVM exits).
         // See https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/OutputType.html
-        System.out.println("Screenshot temporarily saved to: " + image.getAbsolutePath());
+        System.out.println("Screenshot temporarily saved as: " + imageFile.getAbsolutePath());
 
         try {
-            FileUtils.moveFile(image, destination);
-        } catch (IOException e) {
-            e.printStackTrace();
+            FileUtils.moveFile(imageFile, new File(filepath));
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 }

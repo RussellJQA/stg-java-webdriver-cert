@@ -25,7 +25,7 @@ public class challenge2 extends BaseWebDriverTests {
     public void testSearchForExotics(String searchKey, String expectedSearchResult) {
 
         //  GIVEN the Copart homepage is displayed
-        initCopartHomePage(testUrl);
+        initCopartHomePage();
 
         // WHEN the user searches for the specified search key (e.g., "exotics")
         copartHomePage.enterSearchKey(searchKey);

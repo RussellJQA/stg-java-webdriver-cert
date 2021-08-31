@@ -24,7 +24,7 @@ public class challenge3 extends BaseWebDriverTests {
     public void testGetListOfMostPopularItems() {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage(testUrl);
+        initCopartHomePage();
 
         // WHEN you get a list of the Web elements for the page's Most Popular Items
         List<WebElement> mostPopularItems = copartHomePage.getMostPopularItems();

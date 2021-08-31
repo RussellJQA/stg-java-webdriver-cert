@@ -22,7 +22,7 @@ public class challenge7 extends BaseWebDriverTests {
     public void testCheckUrlsOfMostPopularItems() {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage(testUrl);
+        initCopartHomePage();
 
         // WHEN you get a list of the link text and the hrefs for the page's "Most Popular Items", and navigate to each href in the list
         List<List<String>> mostPopularItemsLinkTextAndHref = copartHomePage.getMostPopularItemsLinkTextAndHref();
@@ -37,15 +37,9 @@ public class challenge7 extends BaseWebDriverTests {
             String actualUrl = getActualUrl(href);
 
             String make1 = make.toLowerCase(); // Convert to lowercase to match URL
-
-            // In the US, "3 SERIES" takes you to https://www.copart.com/popular/model/3-series?query=3-series&free
-            String make2 = make1.replace(" ", "-");
-
-            // In the UK, "LAND ROVER" takes you to "...landrover..." and 'MERCEDES BENZ' to "...mercedesbenz..."
-            String make3 = make1.replace(" ", "");
-
-            // In Canada, 'MERCEDES-BENZ' to "...mercedesbenz..."
-            String make4 = make1.replace("-", "");
+            String make2 = make1.replace(" ", "-");  // Handle US's "3 SERIES"
+            String make3 = make1.replace(" ", ""); // Handle UK's "LAND ROVER" and "MERCEDES BENZ"
+            String make4 = make1.replace("-", ""); // Handle Canada's "MERCEDES-BENZ"
 
             // THEN for each element in the list, the current URL of the navigated-to page contains the element's link text
             softassert.assertTrue((actualUrl.contains(make1) || actualUrl.contains(make2) ||

@@ -25,7 +25,7 @@ public class challenge1 extends BaseWebDriverTests {
     // GIVEN/WHEN the Google search page is displayed
     @Test(priority = 1)
     public void testGotoGoogle() {
-        initGoogleHomePage(testUrl);
+        initGoogleHomePage();
     }
 
     // THEN the page title is "Google"
@@ -42,6 +42,7 @@ public class challenge1 extends BaseWebDriverTests {
         // So, for comparison between Java and Python, that has been implemented below.
 
         // WHEN the user searches for the specified search phrase
+
         googleHomePage.enterSearchKey(searchKey);
 
         // This test passed in Chrome without this wait. But it failed in Firefox without it.

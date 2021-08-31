@@ -12,6 +12,8 @@ import java.util.List;
 
 public class ExpectedFibonacciStrings {
 
+    // PRIVATE CONSTRUCTOR
+
     private static final List<String> expectedFibonacciStringsList = Arrays.asList(
             "0",
             "1",
@@ -316,10 +318,14 @@ public class ExpectedFibonacciStrings {
             "222232244629420445529739893461909967206666939096499764990979600"
     );
 
+    // PRIVATE STATIC METHODS
+
     private ExpectedFibonacciStrings() {
         // See "Utility classes should not have public constructors" at https://rules.sonarsource.com/java/tag/design/RSPEC-1118
         throw new IllegalStateException("This is a utility class, and so should not be instantiated.");
     }
+
+    // PRIVATE CLASS METHODS
 
     public static List<String> getExpectedFibonacciStrings() {
         return expectedFibonacciStringsList;

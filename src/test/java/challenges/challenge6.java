@@ -20,8 +20,7 @@ public class challenge6 extends BaseWebDriverTests {
 
     @DataProvider
     public Object[][] searchData() {
-        // Run this twice: once with "Skyline" and once with "Skyline Gt".
-        // The reason:
+        // Running this twice: once with "Skyline" and once with "Skyline Gt", because:
         //      Although the challenge only calls for "Skyline", that often fails (as the challenge said it might).
         //      So I'm re-running with a value which for the U.S. usually passes,
         //      to demonstrate that it can pass (when it should). [Both values usually fail in Canada and the U.K.]
@@ -37,7 +36,7 @@ public class challenge6 extends BaseWebDriverTests {
         System.out.println("Filter checkbox: " + filterCheckbox);
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage(testUrl);
+        initCopartHomePage();
 
         // WHEN the user searches for the specified search phrase
         copartHomePage.search(searchKey);

@@ -11,7 +11,10 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import pages.CopartHomePage;
 import pages.GoogleHomePage;
 import utils.Screenshots;
@@ -21,11 +24,14 @@ import static org.testng.Assert.assertTrue;
 
 public class BaseWebDriverTests extends BaseTests {
 
-    public WebDriverWait wait;
-    protected String testUrl;
+    protected WebDriverWait wait;
     protected GoogleHomePage googleHomePage;
     protected CopartHomePage copartHomePage;
+
     private WebDriver driver;
+    private String url;
+
+    // PRIVATE STATIC METHODS
 
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
@@ -49,6 +55,8 @@ public class BaseWebDriverTests extends BaseTests {
         return options;
     }
 
+    // PUBLIC CLASS METHODS
+
     /**
      * This function will execute before each <class> tag in test*.xml
      * <p>
@@ -58,8 +66,8 @@ public class BaseWebDriverTests extends BaseTests {
      * @throws IllegalArgumentException Exception thrown when parameter browserType is invalid
      */
     @BeforeClass
-    @Parameters("browserType") // Parameter(s) passed from test*.xml file
-    public void startClass(String browserType) throws IllegalArgumentException {
+    @Parameters({"browserType", "testUrl"}) // Parameter(s) passed from test*.xml file
+    public void startClass(String browserType, String testUrl) throws IllegalArgumentException {
 
         System.out.println("Browser type: " + browserType);
 
@@ -78,6 +86,7 @@ public class BaseWebDriverTests extends BaseTests {
 
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 10);
+        url = testUrl;
     }
 
     @AfterClass
@@ -85,16 +94,12 @@ public class BaseWebDriverTests extends BaseTests {
         driver.quit();  // Close the browser and [unlike driver.close()] end the session
     }
 
-    /**
-     * This function will execute before each test method
-     *
-     * @param url Description
-     */
-    @BeforeMethod
-    @Parameters("url") // Parameter(s) passed from test*.xml file
-    public void StartMethod(String url) {
-        testUrl = url;
-        System.out.println("Test URL: " + testUrl);
+    public void initGoogleHomePage() {
+        googleHomePage = new GoogleHomePage(driver, wait, url);
+    }
+
+    public void initCopartHomePage() {
+        copartHomePage = new CopartHomePage(driver, wait, url);
     }
 
     @AfterMethod
@@ -119,15 +124,6 @@ public class BaseWebDriverTests extends BaseTests {
     public void assertTitleContains(String expectedTitleSubstring) {
         String title = driver.getTitle();
         assertTrue(title.contains(expectedTitleSubstring), String.format("Incorrect page title: %s", title));
-    }
-
-    public void initGoogleHomePage(String googleUrl) {
-        googleHomePage = new GoogleHomePage(driver, wait, googleUrl);
-    }
-
-    @Parameters("copartUrl")
-    public void initCopartHomePage(String copartUrl) {
-        copartHomePage = new CopartHomePage(driver, wait, copartUrl);
     }
 
     public String getActualUrl(String href) {

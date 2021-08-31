@@ -5,14 +5,14 @@
 <suite name="FirefoxUKAllTestSuite" parallel="none">
     <test name="FirefoxUKGoogleTest">
         <parameter name="browserType" value="firefox"/>
-        <parameter name="url" value="https://www.google.co.uk/"/>
+        <parameter name="testUrl" value="https://www.google.co.uk/"/>
         <classes>
             <class name="challenges.challenge1"/>
         </classes>
     </test>
     <test name="FirefoxUKCopartTest1">
         <parameter name="browserType" value="firefox"/>
-        <parameter name="url" value="https://www.copart.co.uk/"/>
+        <parameter name="testUrl" value="https://www.copart.co.uk/"/>
         <classes>
             <class name="challenges.challenge2"/>
             <class name="challenges.challenge3"/>
@@ -25,7 +25,7 @@
     </test>
     <test name="FirefoxUKCopartTest2">
         <parameter name="browserType" value="firefox"/>
-        <parameter name="url" value="https://www.copart.co.uk/"/>
+        <parameter name="testUrl" value="https://www.copart.co.uk/"/>
         <classes>
             <class name="challenges.challenge5"/>
             <class name="challenges.challenge6"/>

@@ -5,14 +5,14 @@
 <suite name="ChromeUSAllTestSuite" parallel="none">
     <test name="ChromeUSGoogleTest">
         <parameter name="browserType" value="chrome"/>
-        <parameter name="url" value="https://www.google.com/"/>
+        <parameter name="testUrl" value="https://www.google.com/"/>
         <classes>
             <class name="challenges.challenge1"/>
         </classes>
     </test>
     <test name="ChromeUSCopartTest1">
         <parameter name="browserType" value="chrome"/>
-        <parameter name="url" value="https://www.copart.com/"/>
+        <parameter name="testUrl" value="https://www.copart.com/"/>
         <classes>
             <class name="challenges.challenge2"/>
             <class name="challenges.challenge3"/>
@@ -25,7 +25,7 @@
     </test>
     <test name="ChromeUSCopartTest2">
         <parameter name="browserType" value="chrome"/>
-        <parameter name="url" value="https://www.copart.com/"/>
+        <parameter name="testUrl" value="https://www.copart.com/"/>
         <classes>
             <class name="challenges.challenge5"/>
             <class name="challenges.challenge6"/>

@@ -63,7 +63,7 @@ public class challenge5 extends BaseWebDriverTests {
     public void testSearchThenPrintColumnData(String searchKey, String columnName, List<String> columnLumping) {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage(testUrl);
+        initCopartHomePage();
 
         /*
          * WHEN the user searches for the specified search phrase (e.g., "porsche"),
@@ -101,7 +101,7 @@ public class challenge5 extends BaseWebDriverTests {
     public void testSearchThenPrintColumnDataSwitch(String searchKey, String columnName) {
 
         // GIVEN the Copart homepage is displayed
-        initCopartHomePage(testUrl);
+        initCopartHomePage();
 
         /*
          * WHEN the user searches for the specified search phrase (e.g., "porsche"),
