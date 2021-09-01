@@ -24,7 +24,7 @@ import java.util.List;
 public class challenge4 extends BaseTests {
 
     @DataProvider
-    public Object[][] fibonacciData() {
+    private static Object[][] fibonacciData() {
         return new Object[][]{{300}};
     }
 

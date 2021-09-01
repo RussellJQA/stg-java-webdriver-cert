@@ -33,7 +33,7 @@ import java.util.Map;
 public class challenge5 extends BaseWebDriverTests {
 
     @DataProvider
-    public Object[][] searchData() {
+    private static Object[][] searchData() {
         return new Object[][]{
                 {"porsche", "model", List.of()}, // Part 1
                 {"porsche", "damage", List.of("MISC", "REAR END", "FRONT END", "MINOR DENT/SCRATCHES", "UNDERCARRIAGE")} // Part 2
@@ -93,7 +93,7 @@ public class challenge5 extends BaseWebDriverTests {
     // The following version of Part 2 is deprecated, but has been left here to demonstrate the use of a switch statement.
 
     @DataProvider
-    public Object[][] searchDataSwitch() {
+    private static Object[][] searchDataSwitch() {
         return new Object[][]{{"porsche", "damage"}};
     }
 

@@ -19,7 +19,7 @@ import static org.testng.Assert.assertTrue;
 public class challenge6 extends BaseWebDriverTests {
 
     @DataProvider
-    public Object[][] searchData() {
+    private static Object[][] searchData() {
         // Running this twice: once with "Skyline" and once with "Skyline Gt", because:
         //      Although the challenge only calls for "Skyline", that often fails (as the challenge said it might).
         //      So I'm re-running with a value which for the U.S. usually passes,

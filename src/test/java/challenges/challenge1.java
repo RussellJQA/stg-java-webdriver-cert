@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 public class challenge1 extends BaseWebDriverTests {
 
     @DataProvider
-    public Object[][] searchData() {
+    private static Object[][] searchData() {
         return new Object[][]{{"puppies"}};
     }
 

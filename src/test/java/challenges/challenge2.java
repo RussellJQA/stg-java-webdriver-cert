@@ -17,7 +17,7 @@ import static org.testng.Assert.assertTrue;
 public class challenge2 extends BaseWebDriverTests {
 
     @DataProvider
-    public Object[][] searchData() {
+    private static Object[][] searchData() {
         return new Object[][]{{"exotics", "PORSCHE"}};
     }
 
