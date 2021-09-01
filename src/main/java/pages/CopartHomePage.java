@@ -231,7 +231,7 @@ public class CopartHomePage extends WebPage {
             // Screenshot functionality for Challenge 6
             Screenshots screenshots = new Screenshots(driver);
             String fileBase = String.format("filtering_for_%s_%s_%s", filterPanelLinkText, filterText, filterCheckBox);
-            screenshots.takeScreenshot(String.format("screenshots/%s.png", fileBase));
+            screenshots.takeScreenshot(String.format("screenshots/%s.png", fileBase), true);
             String errorMessage = String.format("Filter checkbox for panel: %s, text: %s, checkbox: %s not found.",
                     filterPanelLinkText, filterText, filterCheckBox);
             System.out.println(errorMessage);

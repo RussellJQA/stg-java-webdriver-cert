@@ -42,6 +42,13 @@ public class challenge5 extends BaseWebDriverTests {
 
     // The following test incorporates both Parts 1 and 2
 
+    @DataProvider
+    private static Object[][] searchDataSwitch() {
+        return new Object[][]{{"porsche", "damage"}};
+    }
+
+    // The following version of Part 2 is deprecated, but has been left here to demonstrate the use of a switch statement.
+
     /**
      * Search copart.com for specified search key, then print distinct values of specified search results column
      *
@@ -88,13 +95,6 @@ public class challenge5 extends BaseWebDriverTests {
 
             copartHomePage.printWebElementValueCounts(lumpedColumnValueCounts, testTitle);
         }
-    }
-
-    // The following version of Part 2 is deprecated, but has been left here to demonstrate the use of a switch statement.
-
-    @DataProvider
-    private static Object[][] searchDataSwitch() {
-        return new Object[][]{{"porsche", "damage"}};
     }
 
     @Test(priority = 8, dataProvider = "searchDataSwitch")

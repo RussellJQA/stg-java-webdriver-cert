@@ -112,7 +112,7 @@ public class BaseWebDriverTests extends BaseTests {
         if (ITestResult.FAILURE == result.getStatus()) {
             Screenshots screenshots = new Screenshots(driver);
             String filepath = String.format("screenshots/%s.png", result.getName());
-            screenshots.takeScreenshot(filepath);
+            screenshots.takeScreenshot(filepath, true);
         }
     }
 

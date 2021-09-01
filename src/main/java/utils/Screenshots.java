@@ -9,6 +9,10 @@ import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Screenshots {
 
@@ -22,7 +26,7 @@ public class Screenshots {
 
     // PUBLIC CLASS METHODS
 
-    public void takeScreenshot(String filepath) {
+    public void takeScreenshot(String filePath, boolean includeTimestamp) {
         File imageFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
         // The screenshot file needs to be moved (or copied), because it's just a temporary file
@@ -30,8 +34,14 @@ public class Screenshots {
         // See https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/OutputType.html
         System.out.println("Screenshot temporarily saved as: " + imageFile.getAbsolutePath());
 
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String strDate = dateFormat.format(date);
+
+        String destFile = includeTimestamp ? filePath.replace(".png", String.format("_%s.png", strDate)) : filePath;
+
         try {
-            FileUtils.moveFile(imageFile, new File(filepath));
+            FileUtils.moveFile(imageFile, new File(destFile));
         } catch (IOException exception) {
             exception.printStackTrace();
         }
