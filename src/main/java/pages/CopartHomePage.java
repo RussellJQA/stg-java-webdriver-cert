@@ -13,7 +13,7 @@ import utils.Screenshots;
 
 import java.util.*;
 
-public class CopartHomePage extends WebPage {
+public final class CopartHomePage extends WebPage {
 
     // PRIVATE STATIC METHODS
 

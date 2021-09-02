@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 import java.util.Comparator;
 import java.util.List;
 
-public class challenge3 extends BaseWebDriverTests {
+public final class challenge3 extends BaseWebDriverTests {
 
     @Test(priority = 5)
     public void testGetListOfMostPopularItems() {

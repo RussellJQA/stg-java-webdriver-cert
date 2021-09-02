@@ -30,7 +30,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class challenge5 extends BaseWebDriverTests {
+public final class challenge5 extends BaseWebDriverTests {
 
     @DataProvider
     private static Object[][] searchData() {

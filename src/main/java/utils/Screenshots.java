@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Screenshots {
+public final class Screenshots {
 
     private final WebDriver driver;
 

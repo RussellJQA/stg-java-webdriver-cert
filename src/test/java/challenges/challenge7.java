@@ -16,7 +16,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-public class challenge7 extends BaseWebDriverTests {
+public final class challenge7 extends BaseWebDriverTests {
 
     @Test(priority = 10)
     public void testCheckUrlsOfMostPopularItems() {

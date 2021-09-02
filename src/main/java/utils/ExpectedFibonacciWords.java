@@ -5,7 +5,7 @@ package utils;
 import java.util.Arrays;
 import java.util.List;
 
-public class ExpectedFibonacciWords {
+public final class ExpectedFibonacciWords {
 
     // PRIVATE CONSTRUCTOR
 

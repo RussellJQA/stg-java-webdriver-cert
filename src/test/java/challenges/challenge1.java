@@ -15,7 +15,7 @@ import base.BaseWebDriverTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class challenge1 extends BaseWebDriverTests {
+public final class challenge1 extends BaseWebDriverTests {
 
     @DataProvider
     private static Object[][] searchData() {

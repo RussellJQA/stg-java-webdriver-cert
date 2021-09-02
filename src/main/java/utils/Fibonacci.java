@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Fibonacci {
+public final class Fibonacci {
 
     private final Map<Integer, BigInteger> cache = new HashMap<>();
 

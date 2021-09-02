@@ -21,7 +21,7 @@ import utils.NumbersToWords;
 import java.math.BigInteger;
 import java.util.List;
 
-public class challenge4 extends BaseTests {
+public final class challenge4 extends BaseTests {
 
     @DataProvider
     private static Object[][] fibonacciData() {

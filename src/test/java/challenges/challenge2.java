@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class challenge2 extends BaseWebDriverTests {
+public final class challenge2 extends BaseWebDriverTests {
 
     @DataProvider
     private static Object[][] searchData() {

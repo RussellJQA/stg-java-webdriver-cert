@@ -10,7 +10,7 @@ package utils;
 import java.util.Arrays;
 import java.util.List;
 
-public class ExpectedFibonacciStrings {
+public final class ExpectedFibonacciStrings {
 
     // PRIVATE CONSTRUCTOR
 

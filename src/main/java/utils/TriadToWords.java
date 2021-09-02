@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class TriadToWords {
+public final class TriadToWords {
 
     private static final Map<Integer, String> numLtTwenty = Map.ofEntries(
             entry(0, "zero"),

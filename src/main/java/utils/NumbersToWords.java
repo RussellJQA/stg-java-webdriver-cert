@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class NumbersToWords {
+public final class NumbersToWords {
 
     // PRIVATE CONSTRUCTOR
 
@@ -74,10 +74,13 @@ public class NumbersToWords {
 
     // PUBLIC STATIC METHODS
 
-    /*
-        Converts the specified BigInteger to words, as in converting 12,586,269,025 (the Fibonacci number for n=50) to:
-            "twelve billion, five hundred eighty six million, two hundred sixty nine thousand twenty five"
-    */
+    /**
+     * Return the word representation of the specified number
+     * For example, return "twelve billion, five hundred eighty six million, two hundred sixty nine thousand twenty five"
+     * if BigInteger("12586269025") is specified.
+     * @param number    BigInteger number to be converted to words
+     * @return
+     */
     public static String numberToWords(BigInteger number) {
         if (number.equals(BigInteger.ZERO)) {
             return "zero";
