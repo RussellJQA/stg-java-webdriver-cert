@@ -1,5 +1,3 @@
-// This class is a base class for other tests
-
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -22,6 +20,9 @@ import utils.Screenshots;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+/**
+ * Base class for WebDriver-based tests
+ */
 public class BaseWebDriverTests extends BaseTests {
 
     protected WebDriverWait wait;
@@ -31,8 +32,13 @@ public class BaseWebDriverTests extends BaseTests {
     private WebDriver driver;
     private String url;
 
-    // PRIVATE STATIC METHODS
+    // ----------------------------------------------------------------------
+    // Public instance methods
+    // ----------------------------------------------------------------------
 
+    /**
+     * @return
+     */
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
 
@@ -43,6 +49,9 @@ public class BaseWebDriverTests extends BaseTests {
         return options;
     }
 
+    /**
+     * @return
+     */
     private static EdgeOptions getEdgeOptions() {
         EdgeOptions options = new EdgeOptions();
 
@@ -54,8 +63,6 @@ public class BaseWebDriverTests extends BaseTests {
 
         return options;
     }
-
-    // PUBLIC CLASS METHODS
 
     /**
      * This function will execute before each <class> tag in test*.xml
@@ -89,19 +96,32 @@ public class BaseWebDriverTests extends BaseTests {
         url = testUrl;
     }
 
+    /**
+     *
+     */
     @AfterClass
     public void stopClass() {
         driver.quit();  // Close the browser and [unlike driver.close()] end the session
     }
 
+    /**
+     *
+     */
     public void initGoogleHomePage() {
         googleHomePage = new GoogleHomePage(driver, wait, url);
     }
 
+    /**
+     *
+     */
     public void initCopartHomePage() {
         copartHomePage = new CopartHomePage(driver, wait, url);
     }
 
+    /**
+     * @param result
+     * @throws InterruptedException
+     */
     @AfterMethod
     public void stopMethod(ITestResult result) throws InterruptedException {
 
@@ -116,18 +136,32 @@ public class BaseWebDriverTests extends BaseTests {
         }
     }
 
+    /**
+     * @param href
+     * @return
+     */
+    public String getActualUrl(String href) {
+        driver.get(href);
+        return driver.getCurrentUrl();
+    }
+
+    // ----------------------------------------------------------------------
+    // Private class (static) methods
+    // ----------------------------------------------------------------------
+
+    /**
+     * @param expectedTitle
+     */
     public void assertTitleAsExpected(String expectedTitle) {
         String title = driver.getTitle();
         assertEquals(title, expectedTitle, String.format("Incorrect page title: %s", title));
     }
 
+    /**
+     * @param expectedTitleSubstring
+     */
     public void assertTitleContains(String expectedTitleSubstring) {
         String title = driver.getTitle();
         assertTrue(title.contains(expectedTitleSubstring), String.format("Incorrect page title: %s", title));
-    }
-
-    public String getActualUrl(String href) {
-        driver.get(href);
-        return driver.getCurrentUrl();
     }
 }

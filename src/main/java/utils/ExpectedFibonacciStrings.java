@@ -1,18 +1,15 @@
-/*
-This ExpectedFibonacciStrings utility class provides a function which returns a list of the first 301 Fibonacci numbers (as strings).
-The numbers were taken from "The first 300 Fibonacci numbers, completely factorised"
-at http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html
-[The referenced Web page lists 301 Fibonacci numbers, those for n=0 through n=300.]
-*/
-
 package utils;
 
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This ExpectedFibonacciStrings utility class provides a function which returns a list of the first 301 Fibonacci numbers (as strings).
+ * The numbers were taken from "The first 300 Fibonacci numbers, completely factorised"
+ * at http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html
+ * [The referenced Web page lists 301 Fibonacci numbers, those for n=0 through n=300.]
+ */
 public final class ExpectedFibonacciStrings {
-
-    // PRIVATE CONSTRUCTOR
 
     private static final List<String> expectedFibonacciStringsList = Arrays.asList(
             "0",
@@ -318,15 +315,25 @@ public final class ExpectedFibonacciStrings {
             "222232244629420445529739893461909967206666939096499764990979600"
     );
 
-    // PRIVATE STATIC METHODS
+    // ----------------------------------------------------------------------
+    // Private Constructor
+    // ----------------------------------------------------------------------
 
+    /**
+     *
+     */
     private ExpectedFibonacciStrings() {
         // See "Utility classes should not have public constructors" at https://rules.sonarsource.com/java/tag/design/RSPEC-1118
         throw new IllegalStateException("This is a utility class, and so should not be instantiated.");
     }
 
-    // PRIVATE CLASS METHODS
+    // ----------------------------------------------------------------------
+    // Public class (static) methods
+    // ----------------------------------------------------------------------
 
+    /**
+     * @return
+     */
     public static List<String> getExpectedFibonacciStrings() {
         return expectedFibonacciStringsList;
     }

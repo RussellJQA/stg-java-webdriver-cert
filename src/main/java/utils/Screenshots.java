@@ -14,18 +14,32 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ *
+ */
 public final class Screenshots {
 
     private final WebDriver driver;
 
-    // CONSTRUCTOR
+    // ----------------------------------------------------------------------
+    // Constructor
+    // ----------------------------------------------------------------------
 
+    /**
+     * @param driver
+     */
     public Screenshots(WebDriver driver) {
         this.driver = driver;
     }
 
-    // PUBLIC CLASS METHODS
+    // ----------------------------------------------------------------------
+    // Public instance methods
+    // ----------------------------------------------------------------------
 
+    /**
+     * @param filePath
+     * @param includeTimestamp
+     */
     public void takeScreenshot(String filePath, boolean includeTimestamp) {
         File imageFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 

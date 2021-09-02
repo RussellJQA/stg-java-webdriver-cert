@@ -1,13 +1,12 @@
-// This ExpectedFibonacciWords utility class provides a function which returns a list of the first 301 Fibonacci numbers (as words).
-
 package utils;
 
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Utility class providing a function which returns a list of the first 301 Fibonacci numbers (as words).
+ */
 public final class ExpectedFibonacciWords {
-
-    // PRIVATE CONSTRUCTOR
 
     private static final List<String> expectedFibonacciWordsList = Arrays.asList(
             "zero",
@@ -313,15 +312,25 @@ public final class ExpectedFibonacciWords {
             "two hundred twenty two novemdecillion, two hundred thirty two octodecillion, two hundred forty four septdecillion, six hundred twenty nine sexdecillion, four hundred twenty quindecillion, four hundred forty five quattuordecillion, five hundred twenty nine tredecillion, seven hundred thirty nine duodecillion, eight hundred ninety three undecillion, four hundred sixty one decillion, nine hundred nine nonillion, nine hundred sixty seven octillion, two hundred six septillion, six hundred sixty six sextillion, nine hundred thirty nine quintillion, ninety six quadrillion, four hundred ninety nine trillion, seven hundred sixty four billion, nine hundred ninety million, nine hundred seventy nine thousand, six hundred"
     );
 
-    // PRIVATE STATIC METHODS
+    // ----------------------------------------------------------------------
+    // Private constructor
+    // ----------------------------------------------------------------------
 
+    /**
+     *
+     */
     private ExpectedFibonacciWords() {
         // See "Utility classes should not have public constructors" at https://rules.sonarsource.com/java/tag/design/RSPEC-1118
         throw new IllegalStateException("This is a utility class, and so should not be instantiated.");
     }
 
-    // PRIVATE CLASS METHODS
+    // ----------------------------------------------------------------------
+    // Public class (static) methods
+    // ----------------------------------------------------------------------
 
+    /**
+     * @return
+     */
     public static List<String> getExpectedFibonacciWords() {
         return expectedFibonacciWordsList;
     }

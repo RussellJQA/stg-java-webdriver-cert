@@ -1,8 +1,3 @@
-/*
-This class has functions for dealing with Fibonacci numbers, and Fibonacci sequences.
-For an explanation of Fibonacci numbers and Fibonacci sequences, see https://en.wikipedia.org/wiki/Fibonacci_number
-*/
-
 package utils;
 
 import java.math.BigInteger;
@@ -11,11 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class has functions for dealing with Fibonacci numbers, and Fibonacci sequences.
+ * For an explanation of Fibonacci numbers and Fibonacci sequences, see https://en.wikipedia.org/wiki/Fibonacci_number
+ */
 public final class Fibonacci {
 
     private final Map<Integer, BigInteger> cache = new HashMap<>();
 
-    // PUBLIC STATIC METHODS
+    // ----------------------------------------------------------------------
+    // Public instance methods
+    // ----------------------------------------------------------------------
 
     public static List<BigInteger> getExpectedFibonaccis() {
         List<BigInteger> expectedFibonaccis = new ArrayList<>();
@@ -25,8 +26,6 @@ public final class Fibonacci {
         }
         return expectedFibonaccis;
     }
-
-    // PUBLIC CLASS METHODS
 
     public BigInteger getFibonacciNumber(int n) {
 
@@ -42,6 +41,10 @@ public final class Fibonacci {
             return fibonacciNumber;
         }
     }
+
+    // ----------------------------------------------------------------------
+    // Public class (static) methods
+    // ----------------------------------------------------------------------
 
     public List<BigInteger> getGeneratedFibonacciSequence(int max) {
         List<BigInteger> generatedFibonacciSequence = new ArrayList<>();

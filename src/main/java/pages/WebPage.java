@@ -5,15 +5,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+/**
+ * The base class for GoogleHomePage and CopartHomePage
+ */
 public class WebPage {
-
     protected final WebDriver driver;
     protected final WebDriverWait wait;
     protected final String url;
 
-    // PROTECTED CLASS METHODS
+    // ----------------------------------------------------------------------
+    // Constructor
+    // ----------------------------------------------------------------------
 
+    /**
+     * @param driver
+     * @param wait
+     * @param url
+     */
     public WebPage(WebDriver driver, WebDriverWait wait, String url) {
         this.driver = driver;
         this.wait = wait;
@@ -21,17 +29,29 @@ public class WebPage {
         driver.get(url);
     }
 
-    // CONSTRUCTOR
+    // ----------------------------------------------------------------------
+    // Public instance methods
+    // ----------------------------------------------------------------------
 
-    protected void clickLink(String linkText) {
-        // Click the link with the specified link text
-        driver.findElement(By.linkText(linkText)).click();
+    /**
+     * Waits for the page title to contain the specified text
+     *
+     * @param text
+     */
+    public void waitForTitleToContain(String text) {
+        wait.until(ExpectedConditions.titleContains(text));
     }
 
-    // PUBLIC CLASS METHODS
+    // ----------------------------------------------------------------------
+    // Protected instance methods
+    // ----------------------------------------------------------------------
 
-    public void waitForTitleToContain(String text) {
-        // Wait for the page title to contain the specified text
-        wait.until(ExpectedConditions.titleContains(text));
+    /**
+     * Clicks the link with the specified link text
+     *
+     * @param linkText
+     */
+    protected void clickLink(String linkText) {
+        driver.findElement(By.linkText(linkText)).click();
     }
 }

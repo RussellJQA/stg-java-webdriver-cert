@@ -58,15 +58,26 @@ public final class TriadToWords {
             entry(900, "nine hundred")
     );
 
-    // PRIVATE CONSTRUCTOR
+    // ----------------------------------------------------------------------
+    // Private constructor
+    // ----------------------------------------------------------------------
 
+    /**
+     *
+     */
     private TriadToWords() {
         // See "Utility classes should not have public constructors" at https://rules.sonarsource.com/java/tag/design/RSPEC-1118
         throw new IllegalStateException("This is a utility class, and so should not be instantiated.");
     }
 
-    // PUBLIC STATIC METHODS
+    // ----------------------------------------------------------------------
+    // Public class (static) methods
+    // ----------------------------------------------------------------------
 
+    /**
+     * @param oneToThreeDigitInt
+     * @return
+     */
     public static String triadToString(int oneToThreeDigitInt) {
 
         if (oneToThreeDigitInt <= 19) {

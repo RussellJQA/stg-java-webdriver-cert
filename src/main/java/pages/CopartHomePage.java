@@ -1,5 +1,3 @@
-// This class contains CopartHomePage, page object for Copart.com's home page
-
 package pages;
 
 import org.openqa.selenium.By;
@@ -11,26 +9,55 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Screenshots;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
+/**
+ * Page object for Copart.com's home page
+ */
 public final class CopartHomePage extends WebPage {
 
-    // PRIVATE STATIC METHODS
+    // ----------------------------------------------------------------------
+    // Constructor
+    // ----------------------------------------------------------------------
 
+    /**
+     * @param driver
+     * @param wait
+     * @param url
+     */
     public CopartHomePage(WebDriver driver, WebDriverWait wait, String url) {
         // Possible url values: "https://www.copart.com", "https://www.copart.ca/", "https://www.copart.co.uk/"
         super(driver, wait, url);
     }
 
-    // PRIVATE CLASS METHODS
+    // ----------------------------------------------------------------------
+    // Public instance methods
+    // ----------------------------------------------------------------------
 
-    private static String filterButtonXpath(String panelLinkText) {
-        // XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
-        //  and also used indirectly for the corresponding filter text box and filter checkboxes
-
-        return String.format("//h4[@class='panel-title']/a[text()='%s']", panelLinkText);
+    /**
+     * Prints the count for each of the distinct text values from the specified WebElements
+     *
+     * @param counts
+     * @param testTitle
+     */
+    public static void printWebElementValueCounts(Map<String, Integer> counts, String testTitle) {
+        System.out.println(testTitle);
+        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+            System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
+        }
     }
 
+    /**
+     * @param columnValueCounts
+     * @param columnLumping
+     * @return
+     */
     public static Map<String, Integer> getLumpedColumnValueCounts(Map<String, Integer> columnValueCounts,
                                                                   List<String> columnLumping) {
         if (columnLumping.size() < 2) {
@@ -56,9 +83,13 @@ public final class CopartHomePage extends WebPage {
         return lumpedColumnValueCounts;
     }
 
+    /**
+     * Gets counts for each of the distinct text values from the specified WebElements
+     *
+     * @param elements
+     * @return
+     */
     public static Map<String, Integer> getWebElementValueCounts(List<WebElement> elements) {
-        //  Get counts for each of the distinct text values from the specified WebElements
-
         // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
         //      (TreeMap is automatically sorted in ascending order of the map's keys.)
         Map<String, Integer> columnValueCounts = new TreeMap<>();
@@ -72,76 +103,49 @@ public final class CopartHomePage extends WebPage {
         return columnValueCounts;
     }
 
-    // CONSTRUCTOR
+    /**
+     * Returns the XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
+     *
+     * @param panelLinkText
+     * @return
+     */
+    private static String filterButtonXpath(String panelLinkText) {
+        // XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
+        //  and also used indirectly for the corresponding filter text box and filter checkboxes
 
-    public static void printWebElementValueCounts(Map<String, Integer> counts, String testTitle) {
-        // Prints the count for each of the distinct text values from the specified WebElements
-
-        System.out.println(testTitle);
-        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
-            System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
-        }
+        return String.format("//h4[@class='panel-title']/a[text()='%s']", panelLinkText);
     }
 
-    // PUBLIC STATIC METHODS
-
-    private void setFilterTextBox(String panelLinkText, String filterText) {
-        /*
-         * Enter the specified filter text (e.g., 'skyline') in the specified
-         * filter text box (e.g., the filter panel's 'Model' text box)
-         */
-
-        String xpath = String.format("%s/ancestor::li//form//input", filterButtonXpath(panelLinkText));
-        driver.findElement(By.xpath(xpath)).sendKeys(filterText);
-    }
-
-    private void clickFilterBtn(String panelLinkText) {
-        /*
-         * Click the specified filter button in the page's left-hand 'Filter Options' sidebar.
-         * For example, click the button which expands the 'Model' filter
-         */
-
-        String xpath = filterButtonXpath(panelLinkText);
-        driver.findElement(By.xpath(xpath)).click();
-    }
-
-    private void setEntriesPerPageTo(int desiredEntriesPerPage) {
-        // Set the entries per page, using the 'Show {20/50/100} entries' dropdown selector
-
-        // The "Show {20/50/100} entries" dropdown selector
-        By numEntriesSelector = By.name("serverSideDataTable_length");
-
-        WebElement entriesPerPageElement =
-                wait.until(ExpectedConditions.presenceOfElementLocated(numEntriesSelector));
-
-        // Change the selected number of entries to display per page
-        Select entriesPerPage = new Select(entriesPerPageElement);
-        entriesPerPage.selectByValue(String.valueOf(desiredEntriesPerPage));
-    }
-
-    // PUBLIC CLASS METHODS
-
+    /**
+     * Enters the specified search key into main search input and press RETURN
+     *
+     * @param searchKey
+     */
     public void enterSearchKey(String searchKey) {
-        // Enter the specified search key into main search input and press RETURN
         driver.findElement(By.id("input-search")).sendKeys(searchKey, Keys.ENTER);
     }
 
+    /**
+     * Waits for the progress spinner to be present and then become invisible
+     */
     public void waitForSpinnerToComeAndGo() {
-        // Wait for the progress spinner to be present and then become invisible
-
         By spinnerLoc = By.xpath("//div[@id='serverSideDataTable_processing']");
         WebElement spinner = wait.until(ExpectedConditions.presenceOfElementLocated(spinnerLoc));
         wait.until(ExpectedConditions.invisibilityOf(spinner));
     }
 
+    /**
+     * Returns the text from the search results table WebElement
+     */
     public String getTableText() {
-        // Return the text from the search results table WebElement
+        //
         return driver.findElement(By.xpath("*//table[@id='serverSideDataTable']")).getText();
     }
 
+    /**
+     * Returns a sorted list of the links (WebElements) from the 'Most Popular Items' section of the page's 'Trending' tab
+     */
     public List<WebElement> getMostPopularItems() {
-        // Return a sorted list of the links (WebElements) from the 'Most Popular Items' section of the page's 'Trending' tab
-
         By mostPopularItemLinks = By.xpath("//span[@ng-repeat='popularSearch in popularSearches']/a");
 
         clickLink("Trending");
@@ -152,6 +156,9 @@ public final class CopartHomePage extends WebPage {
         return mostPopularItems;
     }
 
+    /**
+     * @return
+     */
     public List<List<String>> getMostPopularItemsLinkTextAndHref() {
 
         List<WebElement> mostPopularItems = getMostPopularItems();
@@ -166,9 +173,13 @@ public final class CopartHomePage extends WebPage {
         return mostPopularItemsLinkTextAndHref;
     }
 
+    /**
+     * Searches for the specified search key and set the entries per page
+     *
+     * @param searchKey
+     * @param entriesPerPage
+     */
     public void searchAndSetEntriesPerPage(String searchKey, int entriesPerPage) {
-        // Search for the specified search key and set the entries per page
-
         enterSearchKey(searchKey);
 
         if (entriesPerPage > 0) {
@@ -178,9 +189,17 @@ public final class CopartHomePage extends WebPage {
         waitForSpinnerToComeAndGo();  // Sometimes this fails. Look at alternatives discussed in "class" and afterwards
     }
 
-    public List<WebElement> getElementsFromColumn(String columnName) {
-        // Search for the specified search key and set the entries per page
+    // ----------------------------------------------------------------------
+    // Private instance methods
+    // ----------------------------------------------------------------------
 
+    /**
+     * Searches for the specified search key and set the entries per page
+     *
+     * @param columnName
+     * @return
+     */
+    public List<WebElement> getElementsFromColumn(String columnName) {
         // Java 9's Map.of() is an immutable map with at most 10 key/value pairs
         Map<String, String> columnXpathLocators = Map.of(
                 "make", "//span[@class='make-items']//a",
@@ -191,25 +210,41 @@ public final class CopartHomePage extends WebPage {
         return driver.findElements(By.xpath(columnXpathLocators.get(columnName)));
     }
 
+    /**
+     * @param searchKey
+     */
     public void search(String searchKey) {
         searchAndSetEntriesPerPage(searchKey, -1);  // Leave entriesPerPage unchanged
     }
 
+    /**
+     * Checks the specified checkbox. For example, check the 'Model' filter's 'Skyline' checkbox
+     *
+     * @param panelLinkText
+     * @param filterCheckBox
+     */
     public void checkFilterCheckBox(String panelLinkText, String filterCheckBox) {
-        // Check the specified checkbox. For example, check the 'Model' filter's 'Skyline' checkbox
-
         String xpath = String.format("%s/ancestor::li//ul//input[@value='%s']", filterButtonXpath(panelLinkText), filterCheckBox);
         driver.findElement(By.xpath(xpath)).click();
     }
 
-    public boolean setFilterTextAndCheckBox(String filterPanelLinkText, String filterText, String filterCheckBox) {
-        /*
-         * In the page's page's left-hand 'Filter Options' sidebar:
-         *   - Click the panel with the specified link text (e.g., 'Model')
-         *   - Enter the specified text (e.g. 'skyline') in the 'Model' filter panel's text box
-         *   - Check the specified checkbox (e.g. 'Skyline') in the 'Model' filter panel's list of checkboxes
-         */
+    // ----------------------------------------------------------------------
+    // Public class (static) methods
+    // ----------------------------------------------------------------------
 
+    /**
+     * In the page's page's left-hand 'Filter Options' sidebar:
+     * - Click the panel with the specified link text (e.g., 'Model')
+     * - Enter the specified text (e.g. 'skyline') in the 'Model' filter panel's text box
+     * - Check the specified checkbox (e.g. 'Skyline') in the 'Model' filter panel's list of checkboxes
+     * &
+     *
+     * @param filterPanelLinkText
+     * @param filterText
+     * @param filterCheckBox
+     * @return
+     */
+    public boolean setFilterTextAndCheckBox(String filterPanelLinkText, String filterText, String filterCheckBox) {
         boolean success = true;
 
         try {
@@ -240,5 +275,50 @@ public final class CopartHomePage extends WebPage {
         }
 
         return success;
+    }
+
+    /**
+     * Enters the specified filter text (e.g., 'skyline') in the specified
+     * filter text box (e.g., the filter panel's 'Model' text box)
+     *
+     * @param panelLinkText
+     * @param filterText
+     */
+    private void setFilterTextBox(String panelLinkText, String filterText) {
+        String xpath = String.format("%s/ancestor::li//form//input", filterButtonXpath(panelLinkText));
+        driver.findElement(By.xpath(xpath)).sendKeys(filterText);
+    }
+
+    /**
+     * Clicks the specified filter button in the page's left-hand 'Filter Options' sidebar
+     * For example, click the button which expands the 'Model' filter
+     *
+     * @param panelLinkText
+     */
+    private void clickFilterBtn(String panelLinkText) {
+        String xpath = filterButtonXpath(panelLinkText);
+        driver.findElement(By.xpath(xpath)).click();
+    }
+
+    // ----------------------------------------------------------------------
+    // Private class (static) methods
+    // ----------------------------------------------------------------------
+
+    /**
+     * Sets the entries per page, using the 'Show {20/50/100} entries' dropdown selector
+     *
+     * @param desiredEntriesPerPage
+     */
+    private void setEntriesPerPageTo(int desiredEntriesPerPage) {
+
+        // The "Show {20/50/100} entries" dropdown selector
+        By numEntriesSelector = By.name("serverSideDataTable_length");
+
+        WebElement entriesPerPageElement =
+                wait.until(ExpectedConditions.presenceOfElementLocated(numEntriesSelector));
+
+        // Change the selected number of entries to display per page
+        Select entriesPerPage = new Select(entriesPerPageElement);
+        entriesPerPage.selectByValue(String.valueOf(desiredEntriesPerPage));
     }
 }

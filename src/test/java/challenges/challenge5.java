@@ -1,27 +1,5 @@
 package challenges;
 
-/*
-Challenge 5 (If/Else/Switch):
-
-There are 2 parts to this challenge. They are completely independent of each other, and so can be run separately or together (in either order).
-
-- Part 1:
-1. Go to the https://www.copart.com main page.
-2. Do a search for “porsche” and change the  drop down for “Show Entries” from 20 to 100.
-3. Count how many different models of Porsche are in the results on the first page, and return in the terminal how many of each type exists.
-    Possible values can be “CAYENNE S”, “BOXSTER S”, etc.
-
-- Part 2:
-1. Create a switch statement to count the types of damages.
-    Count each of these types separately:
-        REAR END
-        FRONT END
-        MINOR DENT/SCRATCHES
-        UNDERCARRIAGE
-    Group any other types together into a MISC type.
-2. Make sure you make your code is reusable. Use a class and methods.
-*/
-
 import base.BaseWebDriverTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -40,14 +18,14 @@ public final class challenge5 extends BaseWebDriverTests {
         };
     }
 
-    // The following test incorporates both Parts 1 and 2
-
     @DataProvider
     private static Object[][] searchDataSwitch() {
         return new Object[][]{{"porsche", "damage"}};
     }
 
-    // The following version of Part 2 is deprecated, but has been left here to demonstrate the use of a switch statement.
+    // ----------------------------------------------------------------------
+    // Public instance methods
+    // ----------------------------------------------------------------------
 
     /**
      * Search copart.com for specified search key, then print distinct values of specified search results column
@@ -69,20 +47,25 @@ public final class challenge5 extends BaseWebDriverTests {
     @Test(priority = 7, dataProvider = "searchData")
     public void testSearchThenPrintColumnData(String searchKey, String columnName, List<String> columnLumping) {
 
+        // ----------------------------------------------------------------------
         // GIVEN the Copart homepage is displayed
+        // ----------------------------------------------------------------------
+
         initCopartHomePage();
 
-        /*
-         * WHEN the user searches for the specified search phrase (e.g., "porsche"),
-         * sets the entries per page (e.g., to 100), and get counts for each of the
-         * distinct values for a specified column (e.g., "model" or "damage")
-         */
+        // ----------------------------------------------------------------------
+        // WHEN the user searches for the specified search phrase (e.g., "porsche"),
+        // sets the entries per page (e.g., to 100), and get counts for each of the
+        // distinct values for a specified column (e.g., "model" or "damage")
+        // ----------------------------------------------------------------------
 
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
         Map<String, Integer> columnValueCounts = copartHomePage.getWebElementValueCounts(
                 copartHomePage.getElementsFromColumn(columnName));
 
+        // ----------------------------------------------------------------------
         // THEN Print a sorted list of those values, with their corresponding counts
+        // ----------------------------------------------------------------------
 
         String testTitle = String.format("\n%s %s categories (with the counts of their occurrences)",
                 searchKey.toUpperCase(), columnName.toUpperCase());
@@ -97,26 +80,36 @@ public final class challenge5 extends BaseWebDriverTests {
         }
     }
 
+    /**
+     * This version of Part 2 is deprecated, but has been left here to demonstrate the use of a switch statement.
+     *
+     * @param searchKey
+     * @param columnName
+     */
     @Test(priority = 8, dataProvider = "searchDataSwitch")
     public void testSearchThenPrintColumnDataSwitch(String searchKey, String columnName) {
 
+        // ----------------------------------------------------------------------
         // GIVEN the Copart homepage is displayed
+        // ----------------------------------------------------------------------
+
         initCopartHomePage();
 
-        /*
-         * WHEN the user searches for the specified search phrase (e.g., "porsche"),
-         * sets the entries per page (e.g., to 100), and get counts for each of the
-         * distinct values for a specified column (e.g., "damage")
-         */
+        // ----------------------------------------------------------------------
+        // WHEN the user:
+        // • Searches for the specified search phrase (e.g., "porsche"),
+        // • Sets the entries per page (e.g., to 100)
+        // • Gets counts for each of the distinct values for a specified column (e.g., "damage")
+        // ----------------------------------------------------------------------
+
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
         Map<String, Integer> columnValueCounts = copartHomePage.getWebElementValueCounts(
                 copartHomePage.getElementsFromColumn(columnName));
 
-        /*
-         * THEN Print a sorted list of those values, with their corresponding counts
-         * (lumping some miscellanous values together as "MISC")
-         *
-         */
+        // ----------------------------------------------------------------------
+        // THEN Print a sorted list of those values, with their corresponding counts
+        //  (lumping some miscellanous values together as "MISC")
+        // ----------------------------------------------------------------------
 
         // Lump all unspecified damage categories together under the "MISC" category.
         //      A LinkedHashMap maintains insertion order, so that "MISC" appears last, preceded by the others in alphabetical order
