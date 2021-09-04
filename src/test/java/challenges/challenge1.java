@@ -30,7 +30,7 @@ public final class challenge1 extends BaseWebDriverTests {
     // ----------------------------------------------------------------------
 
     /**
-     * This test simply displays the Google search page, without checking for any specific expected results.
+     * Displays the Google search page. Doesn't verify any expected results.
      */
     @Test(priority = 1)
     public void testGotoGoogle() {
@@ -42,9 +42,9 @@ public final class challenge1 extends BaseWebDriverTests {
     // ----------------------------------------------------------------------
 
     /**
-     * Then the following, dependent test verifies that the resulting Web page's page title is "Google"
+     * Verifies that the resulting Web page's title is "Google". Depends on testGotoGoogle().
      *
-     * @assert Resulting Webpage's page title is "Google"
+     * @assert resulting Webpage's page title is "Google"
      */
     @Test(priority = 1, dependsOnMethods = "testGotoGoogle")
     public void testGoogleTitle() {
@@ -52,13 +52,13 @@ public final class challenge1 extends BaseWebDriverTests {
     }
 
     /**
-     * The STG Python/WebDriver Level 1 (Automation Associate) certification includes 2 additional requirements for challenge 1:
-     * • Search for the specified search key (e.g., "puppies")
-     * • Assert that the results page that loads has the specified search key in its title
-     * So, for comparison between Java and Python, that has been implemented as an additional dependent test below.
+     * Searches for the specified search key (for example, "puppies").
+     * <p>
+     * Although this test was not included in the requirements for challenge 1 of the STG Java/WebDriver Level 1 certification,
+     * it was added for compatibility with challenge 1 of the STG Python/WebDriver Level 1 certification.
      *
-     * @param searchKey Search key (e.g., "puppies")
-     * @assert Resulting Webpage's page title includes the Search key
+     * @param searchKey Search key (for example, "puppies")
+     * @assert resulting Webpage's title includes the Search key
      */
     @Test(priority = 2, dependsOnMethods = "testGotoGoogle", dataProvider = "searchData")
     public void testSearchPuppies(String searchKey) {
