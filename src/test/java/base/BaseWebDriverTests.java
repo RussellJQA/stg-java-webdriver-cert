@@ -1,6 +1,7 @@
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -28,6 +29,7 @@ public class BaseWebDriverTests extends BaseTests {
     protected WebDriverWait wait;
     protected GoogleHomePage googleHomePage;
     protected CopartHomePage copartHomePage;
+    protected int SecondsToSleepBeforeWebDriverQuit;
 
     private WebDriver driver;
     private String url;
@@ -65,7 +67,7 @@ public class BaseWebDriverTests extends BaseTests {
     }
 
     /**
-     * This function will execute before each <class> tag in test*.xml
+     * This function will execute before each Web-based <class> tag in test*.xml
      * <p>
      * After this @BeforeClass startClass() method completes, the tests within the specified class will start executing.
      *
@@ -91,16 +93,33 @@ public class BaseWebDriverTests extends BaseTests {
             throw new IllegalArgumentException(String.format("Unsupported browser type: %s", browserType));
         }
 
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        SecondsToSleepBeforeWebDriverQuit = Integer.parseInt(dotenv.get("SECONDS_TO_SLEEP_BEFORE_WEBDRIVER_QUIT", "0"));
+
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 10);
         url = testUrl;
     }
 
+
     /**
+     * This function will execute after each Web-based <class> tag in test*.xml
+     * <p>
+     * After the tests within the specified class have finished executing, then this @BeforeClass startClass() method will execute.
      *
+     * @throws InterruptedException
      */
     @AfterClass
-    public void stopClass() {
+    public void stopClass() throws InterruptedException {
+
+        // Only do this when the corresponding environment variable has specifically been set to enable it
+        // [as for development or demonstration purposes --
+        //  to allow (during test execution) the then current Web page to be observed].
+        if (SecondsToSleepBeforeWebDriverQuit != 0) {
+            // Wait for the state of the browser to be seen before closing the browser.
+            Thread.sleep(1000L * SecondsToSleepBeforeWebDriverQuit);
+        }
+
         driver.quit();  // Close the browser and [unlike driver.close()] end the session
     }
 
@@ -120,15 +139,9 @@ public class BaseWebDriverTests extends BaseTests {
 
     /**
      * @param result
-     * @throws InterruptedException
      */
     @AfterMethod
-    public void stopMethod(ITestResult result) throws InterruptedException {
-
-        // TODO: To avoid sleep() calls in production test code, make this conditional upon an environment variable setting
-        // Wait long enough for the state of the browser to be seen before closing the browser.
-        Thread.sleep(5000);
-
+    public void stopMethod(ITestResult result) {
         if (ITestResult.FAILURE == result.getStatus()) {
             Screenshots screenshots = new Screenshots(driver);
             String filepath = String.format("screenshots/%s.png", result.getName());

@@ -2,16 +2,19 @@
 
 My implementation of the 7 test challenges for the STG Java/WebDriver Level 1 (Automation Associate) certification.
 
-It has 6 dependencies:
+It has 7 dependencies:
 
+- [dotenv-java:](https://github.com/cdimascio/dotenv-java) reads key-value pairs from a .env file and can set them as
+  environment variables. It helps in the development of applications following the [12-factor](https://12factor.net/)
+  principles. [Factor 3 is "Store configuration in the environment."]
 - selenium-chrome-driver
 - selenium-edge-driver
 - selenium-firefox-driver
 - selenium-support: Includes Selenium ExpectedConditions, Select, and WebDriverWait classes
-- testng: The [TestNG](https://testng.org/doc/) Java testing framework
-- webdrivermanager: [WebDriverManager](https://github.com/bonigarcia/webdrivermanager) is a library to automate the
-  management of the drivers (e.g., chromedriver, edgedriver, geckodriver [for Mozilla Firefox], etc.) required by
-  Selenium WebDriver.
+- [testng:](https://testng.org/doc/) a Java testing framework
+- [webdrivermanager:](https://github.com/bonigarcia/webdrivermanager) a library to automate the management of the
+  browser drivers (e.g., chromedriver, edgedriver, geckodriver [for Mozilla Firefox], etc.) required by Selenium
+  WebDriver.
 
 These dependencies can be installed with [Apache Maven](https://maven.apache.org/), using the repository's pom.xml
 Project Object Model file.

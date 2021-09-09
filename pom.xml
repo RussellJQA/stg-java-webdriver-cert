@@ -14,6 +14,33 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <!-- https://mvnrepository.com/artifact/io.github.cdimascio/dotenv-java -->
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <dependency>
+            <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support -->
+            <!-- Includes Selenium ExpectedConditions, Select, and WebDriverWait classes -->
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+        <dependency>
+            <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>4.4.3</version>
+        </dependency>
         <dependency>
             <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
             <groupId>org.seleniumhq.selenium</groupId>
@@ -33,26 +60,6 @@
             <artifactId>selenium-edge-driver</artifactId>
             <version>3.141.59</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support -->
-            <!-- Includes Selenium ExpectedConditions, Select, and WebDriverWait classes -->
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-support</artifactId>
-            <version>3.141.59</version>
-        </dependency>
-        <dependency>
-            <!-- https://mvnrepository.com/artifact/org.testng/testng -->
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.4.0</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>4.4.3</version>
         </dependency>
     </dependencies>
 
