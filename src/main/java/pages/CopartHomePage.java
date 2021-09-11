@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Page object for Copart.com's home page
+ * Page object model for a Copart homepage (e.g., https://www.copart.com)
  */
 public final class CopartHomePage extends WebPage {
 
@@ -27,12 +27,11 @@ public final class CopartHomePage extends WebPage {
     // ----------------------------------------------------------------------
 
     /**
-     * @param driver
-     * @param wait
-     * @param url
+     * @param driver an instance of a Selenium WebDriver to test with
+     * @param wait   a WebDriverWait instance, with some pre-set time to wait
+     * @param url    the URL of a Copart homepage (e.g., "https://www.copart.com", "https://www.copart.ca", or "https://www.copart.co.uk/")
      */
     public CopartHomePage(WebDriver driver, WebDriverWait wait, String url) {
-        // Possible url values: "https://www.copart.com", "https://www.copart.ca/", "https://www.copart.co.uk/"
         super(driver, wait, url);
     }
 
@@ -225,7 +224,10 @@ public final class CopartHomePage extends WebPage {
      */
     public void checkFilterCheckBox(String panelLinkText, String filterCheckBox) {
         String xpath = String.format("%s/ancestor::li//ul//input[@value='%s']", filterButtonXpath(panelLinkText), filterCheckBox);
-        driver.findElement(By.xpath(xpath)).click();
+        WebElement checkbox = driver.findElement(By.xpath(xpath));
+        if (!checkbox.isSelected()) {
+            checkbox.click();
+        }
     }
 
     // ----------------------------------------------------------------------

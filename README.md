@@ -1,8 +1,30 @@
 # stg-java-webdriver-cert
 
-My implementation of the 7 test challenges for the STG Java/WebDriver Level 1 (Automation Associate) certification.
+My implementation of the 7 test challenges for the STG Java/WebDriver Level 1 (Automation Associate) certification:
 
-It has 7 dependencies:
+- Challenge 1: Uses Selenium WebDriver to perform some simple tests on a Google homepage (e.g., https://www.google.com/)
+- Challenges 2, 3, 5, 6, and 7: Use Selenium WebDriver to perform some tests on a Copart homepage (
+  e.g., https://www.copart.com)
+- Challenge 4: Recursively computes
+  the [Fibonacci numbers for n=0 through n=300](http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html#100)
+  , and outputs the results as both numbers and words. For example, for n=300:
+    - the resulting number is
+      222,232,244,629,420,445,529,739,893,461,909,967,206,666,939,096,499,764,990,979,600  [However, note that the output numbers do not currently include commas (") as "thousands separators".]
+    - the resulting words are "two hundred twenty two novemdecillion, two hundred thirty two octodecillion, two hundred
+      forty four septdecillion, six hundred twenty nine sexdecillion, four hundred twenty quindecillion, four hundred
+      forty five quattuordecillion, five hundred twenty nine tredecillion, seven hundred thirty nine duodecillion, eight
+      hundred ninety three undecillion, four hundred sixty one decillion, nine hundred nine nonillion, nine hundred
+      sixty seven octillion, two hundred six septillion, six hundred sixty six sextillion, nine hundred thirty nine
+      quintillion, ninety six quadrillion, four hundred ninety nine trillion, seven hundred sixty four billion, nine
+      hundred ninety million, nine hundred seventy nine thousand, six hundred"
+
+Although it is quite natural to calculate Fibonacci numbers recursively, this can be quite computationally expensive in
+programming languages (such as Java and Python) which don't automatically
+eliminate [tail recursion](https://www.softwaretestinghelp.com/recursion-in-java/#1_Tail_Recursion). However, this is
+avoided by [memoization](https://en.wikipedia.org/wiki/Memoization): by caching previously computed Fibonacci numbers,
+so they don't need to be re-computed.
+
+The implementation code has 7 dependencies:
 
 - [dotenv-java:](https://github.com/cdimascio/dotenv-java) reads key-value pairs from a .env file and can set them as
   environment variables. It helps in the development of applications following the [12-factor](https://12factor.net/)

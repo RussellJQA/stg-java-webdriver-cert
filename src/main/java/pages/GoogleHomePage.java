@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Contains GoogleSearchPage, the page object for Google's search page
+ * Page object model for a Google home page (e.g., https://www.google.com/)
  */
 public final class GoogleHomePage extends WebPage {
 
@@ -14,8 +14,12 @@ public final class GoogleHomePage extends WebPage {
     // Constructor
     // ----------------------------------------------------------------------
 
+    /**
+     * @param driver an instance of a Selenium WebDriver to test with
+     * @param wait   a WebDriverWait instance, with some pre-set time to wait
+     * @param url    the URL of a Google homepage (e.g., "https://www.google.com/", "https://www.google.ca/", or "https://www.google.co.uk/")
+     */
     public GoogleHomePage(WebDriver driver, WebDriverWait wait, String url) {
-        // Possible url values: "https://www.google.com/", "https://www.google.ca/", "https://www.google.co.uk/"
         super(driver, wait, url);
     }
 
@@ -26,7 +30,7 @@ public final class GoogleHomePage extends WebPage {
     /**
      * Enters the specified search key into main search input and presses RETURN
      *
-     * @param searchKey
+     * @param searchKey a word or phrase to search for (for example, "puppies")
      */
     public void enterSearchKey(String searchKey) {
         driver.findElement(By.xpath("//input[@name='q']")).sendKeys(searchKey, Keys.ENTER);

@@ -18,14 +18,15 @@ public class WebPage {
     // ----------------------------------------------------------------------
 
     /**
-     * @param driver
-     * @param wait
-     * @param url
+     * @param driver an instance of a Selenium WebDriver to test with
+     * @param wait   a WebDriverWait instance, with some pre-set time to wait
+     * @param url    the URL of a Webpage (e.g., "https://www.google.com/" or "https://www.copart.com")
      */
     public WebPage(WebDriver driver, WebDriverWait wait, String url) {
         this.driver = driver;
         this.wait = wait;
         this.url = url;
+
         driver.get(url);
     }
 
@@ -36,7 +37,7 @@ public class WebPage {
     /**
      * Waits for the page title to contain the specified text
      *
-     * @param text
+     * @param text text which the page title must contain before the waiting period expires
      */
     public void waitForTitleToContain(String text) {
         wait.until(ExpectedConditions.titleContains(text));
@@ -49,7 +50,7 @@ public class WebPage {
     /**
      * Clicks the link with the specified link text
      *
-     * @param linkText
+     * @param linkText link text of the link to be clicked
      */
     protected void clickLink(String linkText) {
         driver.findElement(By.linkText(linkText)).click();
