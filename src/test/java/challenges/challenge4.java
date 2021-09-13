@@ -11,6 +11,8 @@ import utils.NumbersToWords;
 import java.math.BigInteger;
 import java.util.List;
 
+import static org.testng.Assert.assertTrue;
+
 /**
  * Challenge 4 (Operators and Functions):
  * 1. Write a class that displays the Fibonacci sequence up to a certain number.
@@ -32,13 +34,18 @@ public final class challenge4 extends BaseTests {
     // ----------------------------------------------------------------------
 
     /**
-     * @param maxFibonacciSeed
+     * For n=0 to the specified maxFibonacciSeed, print Fibonacci(n), as both a number and as words
+     *
+     * @param maxFibonacciSeed maximum "seed" for the Fibonnaci function (e.g., 300)
      */
     @Test(priority = 6, dataProvider = "fibonacciData")
     public void testFibonacci(int maxFibonacciSeed) {
 
         List<BigInteger> expectedFibonaccis = Fibonacci.getExpectedFibonaccis();
+        assertTrue(maxFibonacciSeed <= expectedFibonaccis.size() - 1,
+                String.format("The specified maxFibonacciSeed (%,d) is greater than the seed (%,d) of the largest expected Fibonacci number", maxFibonacciSeed, expectedFibonaccis.size() - 1));
         List<String> expectedFibonaccisAsWords = ExpectedFibonacciWords.getExpectedFibonacciWords();
+
 
         Fibonacci f = new Fibonacci();
         List<BigInteger> actualFibonaccis = f.getGeneratedFibonacciSequence((maxFibonacciSeed));
@@ -61,7 +68,7 @@ public final class challenge4 extends BaseTests {
 
             BigInteger fibonacciNumber = actualFibonaccis.get(num);
             String fibonacciNumberAsWords = NumbersToWords.numberToWords(fibonacciNumber);
-            System.out.printf("For num=%d, the Fibonacci number is %d - %s%n", num, fibonacciNumber, fibonacciNumberAsWords);
+            System.out.printf("For num=%d, the Fibonacci number is %,d - %s%n", num, fibonacciNumber, fibonacciNumberAsWords);
 
             // ----------------------------------------------------------------------
             // THEN the actual values should match the expected values

@@ -8,8 +8,7 @@ My implementation of the 7 test challenges for the STG Java/WebDriver Level 1 (A
 - Challenge 4: Recursively computes
   the [Fibonacci numbers for n=0 through n=300](http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html#100)
   , and outputs the results as both numbers and words. For example, for n=300:
-    - the resulting number is
-      222,232,244,629,420,445,529,739,893,461,909,967,206,666,939,096,499,764,990,979,600  [However, note that the output numbers do not currently include commas (") as "thousands separators".]
+    - the resulting number is 222,232,244,629,420,445,529,739,893,461,909,967,206,666,939,096,499,764,990,979,600
     - the resulting words are "two hundred twenty two novemdecillion, two hundred thirty two octodecillion, two hundred
       forty four septdecillion, six hundred twenty nine sexdecillion, four hundred twenty quindecillion, four hundred
       forty five quattuordecillion, five hundred twenty nine tredecillion, seven hundred thirty nine duodecillion, eight
