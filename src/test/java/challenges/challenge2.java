@@ -25,6 +25,8 @@ public final class challenge2 extends BaseWebDriverTests {
     // ----------------------------------------------------------------------
 
     /**
+     * Searches for the specified searchKey, and verified that the expectedSearchResult is found in the resulting table of search results.
+     *
      * @param searchKey            a word or phrase to search for (for example, "exotics")
      * @param expectedSearchResult a word or phrase expected to be in the table of search results
      * @assert the expected word or phrase is contained in the resulting table of search results

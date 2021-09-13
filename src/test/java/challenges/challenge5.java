@@ -8,6 +8,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * For the first part of this challenge:
+ * - Go to https://www.copart.com and do a search for “porsche”
+ * - Change the dropdown for “Show Entries” to 100 from 20
+ * - Count how many different models of porsche are in the results on the first page, and return in the terminal how many of each type exists
+ * Possible values can be “CAYENNE S”, “BOXSTER S”, etc.
+ * <p>
+ * For the 2nd part of this challenge, create a switch statement to count the types of damages from amoung REAR END, FRONT END, MINOR DENT/SCRATCHES, and UNDERCARRIAGE
+ * Any other types can be grouped into a category of MISC
+ */
 public final class challenge5 extends BaseWebDriverTests {
 
     @DataProvider
@@ -28,7 +38,8 @@ public final class challenge5 extends BaseWebDriverTests {
     // ----------------------------------------------------------------------
 
     /**
-     * Search copart.com for specified search key, then print distinct values of specified search results column
+     * Search Copart homepage for the specified searchKey, then print distinct values of specified search results column (columnname),
+     * with some columns optionally lumped together based on the specified columnLumping information.
      *
      * @param searchKey     search phrase (e.g., "porsche") to enter into Copart.com's main search box
      * @param columnName    lowercase name of the column (in Copart.com's search results table)
@@ -82,6 +93,9 @@ public final class challenge5 extends BaseWebDriverTests {
 
     /**
      * This version of Part 2 is deprecated, but has been left here to demonstrate the use of a switch statement.
+     * <p>
+     * Search Copart homepage for the specified searchKey, then print distinct values of specified search results column (columnname),
+     * with some columns optionally lumped together into a "MISC" category.
      *
      * @param searchKey
      * @param columnName

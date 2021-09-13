@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Challenge 3 (Loops):
- * 1. Go to the https://www.copart.com main page.
+ * 1. Go to a Copart homepage  (e.g., https://www.copart.com, https://www.copart.ca, or "https://www.copart.co.uk/")
  * 2. Go to the Makes/Models section of the page.
  * This used to be displayed on initial page load.
  * But now, you first need to click the "Trending" tab. There, you'll find it under the "Most Popular Items" heading.
@@ -24,7 +24,7 @@ public final class challenge3 extends BaseWebDriverTests {
     // ----------------------------------------------------------------------
 
     /**
-     *
+     * Prints the make/model and URL/href os each item listed in a Copart homepage's "Most Popular Items" section
      */
     @Test(priority = 5)
     public void testGetListOfMostPopularItems() {
