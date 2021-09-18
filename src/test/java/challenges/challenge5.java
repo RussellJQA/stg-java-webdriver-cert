@@ -30,7 +30,7 @@ public final class challenge5 extends BaseWebDriverTests {
 
     @DataProvider
     private static Object[][] searchDataSwitch() {
-        return new Object[][]{{"porsche", "damage"}};
+        return new Object[][]{{"porsche"}};
     }
 
     // ----------------------------------------------------------------------
@@ -94,14 +94,13 @@ public final class challenge5 extends BaseWebDriverTests {
     /**
      * This version of Part 2 is deprecated, but has been left here to demonstrate the use of a switch statement.
      * <p>
-     * Search Copart homepage for the specified searchKey, then print distinct values of specified search results column (columnname),
-     * with some columns optionally lumped together into a "MISC" category.
+     * Search Copart homepage for the specified searchKey, then print distinct values (with counts of their occurrences)
+     * of the "damage" column, with some columns lumped together into a "MISC" category.
      *
-     * @param searchKey
-     * @param columnName
+     * @param searchKey search phrase (e.g., "porsche") to enter into Copart.com's main search box
      */
     @Test(priority = 8, dataProvider = "searchDataSwitch")
-    public void testSearchThenPrintColumnDataSwitch(String searchKey, String columnName) {
+    public void testSearchThenPrintDamageColumnValues(String searchKey) {
 
         // ----------------------------------------------------------------------
         // GIVEN the Copart homepage is displayed
@@ -113,9 +112,10 @@ public final class challenge5 extends BaseWebDriverTests {
         // WHEN the user:
         // • Searches for the specified search phrase (e.g., "porsche"),
         // • Sets the entries per page (e.g., to 100)
-        // • Gets counts for each of the distinct values for a specified column (e.g., "damage")
+        // • Gets counts for each of the distinct values for the "damage" column
         // ----------------------------------------------------------------------
 
+        String columnName = "damage";
         copartHomePage.searchAndSetEntriesPerPage(searchKey, 100);
         Map<String, Integer> columnValueCounts = copartHomePage.getWebElementValueCounts(
                 copartHomePage.getElementsFromColumn(columnName));
