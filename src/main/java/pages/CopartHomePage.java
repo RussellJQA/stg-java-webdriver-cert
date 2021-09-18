@@ -219,8 +219,8 @@ public final class CopartHomePage extends WebPage {
     /**
      * Checks the specified checkbox. For example, check the 'Model' filter's 'Skyline' checkbox
      *
-     * @param panelLinkText
-     * @param filterCheckBox
+     * @param panelLinkText  link text (e.g., "Model") of the to-be-selected filter panel in the page's left-hand 'Filter Options' sidebar
+     * @param filterCheckBox checkbox (e.g., "Skyline" or "Skyline Gt") to select (check) in that filter panel
      */
     public void checkFilterCheckBox(String panelLinkText, String filterCheckBox) {
         String xpath = String.format("%s/ancestor::li//ul//input[@value='%s']", filterButtonXpath(panelLinkText), filterCheckBox);
@@ -235,15 +235,14 @@ public final class CopartHomePage extends WebPage {
     // ----------------------------------------------------------------------
 
     /**
-     * In the page's page's left-hand 'Filter Options' sidebar:
+     * In the page's left-hand 'Filter Options' sidebar:
      * - Click the panel with the specified link text (e.g., 'Model')
      * - Enter the specified text (e.g. 'skyline') in the 'Model' filter panel's text box
      * - Check the specified checkbox (e.g. 'Skyline') in the 'Model' filter panel's list of checkboxes
-     * &
      *
-     * @param filterPanelLinkText
-     * @param filterText
-     * @param filterCheckBox
+     * @param filterPanelLinkText link text (e.g., "Model") of the to-be-selected filter panel in the page's left-hand 'Filter Options' sidebar
+     * @param filterText          text (e.g, "skyline") to enter into that filter panel's search box
+     * @param filterCheckBox      checkbox (e.g., "Skyline" or "Skyline Gt") to select (check) in that filter panel
      * @return
      */
     public boolean setFilterTextAndCheckBox(String filterPanelLinkText, String filterText, String filterCheckBox) {
@@ -283,8 +282,8 @@ public final class CopartHomePage extends WebPage {
      * Enters the specified filter text (e.g., 'skyline') in the specified
      * filter text box (e.g., the filter panel's 'Model' text box)
      *
-     * @param panelLinkText
-     * @param filterText
+     * @param panelLinkText link text (e.g., "Model") of the to-be-selected filter panel in the page's left-hand 'Filter Options' sidebar
+     * @param filterText    text (e.g, "skyline") to enter into that filter panel's search box
      */
     private void setFilterTextBox(String panelLinkText, String filterText) {
         String xpath = String.format("%s/ancestor::li//form//input", filterButtonXpath(panelLinkText));
@@ -295,7 +294,7 @@ public final class CopartHomePage extends WebPage {
      * Clicks the specified filter button in the page's left-hand 'Filter Options' sidebar
      * For example, click the button which expands the 'Model' filter
      *
-     * @param panelLinkText
+     * @param panelLinkText link text (e.g., "Model") of the to-be-selected filter panel in the page's left-hand 'Filter Options' sidebar
      */
     private void clickFilterBtn(String panelLinkText) {
         String xpath = filterButtonXpath(panelLinkText);

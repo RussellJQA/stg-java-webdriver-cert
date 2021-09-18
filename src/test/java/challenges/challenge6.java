@@ -34,10 +34,10 @@ public final class challenge6 extends BaseWebDriverTests {
     // ----------------------------------------------------------------------
 
     /**
-     * @param searchKey
-     * @param filterPanelLinkText
-     * @param filterText
-     * @param filterCheckbox
+     * @param searchKey           search phrase (e.g., "nissan") to enter into Copart.com's main search box
+     * @param filterPanelLinkText link text (e.g., "Model") of the to-be-selected filter panel in the page's left-hand 'Filter Options' sidebar
+     * @param filterText          text (e.g, "skyline") to enter into that filter panel's search box
+     * @param filterCheckbox      checkbox (e.g., "Skyline" or "Skyline Gt") to select (check) in that filter panel
      */
     @Test(priority = 9, dataProvider = "searchData")
     public void testChallenge6(String searchKey, String filterPanelLinkText, String filterText, String filterCheckbox) {
@@ -57,7 +57,7 @@ public final class challenge6 extends BaseWebDriverTests {
         copartHomePage.search(searchKey);
 
         // ----------------------------------------------------------------------
-        // THEN the user is able to successfully do the following in the page's page's left-hand 'Filter Options' sidebar:
+        // THEN the user is able to successfully do the following in the page's left-hand 'Filter Options' sidebar:
         // • Click the panel with the specified link text (e.g., 'Model')
         // • Enter the specified text (e.g. 'skyline') in the 'Model' filter panel's text box
         // • Check the specified checkbox (e.g. 'Skyline') in the 'Model' filter panel's list of checkboxes
