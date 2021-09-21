@@ -9,9 +9,9 @@ import java.util.List;
 /**
  * Challenge 7 (Array or ArrayList):
  * 1. Go to the https://www.copart.com main page.
- * 2. Go to the Makes/Models section of the page.
- * This used to be displayed on initial page load.
- * But now, you first need to click the "Trending" tab. There, you'll find it under the "Most Popular Items" heading.
+ * 2. Go to the Makes/Models section under the page's "Most Popular Items" heading.
+ * This section used to be displayed on initial page load, but now, you first need to click the "Trending" tab.
+ * Then you'll find this section there under the "Most Popular Items" heading.
  * 3. Create a 2-dimensional Array or ArrayList that stores all the values displayed on the page along with the URL for that link.
  * 4. Verify that all the elements in the Array or ArrayList navigate to the correct page.
  */
@@ -21,8 +21,11 @@ public final class challenge7 extends BaseWebDriverTests {
     // Public instance methods
     // ----------------------------------------------------------------------
 
+    /**
+     * Navigate through the "Most Popular Items" links, and verify that each takes you to a page whose URL contains the link's link text.
+     */
     @Test(priority = 10)
-    public void testCheckUrlsOfMostPopularItems() {
+    public void testUrlsOfMostPopularItems() {
 
         // ----------------------------------------------------------------------
         // GIVEN the Copart homepage is displayed
