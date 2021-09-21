@@ -12,7 +12,7 @@ public class BaseTests {
     // ----------------------------------------------------------------------
 
     /**
-     *
+     * This function will be run after all tests in the current suite (as specified by a <suite> tag in a test*.xml file) have run.
      */
     @AfterSuite
     public void stopSuite() {

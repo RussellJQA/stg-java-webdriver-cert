@@ -39,7 +39,8 @@ public class BaseWebDriverTests extends BaseTests {
     // ----------------------------------------------------------------------
 
     /**
-     * @return
+     * Returns the default Google Chrome Options, except with a flag set to prevent Chrome from displaying the
+     * "Chrome is being controlled by automated test software." notification bar
      */
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
@@ -52,7 +53,7 @@ public class BaseWebDriverTests extends BaseTests {
     }
 
     /**
-     * @return
+     * Currently, returns the default Microsoft Edge Options
      */
     private static EdgeOptions getEdgeOptions() {
         EdgeOptions options = new EdgeOptions();
@@ -67,9 +68,7 @@ public class BaseWebDriverTests extends BaseTests {
     }
 
     /**
-     * This function will execute before each Web-based <class> tag in test*.xml
-     * <p>
-     * After this @BeforeClass startClass() method completes, the tests within the specified class will start executing.
+     * This function will be run before the first test method in the current class (as specified by a <class> tag in a test*.xml file) is invoked.
      *
      * @param browserType The type of browser ("chrome", "edge", or "firefox") to use for the test
      * @throws IllegalArgumentException Exception thrown when parameter browserType is invalid
@@ -101,13 +100,11 @@ public class BaseWebDriverTests extends BaseTests {
         url = testUrl;
     }
 
-
     /**
-     * This function will execute after each Web-based <class> tag in test*.xml
-     * <p>
-     * After the tests within the specified class have finished executing, then this @BeforeClass startClass() method will execute.
+     * This function will be run after all the test methods in the current class (as specified by a <class> tag in a test*.xml file) have been run.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException If the SecondsToSleepBeforeWebDriverQuit environment variable is non-zero,
+     *                              the function sleeps for the specified number of seconds and then throws InterruptedException
      */
     @AfterClass
     public void stopClass() throws InterruptedException {
@@ -124,21 +121,9 @@ public class BaseWebDriverTests extends BaseTests {
     }
 
     /**
+     * This function will be run after each test method (as specified by a <test> tag in a test*.xml file).
      *
-     */
-    public void initGoogleHomePage() {
-        googleHomePage = new GoogleHomePage(driver, wait, url);
-    }
-
-    /**
-     *
-     */
-    public void initCopartHomePage() {
-        copartHomePage = new CopartHomePage(driver, wait, url);
-    }
-
-    /**
-     * @param result
+     * @param result The result of the test method, as determined by testNG.
      */
     @AfterMethod
     public void stopMethod(ITestResult result) {
@@ -150,12 +135,17 @@ public class BaseWebDriverTests extends BaseTests {
     }
 
     /**
-     * @param href
-     * @return
+     * Displays a Google homepage.
      */
-    public String getActualUrl(String href) {
-        driver.get(href);
-        return driver.getCurrentUrl();
+    public void initGoogleHomePage() {
+        googleHomePage = new GoogleHomePage(driver, wait, url);
+    }
+
+    /**
+     * Displays a Copart homepage.
+     */
+    public void initCopartHomePage() {
+        copartHomePage = new CopartHomePage(driver, wait, url);
     }
 
     // ----------------------------------------------------------------------
@@ -163,7 +153,9 @@ public class BaseWebDriverTests extends BaseTests {
     // ----------------------------------------------------------------------
 
     /**
-     * @param expectedTitle
+     * Asserts that the page title is as expected.
+     *
+     * @param expectedTitle expected page title
      */
     public void assertTitleAsExpected(String expectedTitle) {
         String title = driver.getTitle();
@@ -171,7 +163,9 @@ public class BaseWebDriverTests extends BaseTests {
     }
 
     /**
-     * @param expectedTitleSubstring
+     * Asserts that the page title contains the specified substring.
+     *
+     * @param expectedTitleSubstring substring expected to be contained in the page title
      */
     public void assertTitleContains(String expectedTitleSubstring) {
         String title = driver.getTitle();
