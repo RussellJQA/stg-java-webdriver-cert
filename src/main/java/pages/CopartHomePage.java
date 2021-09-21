@@ -42,20 +42,24 @@ public final class CopartHomePage extends WebPage {
     /**
      * Prints the count for each of the distinct text values from the specified WebElements
      *
-     * @param counts
-     * @param testTitle
+     * @param columnValueCounts For a given column in the search results table, contains the distinct values of that column, along with a count of occurrences for that value
+     *                          [sometimes, miscellaneous values may be lumped together under some "miscellaneous" category (e.g., "MISC")]
+     * @param printTitle        Title to be printed immediately prior to printing the columnValueCounts information
      */
-    public static void printWebElementValueCounts(Map<String, Integer> counts, String testTitle) {
-        System.out.println(testTitle);
-        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+    public static void printWebElementValueCounts(Map<String, Integer> columnValueCounts, String printTitle) {
+        System.out.println(printTitle);
+        for (Map.Entry<String, Integer> entry : columnValueCounts.entrySet()) {
             System.out.println("\t" + entry.getKey() + " - " + entry.getValue());
         }
     }
 
     /**
-     * @param columnValueCounts
-     * @param columnLumping
-     * @return
+     * Lumps specified miscellaneous column values together under the specified "miscellaneous" category
+     *
+     * @param columnValueCounts For a given column in the search results table, contains the distinct values of that column, along with a count of occurrences for that value
+     * @param columnLumping     List of miscellaneous values to be lumped together under some "miscellaneous" category,
+     *                          except that the initial list element -- columnLumping.get(0) -- is a name (e.g., "MISC") for the miscellaneous category
+     * @return columnValueCounts, with miscellaneous values to be lumped together under a "miscellaneous" category (e.g., "MISC")
      */
     public static Map<String, Integer> getLumpedColumnValueCounts(Map<String, Integer> columnValueCounts,
                                                                   List<String> columnLumping) {
@@ -85,8 +89,8 @@ public final class CopartHomePage extends WebPage {
     /**
      * Gets counts for each of the distinct text values from the specified WebElements
      *
-     * @param elements
-     * @return
+     * @param elements list of WebElements
+     * @return Map of all distinct text values in that list to a count of the number of occurrences for each value
      */
     public static Map<String, Integer> getWebElementValueCounts(List<WebElement> elements) {
         // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
@@ -103,10 +107,10 @@ public final class CopartHomePage extends WebPage {
     }
 
     /**
-     * Returns the XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
+     * Returns the XPath to be used in locating the specified filter button (in the page's left-hand 'Filter Options' sidebar)
      *
-     * @param panelLinkText
-     * @return
+     * @param panelLinkText link text for a filter button (and its containing filter panel) in the page's left-hand 'Filter Options' sidebar
+     * @return XPath to be used in locating the specified filter button
      */
     private static String filterButtonXpath(String panelLinkText) {
         // XPath used directly for the filter button in the page's left-hand 'Filter Options' sidebar
@@ -118,14 +122,14 @@ public final class CopartHomePage extends WebPage {
     /**
      * Enters the specified search key into main search input and press RETURN
      *
-     * @param searchKey
+     * @param searchKey a word or phrase to search for (for example, "exotics" or "porsche")
      */
     public void enterSearchKey(String searchKey) {
         driver.findElement(By.id("input-search")).sendKeys(searchKey, Keys.ENTER);
     }
 
     /**
-     * Waits for the progress spinner to be present and then become invisible
+     * Waits for the progress spinner to be present, and then waits for it to become invisible
      */
     public void waitForSpinnerToComeAndGo() {
         By spinnerLoc = By.xpath("//div[@id='serverSideDataTable_processing']");
@@ -134,7 +138,7 @@ public final class CopartHomePage extends WebPage {
     }
 
     /**
-     * Returns the text from the search results table WebElement
+     * Returns the text from the search results table's WebElement
      */
     public String getTableText() {
         //
@@ -142,7 +146,7 @@ public final class CopartHomePage extends WebPage {
     }
 
     /**
-     * Returns a sorted list of the links (WebElements) from the 'Most Popular Items' section of the page's 'Trending' tab
+     * Returns a sorted list of the links (WebElements) from the "Most Popular Items" section of the page's "Trending" tab
      */
     public List<WebElement> getMostPopularItems() {
         By mostPopularItemLinks = By.xpath("//span[@ng-repeat='popularSearch in popularSearches']/a");
@@ -156,13 +160,13 @@ public final class CopartHomePage extends WebPage {
     }
 
     /**
-     * @return
+     * Returns a 2 dimensional arraylist that stores the link text of each link displayed under the "Most Popular Items" heading, along with the URL for each link
      */
     public List<List<String>> getMostPopularItemsLinkTextAndHref() {
 
         List<WebElement> mostPopularItems = getMostPopularItems();
 
-        // Create a 2 dimensional array or arraylist that stores all the values displayed on the page along w/ the URL for that link
+        // Create a 2 dimensional arraylist that stores the link text of each link displayed under the "Most Popular Items" heading, along with the URL for each link
         //      [A map might be preferable.]
         List<List<String>> mostPopularItemsLinkTextAndHref = new ArrayList<>();
         for (WebElement element : mostPopularItems) {
@@ -173,10 +177,10 @@ public final class CopartHomePage extends WebPage {
     }
 
     /**
-     * Searches for the specified search key and set the entries per page
+     * Searches the Copart homepage for the specified search key, and sets the number of entries to be displayed per page
      *
-     * @param searchKey
-     * @param entriesPerPage
+     * @param searchKey      a word or phrase to search for (for example, "exotics" or "porsche")
+     * @param entriesPerPage number of entries per page to select in the "Show ddd entries" dropdown
      */
     public void searchAndSetEntriesPerPage(String searchKey, int entriesPerPage) {
         enterSearchKey(searchKey);
@@ -188,18 +192,14 @@ public final class CopartHomePage extends WebPage {
         waitForSpinnerToComeAndGo();  // Sometimes this fails. Look at alternatives discussed in "class" and afterwards
     }
 
-    // ----------------------------------------------------------------------
-    // Private instance methods
-    // ----------------------------------------------------------------------
-
     /**
-     * Searches for the specified search key and set the entries per page
+     * Gets the WebElements contained in the specified column in the search results table
      *
-     * @param columnName
-     * @return
+     * @param columnName name of a column in the search results table
+     * @return the WebElements contained in that column
      */
     public List<WebElement> getElementsFromColumn(String columnName) {
-        // Java 9's Map.of() is an immutable map with at most 10 key/value pairs
+        // Java 9+'s Map.of() is an immutable map with at most 10 key/value pairs
         Map<String, String> columnXpathLocators = Map.of(
                 "make", "//span[@class='make-items']//a",
                 "model", "//span[@data-uname='lotsearchLotmodel' and not(text()='[[ lm ]]')]",
@@ -210,11 +210,17 @@ public final class CopartHomePage extends WebPage {
     }
 
     /**
-     * @param searchKey
+     * Searches the Copart homepage for the specified search key
+     *
+     * @param searchKey a word or phrase to search for (for example, "exotics" or "porsche")
      */
     public void search(String searchKey) {
         searchAndSetEntriesPerPage(searchKey, -1);  // Leave entriesPerPage unchanged
     }
+
+    // ----------------------------------------------------------------------
+    // Private instance methods
+    // ----------------------------------------------------------------------
 
     /**
      * Checks the specified checkbox. For example, check the 'Model' filter's 'Skyline' checkbox
