@@ -171,4 +171,16 @@ public class BaseWebDriverTests extends BaseTests {
         String title = driver.getTitle();
         assertTrue(title.contains(expectedTitleSubstring), String.format("Incorrect page title: %s", title));
     }
+
+    /**
+     * Goes to the specified URL, and get the resulting page's actual URL, which sometimes is different
+     * (e.g., due to relative URLs or redirection).
+     *
+     * @param urlToGoTo specified URL to go to
+     * @return the resulting page's actual (current) URL
+     */
+    public String getActualUrl(String urlToGoTo) {
+        driver.get(urlToGoTo);
+        return driver.getCurrentUrl();
+    }
 }
