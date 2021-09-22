@@ -11,8 +11,6 @@ import utils.NumbersToWords;
 import java.math.BigInteger;
 import java.util.List;
 
-import static org.testng.Assert.assertTrue;
-
 /**
  * Challenge 4 (Operators and Functions):
  * 1. Write a class that displays the Fibonacci sequence up to a certain number.
@@ -42,10 +40,10 @@ public final class challenge4 extends BaseTests {
     public void testFibonacci(int maxFibonacciSeed) {
 
         List<BigInteger> expectedFibonaccis = Fibonacci.getExpectedFibonaccis();
-        assertTrue(maxFibonacciSeed <= expectedFibonaccis.size() - 1,
-                String.format("The specified maxFibonacciSeed (%,d) is greater than the seed (%,d) of the largest expected Fibonacci number", maxFibonacciSeed, expectedFibonaccis.size() - 1));
+        if (maxFibonacciSeed > expectedFibonaccis.size() - 1) {
+            throw new IllegalArgumentException(String.format("The specified maxFibonacciSeed (%,d) is greater than the seed (%,d) of the largest expected Fibonacci number", maxFibonacciSeed, expectedFibonaccis.size() - 1));
+        }
         List<String> expectedFibonaccisAsWords = ExpectedFibonacciWords.getExpectedFibonacciWords();
-
 
         Fibonacci f = new Fibonacci();
         List<BigInteger> actualFibonaccis = f.getGeneratedFibonacciSequence((maxFibonacciSeed));
