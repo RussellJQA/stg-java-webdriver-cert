@@ -1,5 +1,3 @@
-// This class interfaces with Selenium's TakesScreenshot class, and that class's getScreenshotAs function
-
 package utils;
 
 import org.apache.commons.io.FileUtils;
@@ -15,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- *
+ * Interface with Selenium's TakesScreenshot class, and with that class's getScreenshotAs function
  */
 public final class Screenshots {
 
@@ -26,7 +24,9 @@ public final class Screenshots {
     // ----------------------------------------------------------------------
 
     /**
-     * @param driver
+     * Constructor
+     *
+     * @param driver the instance of a Selenium WebDriver which is being used for testing
      */
     public Screenshots(WebDriver driver) {
         this.driver = driver;
@@ -37,8 +37,10 @@ public final class Screenshots {
     // ----------------------------------------------------------------------
 
     /**
-     * @param filePath
-     * @param includeTimestamp
+     * Takes a screenshot and stores it in the specified location, optionally adding a timestamp at the end of the filename
+     *
+     * @param filePath         specified location to store the screenshot (e.g., "testChallenge6.png" or "filtering_for_Model_skyline_Skyline.png")
+     * @param includeTimestamp whether to add an optional timestamp at the end of the filename
      */
     public void takeScreenshot(String filePath, boolean includeTimestamp) {
         File imageFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
