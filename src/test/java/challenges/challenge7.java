@@ -22,7 +22,7 @@ public final class challenge7 extends BaseWebDriverTests {
     // ----------------------------------------------------------------------
 
     /**
-     * Navigate through the "Most Popular Items" links, and verify that each takes you to a page whose URL contains the link's link text.
+     * Navigates through the "Most Popular Items" links, and verify that each takes you to a page whose URL contains the link's link text.
      */
     @Test(priority = 10)
     public void testUrlsOfMostPopularItems() {

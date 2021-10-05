@@ -39,35 +39,6 @@ public class BaseWebDriverTests extends BaseTests {
     // ----------------------------------------------------------------------
 
     /**
-     * Returns the default Google Chrome Options, except with a flag set to prevent Chrome from displaying the
-     * "Chrome is being controlled by automated test software." notification bar
-     */
-    private static ChromeOptions getChromeOptions() {
-        ChromeOptions options = new ChromeOptions();
-
-        // Prevent Chrome from displaying the "Chrome is being controlled by automated test software." notification bar
-        // See https://help.applitools.com/hc/en-us/articles/360007189411--Chrome-is-being-controlled-by-automated-test-software-notification
-        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-
-        return options;
-    }
-
-    /**
-     * Currently, returns the default Microsoft Edge Options
-     */
-    private static EdgeOptions getEdgeOptions() {
-        EdgeOptions options = new EdgeOptions();
-
-        // TODO: Conditionally add the following for Selenium 4 (which supports it)
-        //      See How to remove the infobar “Microsoft Edge is being controlled by automated test software” in selenium test
-        //      at https://codersatellite.com/question-with-identifier-59299282
-        // options.setExperimentalOption("useAutomationExtension", false);
-        // options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
-
-        return options;
-    }
-
-    /**
      * This function will be run before the first test method in the current class (as specified by a <class> tag in a test*.xml file) is invoked.
      *
      * @param browserType The type of browser ("chrome", "edge", or "firefox") to use for the test
@@ -81,10 +52,25 @@ public class BaseWebDriverTests extends BaseTests {
 
         if (browserType.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup(); // Setup and create Chrome instance
-            driver = new ChromeDriver(getChromeOptions());
+            ChromeOptions options = new ChromeOptions();
+
+            // Prevent Chrome from displaying the "Chrome is being controlled by automated test software." infobar
+            // See https://help.applitools.com/hc/en-us/articles/360007189411--Chrome-is-being-controlled-by-automated-test-software-notification
+            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+
+            driver = new ChromeDriver(options);
         } else if (browserType.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();  // Setup and create Edge instance
-            driver = new EdgeDriver(getEdgeOptions());
+            EdgeOptions options = new EdgeOptions();
+
+            // Because EdgeOptions.setExperimentalOption() wasn't introduced into Selenium until Selenium 4,
+            // the following code requires Selenium 4+ not only to run, but even to compile.
+            /* */
+            // Hide Edge's "... controlled by automated test software" infobar.
+            /* options.setExperimentalOption("useAutomationExtension", false); */
+            /* options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation")); */
+
+            driver = new EdgeDriver(options);
         } else if (browserType.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup(); // Setup and create Firefox instance
             driver = new FirefoxDriver();

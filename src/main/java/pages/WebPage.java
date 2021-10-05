@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * The base class for GoogleHomePage and CopartHomePage
+ * Page Object Model base class for GoogleHomePage and CopartHomePage
  */
 public class WebPage {
     protected final WebDriver driver;

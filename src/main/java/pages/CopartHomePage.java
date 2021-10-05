@@ -90,7 +90,7 @@ public final class CopartHomePage extends WebPage {
      * Gets counts for each of the distinct text values from the specified WebElements
      *
      * @param elements list of WebElements
-     * @return Map of all distinct text values in that list to a count of the number of occurrences for each value
+     * @return map of all distinct text values in that list to a count of the number of occurrences for each value
      */
     public static Map<String, Integer> getWebElementValueCounts(List<WebElement> elements) {
         // Use TreeMap (an implementation of the SortedMap interface), rather than HashMap.
