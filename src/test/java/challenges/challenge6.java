@@ -19,13 +19,14 @@ public final class challenge6 extends BaseWebDriverTests {
 
     @DataProvider
     private static Object[][] searchData() {
-        // Running this twice: once with "Skyline" and once with "Skyline Gt", because:
+        // Running this 3x: once with "Skyline", once with "Skyline Gt", and once with "Skylinegtr" because:
         //      Although the challenge only calls for "Skyline", that often fails (as the challenge said it might).
-        //      So I'm re-running with a value which for the U.S. usually passes,
-        //      to demonstrate that it can pass (when it should). [Both values usually fail in Canada and the U.K.]
+        //      So I'm re-running with some alternative values to demonstrate that it can pass (when it should).
+        //      At least 1 of the values usually passes for the U.S. [All 3 values usually fail in Canada and the U.K.]
         return new Object[][]{
                 {"nissan", "Model", "skyline", "Skyline"},
-                {"nissan", "Model", "skyline", "Skyline Gt"}
+                {"nissan", "Model", "skyline", "Skyline Gt"},
+                {"nissan", "Model", "skyline", "Skylinegtr"}
         };
     }
 
@@ -40,7 +41,7 @@ public final class challenge6 extends BaseWebDriverTests {
      * @param filterCheckbox      checkbox (e.g., "Skyline" or "Skyline Gt") to select (check) in that filter panel
      */
     @Test(priority = 9, dataProvider = "searchData")
-    public void testChallenge6(String searchKey, String filterPanelLinkText, String filterText, String filterCheckbox) {
+    public void testFiltering(String searchKey, String filterPanelLinkText, String filterText, String filterCheckbox) {
 
         System.out.println("Filter checkbox: " + filterCheckbox);
 
