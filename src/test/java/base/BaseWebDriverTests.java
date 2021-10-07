@@ -18,6 +18,9 @@ import pages.CopartHomePage;
 import pages.GoogleHomePage;
 import utils.Screenshots;
 
+import java.time.Duration;
+import java.util.Collections;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -64,11 +67,11 @@ public class BaseWebDriverTests extends BaseTests {
             EdgeOptions options = new EdgeOptions();
 
             // Because EdgeOptions.setExperimentalOption() wasn't introduced into Selenium until Selenium 4,
-            // the following code requires Selenium 4+ not only to run, but even to compile.
-            /* */
+            // the following code requires Selenium 4+ not just to run, but even to compile.
+            //
             // Hide Edge's "... controlled by automated test software" infobar.
-            /* options.setExperimentalOption("useAutomationExtension", false); */
-            /* options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation")); */
+            options.setExperimentalOption("useAutomationExtension", false);
+            options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 
             driver = new EdgeDriver(options);
         } else if (browserType.equalsIgnoreCase("firefox")) {
@@ -82,7 +85,7 @@ public class BaseWebDriverTests extends BaseTests {
         SecondsToSleepBeforeWebDriverQuit = Integer.parseInt(dotenv.get("SECONDS_TO_SLEEP_BEFORE_WEBDRIVER_QUIT", "0"));
 
         driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Selenium 3.141.59's "WebDriverWait(driver, 10)" deprecated in Selenium 4
         url = testUrl;
     }
 
