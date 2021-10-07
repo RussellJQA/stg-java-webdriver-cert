@@ -2,6 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -133,7 +135,13 @@ public final class CopartHomePage extends WebPage {
      */
     public void waitForSpinnerToComeAndGo() {
         By spinnerLoc = By.xpath("//div[@id='serverSideDataTable_processing']");
-        WebElement spinner = wait.until(ExpectedConditions.presenceOfElementLocated(spinnerLoc));
+        WebElement spinner;
+        try {
+            spinner = wait.until(ExpectedConditions.presenceOfElementLocated(spinnerLoc));
+        } catch (NoSuchElementException | TimeoutException e) {
+            System.out.println("Timed out waiting for progress spinner to become visible, so don't wait for it to become invisible.");
+            return;
+        }
         wait.until(ExpectedConditions.invisibilityOf(spinner));
     }
 
@@ -141,8 +149,11 @@ public final class CopartHomePage extends WebPage {
      * Returns the text from the search results table's WebElement
      */
     public String getTableText() {
-        //
-        return driver.findElement(By.xpath("*//table[@id='serverSideDataTable']")).getText();
+        By tableLocator = By.xpath("*//table[@id='serverSideDataTable']");
+        wait.until(ExpectedConditions.or(ExpectedConditions.presenceOfElementLocated(tableLocator),
+                ExpectedConditions.visibilityOfElementLocated(tableLocator)));
+        WebElement table = driver.findElement(tableLocator);
+        return table.getText();
     }
 
     /**
