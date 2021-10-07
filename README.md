@@ -63,13 +63,16 @@ Strictly speaking:
 1. This code was developed and tested using:
 
 - OpenJDK 11 LTS (11.0.11+9)
-- TestNG 7.4.0
 - Apache Maven 3 (3.6.3)
 - IntelliJ IDEA 2021.2.1 (Community Edition)
+- dotenv-java 2.2.0
+- TestNG 7.4.0
+- Selenium 4.0 RC2
 - The following browsers in Windows (Windows 8.1 Professional)
-    - Google Chrome 93.0.4577.63
-    - Microsoft Edge 93.0.961.38
-    - Mozilla Firefox 91.0.2
+    - Google Chrome 94.0.4606.71
+    - Microsoft Edge 94.0.992.38
+    - Mozilla Firefox 93.0
+- webdrivermanager 5.0.3
 
 2. It uses [webdriver_manager](https://github.com/bonigarcia/webdrivermanager) to simplify managing WebDriver instances
    for different browsers.
