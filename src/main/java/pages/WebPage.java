@@ -1,17 +1,23 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 /**
  * Page Object Model base class for GoogleHomePage and CopartHomePage
  */
 public class WebPage {
     protected final WebDriver driver;
-    protected final WebDriverWait wait;
     protected final String url;
+    protected final WebDriverWait wait;
+    protected final WebDriverWait longWait;
+
+    private static final long PAGE_LOAD_TIMEOUT = 60;
 
     // ----------------------------------------------------------------------
     // Constructor
@@ -22,12 +28,18 @@ public class WebPage {
      * @param wait   a WebDriverWait instance, with some pre-set time to wait
      * @param url    the URL of a Webpage (e.g., "https://www.google.com/" or "https://www.copart.com")
      */
-    public WebPage(WebDriver driver, WebDriverWait wait, String url) {
+    public WebPage(WebDriver driver, String url, WebDriverWait wait, WebDriverWait longWait) {
         this.driver = driver;
-        this.wait = wait;
         this.url = url;
+        this.wait = wait;
+        this.longWait = longWait;
 
-        driver.get(url);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
+        try {
+            driver.get(url);
+        } catch (TimeoutException e) {
+            System.out.printf("Page did not load within %d seconds!%n", PAGE_LOAD_TIMEOUT);
+        }
     }
 
     // ----------------------------------------------------------------------

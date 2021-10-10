@@ -1,7 +1,6 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -33,8 +32,8 @@ public final class CopartHomePage extends WebPage {
      * @param wait   a WebDriverWait instance, with some pre-set time to wait
      * @param url    the URL of a Copart homepage (e.g., "https://www.copart.com", "https://www.copart.ca", or "https://www.copart.co.uk/")
      */
-    public CopartHomePage(WebDriver driver, WebDriverWait wait, String url) {
-        super(driver, wait, url);
+    public CopartHomePage(WebDriver driver, String url, WebDriverWait wait, WebDriverWait longWait) {
+        super(driver, url, wait, longWait);
     }
 
     // ----------------------------------------------------------------------
@@ -127,22 +126,25 @@ public final class CopartHomePage extends WebPage {
      * @param searchKey a word or phrase to search for (for example, "exotics" or "porsche")
      */
     public void enterSearchKey(String searchKey) {
-        driver.findElement(By.id("input-search")).sendKeys(searchKey, Keys.ENTER);
+        driver.findElement(By.id("input-search")).sendKeys(searchKey);
+        By searchButtonLocator = By.xpath("*//button[contains(text(), 'Search Inventory')]");
+        WebElement searchButton = wait.until(ExpectedConditions.visibilityOfElementLocated(searchButtonLocator));
+        searchButton.click();
     }
 
     /**
      * Waits for the progress spinner to be present, and then waits for it to become invisible
      */
     public void waitForSpinnerToComeAndGo() {
-        By spinnerLoc = By.xpath("//div[@id='serverSideDataTable_processing']");
+        By spinnerLocator = By.xpath("//div[@id='serverSideDataTable_processing']");
         WebElement spinner;
         try {
-            spinner = wait.until(ExpectedConditions.presenceOfElementLocated(spinnerLoc));
+            spinner = longWait.until(ExpectedConditions.visibilityOfElementLocated(spinnerLocator));
         } catch (NoSuchElementException | TimeoutException e) {
             System.out.println("Timed out waiting for progress spinner to become visible, so don't wait for it to become invisible.");
             return;
         }
-        wait.until(ExpectedConditions.invisibilityOf(spinner));
+        longWait.until(ExpectedConditions.invisibilityOf(spinner));
     }
 
     /**
@@ -150,8 +152,7 @@ public final class CopartHomePage extends WebPage {
      */
     public String getTableText() {
         By tableLocator = By.xpath("*//table[@id='serverSideDataTable']");
-        wait.until(ExpectedConditions.or(ExpectedConditions.presenceOfElementLocated(tableLocator),
-                ExpectedConditions.visibilityOfElementLocated(tableLocator)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(tableLocator));
         WebElement table = driver.findElement(tableLocator);
         return table.getText();
     }

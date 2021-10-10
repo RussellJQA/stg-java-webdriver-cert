@@ -30,12 +30,16 @@ import static org.testng.Assert.assertTrue;
 public class BaseWebDriverTests extends BaseTests {
 
     protected WebDriverWait wait;
+    protected WebDriverWait longWait;
     protected GoogleHomePage googleHomePage;
     protected CopartHomePage copartHomePage;
     protected int SecondsToSleepBeforeWebDriverQuit;
 
     private WebDriver driver;
     private String url;
+
+    private static final long WAIT_TIMEOUT = 10; // Duration of normal waits in seconds
+    private static final long LONG_WAIT_TIMEOUT = 20; // Duration of long waits in seconds
 
     // ----------------------------------------------------------------------
     // Public instance methods
@@ -85,7 +89,8 @@ public class BaseWebDriverTests extends BaseTests {
         SecondsToSleepBeforeWebDriverQuit = Integer.parseInt(dotenv.get("SECONDS_TO_SLEEP_BEFORE_WEBDRIVER_QUIT", "0"));
 
         driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Selenium 3.141.59's "WebDriverWait(driver, 10)" deprecated in Selenium 4
+        wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT)); // Selenium 3.141.59's "WebDriverWait(driver, 10)" deprecated in Selenium 4
+        longWait = new WebDriverWait(driver, Duration.ofSeconds(LONG_WAIT_TIMEOUT));
         url = testUrl;
     }
 
@@ -127,14 +132,14 @@ public class BaseWebDriverTests extends BaseTests {
      * Displays a Google homepage.
      */
     public void initGoogleHomePage() {
-        googleHomePage = new GoogleHomePage(driver, wait, url);
+        googleHomePage = new GoogleHomePage(driver, url, wait, longWait);
     }
 
     /**
      * Displays a Copart homepage.
      */
     public void initCopartHomePage() {
-        copartHomePage = new CopartHomePage(driver, wait, url);
+        copartHomePage = new CopartHomePage(driver, url, wait, longWait);
     }
 
     // ----------------------------------------------------------------------
