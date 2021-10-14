@@ -19,13 +19,12 @@ public final class challenge6 extends BaseWebDriverTests {
 
     @DataProvider
     private static Object[][] searchData() {
-        // Running this 3x: once with "Skyline", once with "Skyline Gt", and once with "Skylinegtr" because:
+        // Running this 2x: once with "Skyline", and once with "Skylinegtr" because:
         //      Although the challenge only calls for "Skyline", that often fails (as the challenge said it might).
-        //      So I'm re-running with some alternative values to demonstrate that it can pass (when it should).
-        //      At least 1 of the values usually passes for the U.S. [All 3 values usually fail in Canada and the U.K.]
+        //      So I'm re-running with an alternative value to demonstrate that it can pass (when it should).
+        //      At least 1 of the values usually passes for the U.S. [Both values usually fail in Canada and the U.K.]
         return new Object[][]{
                 {"nissan", "Model", "skyline", "Skyline"},
-                {"nissan", "Model", "skyline", "Skyline Gt"},
                 {"nissan", "Model", "skyline", "Skylinegtr"}
         };
     }
@@ -38,7 +37,7 @@ public final class challenge6 extends BaseWebDriverTests {
      * @param searchKey           search phrase (e.g., "nissan") to enter into Copart.com's main search box
      * @param filterPanelLinkText link text (e.g., "Model") of the to-be-selected filter panel in the page's left-hand 'Filter Options' sidebar
      * @param filterText          text (e.g, "skyline") to enter into that filter panel's search box
-     * @param filterCheckbox      checkbox (e.g., "Skyline" or "Skyline Gt") to select (check) in that filter panel
+     * @param filterCheckbox      checkbox (e.g., "Skyline" or "Skylinegtr") to select (check) in that filter panel
      */
     @Test(priority = 9, dataProvider = "searchData")
     public void testFiltering(String searchKey, String filterPanelLinkText, String filterText, String filterCheckbox) {
@@ -61,7 +60,7 @@ public final class challenge6 extends BaseWebDriverTests {
         // THEN the user is able to successfully do the following in the page's left-hand 'Filter Options' sidebar:
         // • Click the panel with the specified link text (e.g., 'Model')
         // • Enter the specified text (e.g. 'skyline') in the 'Model' filter panel's text box
-        // • Check the specified checkbox (e.g. 'Skyline') in the 'Model' filter panel's list of checkboxes
+        // • Check the specified checkbox (e.g., "Skyline" or "Skylinegtr") in the 'Model' filter panel's list of checkboxes
         // ----------------------------------------------------------------------
 
         assertTrue(copartHomePage.setFilterTextAndCheckBox(filterPanelLinkText, filterText, filterCheckbox));
